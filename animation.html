@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EPICPAGES - Animation Potential</title>
+
+    <style>
+        /* ----- RESET & BASE ----- */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background: #0a0a1a;
+            color: #fff;
+            height: 100vh;
+            width: 100vw;
+            user-select: none;
+        }
+
+        /* ----- THREE.JS CANVAS CONTAINER ----- */
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+        }
+
+        /* ----- OVERLAY UI ----- */
+        #ui-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding-top: 2vh;
+        }
+
+        /* ----- HEADER ----- */
+        .header {
+            text-align: center;
+            pointer-events: none;
+            animation: fadeInDown 1.5s ease-out;
+        }
+
+        .main-title {
+            font-size: clamp(3.5rem, 12vw, 8rem);
+            font-weight: 900;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, #f7971e, #ffd200, #f7971e);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(255, 200, 0, 0.3);
+            animation: shimmerText 4s ease-in-out infinite alternate, floatText 6s ease-in-out infinite;
+            transform-origin: center;
+            filter: drop-shadow(0 0 30px rgba(255, 200, 0, 0.15));
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 2.5vw, 2rem);
+            font-weight: 300;
+            letter-spacing: 0.4em;
+            color: rgba(255, 255, 255, 0.85);
+            text-shadow: 0 0 30px rgba(100, 200, 255, 0.3);
+            margin-top: -0.5vh;
+            animation: fadeInUp 2s ease-out 0.5s both, pulseGlow 3s ease-in-out infinite alternate;
+            text-transform: uppercase;
+        }
+
+        /* ----- BADGE / STATS ----- */
+        .stats-bar {
+            position: fixed;
+            bottom: 3vh;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 3vw;
+            pointer-events: none;
+            z-index: 20;
+            background: rgba(10, 10, 30, 0.6);
+            backdrop-filter: blur(12px);
+            padding: 1.2vh 3vw;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            animation: fadeInUp 2s ease-out 1s both;
+        }
+
+        .stat-item {
+            text-align: center;
+            font-size: clamp(0.7rem, 1.2vw, 1.1rem);
+            color: rgba(255, 255, 255, 0.7);
+            letter-spacing: 0.05em;
+        }
+
+        .stat-item span {
+            display: block;
+            font-size: clamp(1.2rem, 2vw, 2rem);
+            font-weight: 700;
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .stat-item .label {
+            font-size: clamp(0.5rem, 0.8vw, 0.8rem);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ----- CONTROLS HINT ----- */
+        .controls-hint {
+            position: fixed;
+            bottom: 12vh;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: clamp(0.6rem, 0.8vw, 0.9rem);
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            z-index: 15;
+            pointer-events: none;
+            animation: pulseOpacity 3s ease-in-out infinite;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.5vh 2vw;
+            border-radius: 30px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        /* ----- KEYFRAMES ----- */
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-40px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shimmerText {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        @keyframes floatText {
+            0%,
+            100% {
+                transform: translateY(0px) scale(1);
+            }
+            50% {
+                transform: translateY(-8px) scale(1.02);
+            }
+        }
+
+        @keyframes pulseGlow {
+            0% {
+                text-shadow: 0 0 20px rgba(100, 200, 255, 0.2);
+            }
+            100% {
+                text-shadow: 0 0 50px rgba(100, 200, 255, 0.5), 0 0 80px rgba(100, 200, 255, 0.2);
+            }
+        }
+
+        @keyframes pulseOpacity {
+            0%,
+            100% {
+                opacity: 0.2;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        /* ----- RESPONSIVE TWEAKS ----- */
+        @media (max-width: 768px) {
+            .stats-bar {
+                gap: 4vw;
+                padding: 1.5vh 4vw;
+                bottom: 2vh;
+                flex-wrap: wrap;
+                justify-content: center;
+                border-radius: 20px;
+                width: 90%;
+            }
+            .stat-item span {
+                font-size: 1.2rem;
+            }
+            .controls-hint {
+                bottom: 10vh;
+                font-size: 0.5rem;
+                padding: 0.3vh 3vw;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2.8rem;
+                letter-spacing: 0.08em;
+            }
+            .subtitle {
+                font-size: 0.8rem;
+                letter-spacing: 0.2em;
+                margin-top: 0;
+            }
+            .stats-bar {
+                gap: 2vw;
+                padding: 1vh 2vw;
+                bottom: 1.5vh;
+            }
+            .stat-item {
+                font-size: 0.5rem;
+            }
+            .stat-item span {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* ----- SCROLLBAR ----- */
+        ::-webkit-scrollbar {
+            width: 0;
+        }
+
+        /* loading splash (optional) */
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a1a;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffd700;
+            font-size: 2rem;
+            font-weight: 300;
+            letter-spacing: 0.3em;
+            transition: opacity 1.2s ease;
+        }
+        #loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LOADING -->
+    <div id="loading">LOADING ...</div>
+
+    <!-- THREE.JS CANVAS -->
+    <div id="canvas-container"></div>
+
+    <!-- UI OVERLAY -->
+    <div id="ui-overlay">
+        <div class="header">
+            <div class="main-title">EPICPAGES</div>
+            <div class="subtitle">✦ test our animation potential ✦</div>
+        </div>
+    </div>
+
+    <!-- STATS BAR -->
+    <div class="stats-bar">
+        <div class="stat-item">
+            <span id="objCount">0</span>
+            <div class="label">3D Objects</div>
+        </div>
+        <div class="stat-item">
+            <span id="particleCount">0</span>
+            <div class="label">Particles</div>
+        </div>
+        <div class="stat-item">
+            <span id="fpsDisplay">60</span>
+            <div class="label">FPS</div>
+        </div>
+        <div class="stat-item">
+            <span>⚡</span>
+            <div class="label">Live 3D</div>
+        </div>
+    </div>
+
+    <div class="controls-hint">🖱 drag to orbit · scroll to zoom</div>
+
+    <!-- ===== THREE.JS ===== -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <script type="module">
+        // ------------------------------------------------------------------
+        // IMPORTS
+        // ------------------------------------------------------------------
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+
+        // ------------------------------------------------------------------
+        // DOM REFS
+        // ------------------------------------------------------------------
+        const container = document.getElementById('canvas-container');
+        const loadingEl = document.getElementById('loading');
+        const objCountEl = document.getElementById('objCount');
+        const particleCountEl = document.getElementById('particleCount');
+        const fpsDisplayEl = document.getElementById('fpsDisplay');
+
+        // ------------------------------------------------------------------
+        // SCENE SETUP
+        // ------------------------------------------------------------------
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x0a0a1a);
+        scene.fog = new THREE.Fog(0x0a0a1a, 30, 80);
+
+        // Camera
+        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 200);
+        camera.position.set(22, 16, 28);
+        camera.lookAt(0, 2, 0);
+
+        // WebGL Renderer
+        const renderer = new THREE.WebGLRenderer({
+            antialias: true,
+            alpha: false,
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.2;
+        container.appendChild(renderer.domElement);
+
+        // CSS2D Renderer for labels
+        const labelRenderer = new CSS2DRenderer();
+        labelRenderer.setSize(window.innerWidth, window.innerHeight);
+        labelRenderer.domElement.style.position = 'absolute';
+        labelRenderer.domElement.style.top = '0';
+        labelRenderer.domElement.style.left = '0';
+        labelRenderer.domElement.style.pointerEvents = 'none';
+        labelRenderer.domElement.style.zIndex = '5';
+        container.appendChild(labelRenderer.domElement);
+
+        // Controls
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.06;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 0.6;
+        controls.maxPolarAngle = Math.PI / 2.3;
+        controls.minDistance = 8;
+        controls.maxDistance = 60;
+        controls.target.set(0, 3, 0);
+
+        // ------------------------------------------------------------------
+        // LIGHTING
+        // ------------------------------------------------------------------
+        const ambientLight = new THREE.AmbientLight(0x404060, 0.6);
+        scene.add(ambientLight);
+
+        const hemiLight = new THREE.HemisphereLight(0x88ccff, 0x443322, 0.8);
+        scene.add(hemiLight);
+
+        const dirLight = new THREE.DirectionalLight(0xffeedd, 2.5);
+        dirLight.position.set(20, 30, 10);
+        dirLight.castShadow = true;
+        dirLight.shadow.mapSize.width = 2048;
+        dirLight.shadow.mapSize.height = 2048;
+        dirLight.shadow.camera.near = 0.5;
+        dirLight.shadow.camera.far = 60;
+        dirLight.shadow.camera.left = -30;
+        dirLight.shadow.camera.right = 30;
+        dirLight.shadow.camera.top = 30;
+        dirLight.shadow.camera.bottom = -30;
+        scene.add(dirLight);
+
+        const fillLight = new THREE.DirectionalLight(0x4488ff, 0.5);
+        fillLight.position.set(-20, 10, -20);
+        scene.add(fillLight);
+
+        const rimLight = new THREE.DirectionalLight(0xff8844, 0.4);
+        rimLight.position.set(0, 5, -25);
+        scene.add(rimLight);
+
+        // ------------------------------------------------------------------
+        // GROUND
+        // ------------------------------------------------------------------
+        const groundGeo = new THREE.PlaneGeometry(80, 80);
+        const groundMat = new THREE.MeshStandardMaterial({
+            color: 0x1a1a2e,
+            roughness: 0.8,
+            metalness: 0.2,
+            transparent: true,
+            opacity: 0.9,
+        });
+        const ground = new THREE.Mesh(groundGeo, groundMat);
+        ground.rotation.x = -Math.PI / 2;
+        ground.position.y = -0.1;
+        ground.receiveShadow = true;
+        scene.add(ground);
+
+        // Grid
+        const gridHelper = new THREE.GridHelper(80, 40, 0x4444aa, 0x222255);
+        gridHelper.position.y = 0;
+        gridHelper.material.transparent = true;
+        gridHelper.material.opacity = 0.3;
+        scene.add(gridHelper);
+
+        // ------------------------------------------------------------------
+        // HELPER: create text label
+        // ------------------------------------------------------------------
+        function createLabel(text, color = '#ffd700', size = '14px') {
+            const div = document.createElement('div');
+            div.textContent = text;
+            div.style.color = color;
+            div.style.fontSize = size;
+            div.style.fontWeight = '600';
+            div.style.textShadow = '0 0 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5)';
+            div.style.letterSpacing = '0.1em';
+            div.style.fontFamily = "'Segoe UI', sans-serif";
+            div.style.background = 'rgba(0,0,0,0.4)';
+            div.style.padding = '4px 14px';
+            div.style.borderRadius = '20px';
+            div.style.backdropFilter = 'blur(6px)';
+            div.style.border = '1px solid rgba(255,255,255,0.06)';
+            return new CSS2DObject(div);
+        }
+
+        // ------------------------------------------------------------------
+        // 1. CITY (background buildings)
+        // ------------------------------------------------------------------
+        const cityGroup = new THREE.Group();
+        scene.add(cityGroup);
+
+        const buildingColors = [
+            0x2a2a4a, 0x3a3a6a, 0x1a2a4a, 0x4a3a5a, 0x2a3a5a,
+            0x3a4a6a, 0x1a3a5a, 0x5a4a6a, 0x2a4a6a, 0x3a5a7a,
+        ];
+
+        const buildings = [];
+        for (let i = 0; i < 45; i++) {
+            const w = 0.6 + Math.random() * 1.4;
+            const d = 0.6 + Math.random() * 1.4;
+            const h = 1.5 + Math.random() * 6;
+            const geo = new THREE.BoxGeometry(w, h, d);
+            const mat = new THREE.MeshStandardMaterial({
+                color: buildingColors[Math.floor(Math.random() * buildingColors.length)],
+                roughness: 0.5 + Math.random() * 0.4,
+                metalness: 0.1 + Math.random() * 0.3,
+                emissive: new THREE.Color(0x111133),
+                emissiveIntensity: 0.1,
+            });
+            const mesh = new THREE.Mesh(geo, mat);
+            const angle = Math.random() * Math.PI * 2;
+            const radius = 6 + Math.random() * 16;
+            mesh.position.set(
+                Math.cos(angle) * radius,
+                h / 2,
+                Math.sin(angle) * radius
+            );
+            mesh.rotation.y = Math.random() * Math.PI;
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
+            cityGroup.add(mesh);
+            buildings.push(mesh);
+
+            // windows (tiny glowing dots)
+            if (h > 2 && Math.random() > 0.4) {
+                const winCount = Math.floor(Math.random() * 6) + 3;
+                for (let ww = 0; ww < winCount; ww++) {
+                    const win = new THREE.Mesh(
+                        new THREE.PlaneGeometry(0.08, 0.12),
+                        new THREE.MeshBasicMaterial({
+                            color: 0xffdd77,
+                            transparent: true,
+                            opacity: 0.3 + Math.random() * 0.5,
+                        })
+                    );
+                    const wy = (Math.random() - 0.5) * h * 0.7;
+                    const wx = (Math.random() - 0.5) * w * 0.7;
+                    const wz = (Math.random() - 0.5) * d * 0.7;
+                    const face = Math.floor(Math.random() * 6);
+                    if (face === 0) { win.position.set(w, wy, wz);
+                        win.rotation.y = Math.PI / 2; } else if (face === 1) { win.position.set(-w, wy, wz);
+                        win.rotation.y = -Math.PI / 2; } else if (face === 2) { win.position.set(wx, wy, d);
+                        win.rotation.y = 0; } else if (face === 3) { win.position.set(wx, wy, -d);
+                        win.rotation.y = Math.PI; } else if (face === 4) { win.position.set(wx, h, wz);
+                        win.rotation.x = -Math.PI / 2; } else { win.position.set(wx, 0, wz);
+                        win.rotation.x = Math.PI / 2; }
+                    mesh.add(win);
+                }
+            }
+        }
+
+        // ------------------------------------------------------------------
+        // 2. CAR (moving)
+        // ------------------------------------------------------------------
+        const carGroup = new THREE.Group();
+        scene.add(carGroup);
+
+        // Car body
+        const bodyMat = new THREE.MeshStandardMaterial({ color: 0xff3333, roughness: 0.3, metalness: 0.7 });
+        const body = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.5, 1.0), bodyMat);
+        body.position.y = 0.5;
+        body.castShadow = true;
+        carGroup.add(body);
+
+        // Cabin
+        const cabinMat = new THREE.MeshStandardMaterial({ color: 0x88ccff, roughness: 0.1, metalness: 0.1, transparent: true,
+            opacity: 0.6 });
+        const cabin = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.4, 0.9), cabinMat);
+        cabin.position.set(-0.3, 0.9, 0);
+        cabin.castShadow = true;
+        carGroup.add(cabin);
+
+        // Headlights
+        const hlMat = new THREE.MeshStandardMaterial({ color: 0xffffaa, emissive: 0xffffaa, emissiveIntensity: 0.5 });
+        const hl1 = new THREE.Mesh(new THREE.SphereGeometry(0.12, 8, 8), hlMat);
+        hl1.position.set(1.1, 0.4, 0.3);
+        carGroup.add(hl1);
+        const hl2 = new THREE.Mesh(new THREE.SphereGeometry(0.12, 8, 8), hlMat);
+        hl2.position.set(1.1, 0.4, -0.3);
+        carGroup.add(hl2);
+
+        // Tail lights
+        const tlMat = new THREE.MeshStandardMaterial({ color: 0xff2200, emissive: 0xff2200, emissiveIntensity: 0.3 });
+        const tl1 = new THREE.Mesh(new THREE.SphereGeometry(0.1, 8, 8), tlMat);
+        tl1.position.set(-1.1, 0.4, 0.3);
+        carGroup.add(tl1);
+        const tl2 = new THREE.Mesh(new THREE.SphereGeometry(0.1, 8, 8), tlMat);
+        tl2.position.set(-1.1, 0.4, -0.3);
+        carGroup.add(tl2);
+
+        // Wheels
+        const wheelMat = new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.9 });
+        const wheelPos = [
+            [-0.7, 0.15, 0.6],
+            [-0.7, 0.15, -0.6],
+            [0.7, 0.15, 0.6],
+            [0.7, 0.15, -0.6]
+        ];
+        const wheels = [];
+        wheelPos.forEach(pos => {
+            const wheel = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.25, 0.12, 12), wheelMat);
+            wheel.rotation.z = Math.PI / 2;
+            wheel.position.set(pos[0], pos[1], pos[2]);
+            wheel.castShadow = true;
+            carGroup.add(wheel);
+            wheels.push(wheel);
+        });
+
+        // Car label
+        const carLabel = createLabel('🚗 DRIVING', '#ff6666', '12px');
+        carLabel.position.set(0, 1.8, 0);
+        carGroup.add(carLabel);
+
+        // car path
+        const carRadius = 12;
+        let carAngle = 0;
+
+        // ------------------------------------------------------------------
+        // 3. CONSTRUCTION SITE (building rising)
+        // ------------------------------------------------------------------
+        const constructionGroup = new THREE.Group();
+        constructionGroup.position.set(-8, 0, -6);
+        scene.add(constructionGroup);
+
+        // Crane
+        const craneMat = new THREE.MeshStandardMaterial({ color: 0xffaa44, roughness: 0.6, metalness: 0.3 });
+        const craneBase = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.4, 0.5, 8), craneMat);
+        craneBase.position.y = 0.25;
+        constructionGroup.add(craneBase);
+
+        const cranePole = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.12, 5, 6), craneMat);
+        cranePole.position.set(0, 2.75, 0);
+        constructionGroup.add(cranePole);
+
+        const craneArm = new THREE.Mesh(new THREE.BoxGeometry(4, 0.08, 0.08), craneMat);
+        craneArm.position.set(1.5, 5.2, 0);
+        constructionGroup.add(craneArm);
+
+        const craneCable = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 2.5, 4),
+            new THREE.MeshBasicMaterial({ color: 0x888888 }));
+        craneCable.position.set(3.0, 3.8, 0);
+        constructionGroup.add(craneCable);
+
+        const hook = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.1, 0.1), new THREE.MeshStandardMaterial({ color: 0x888888 }));
+        hook.position.set(3.0, 2.5, 0);
+        constructionGroup.add(hook);
+
+        // Building under construction (rising floors)
+        const buildGroup = new THREE.Group();
+        buildGroup.position.set(1.5, 0, 0);
+        constructionGroup.add(buildGroup);
+
+        const floorMat = new THREE.MeshStandardMaterial({ color: 0xccaa88, roughness: 0.7 });
+        const floorMat2 = new THREE.MeshStandardMaterial({ color: 0xbb9966, roughness: 0.7 });
+        const steelMat = new THREE.MeshStandardMaterial({ color: 0x8899aa, roughness: 0.4, metalness: 0.6 });
+
+        const floors = [];
+        const maxFloors = 12;
+        let floorCount = 0;
+
+        function addFloor(yPos, width, depth) {
+            const mat = floorCount % 2 === 0 ? floorMat : floorMat2;
+            const floor = new THREE.Mesh(new THREE.BoxGeometry(width, 0.2, depth), mat);
+            floor.position.y = yPos;
+            floor.castShadow = true;
+            floor.receiveShadow = true;
+            buildGroup.add(floor);
+            floors.push(floor);
+            floorCount++;
+
+            // steel beams
+            if (floorCount > 1 && floorCount % 2 === 0) {
+                for (let i = -1; i <= 1; i += 2) {
+                    const beam = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.04, depth * 0.8), steelMat);
+                    beam.position.set(i * width * 0.35, yPos + 0.1, 0);
+                    buildGroup.add(beam);
+                }
+            }
+            return floor;
+        }
+
+        // Initial floors
+        for (let i = 0; i < 4; i++) {
+            const w = 2.0 - i * 0.08;
+            const d = 1.6 - i * 0.06;
+            addFloor(0.2 + i * 0.45, w, d);
+        }
+
+        // construction label
+        const constLabel = createLabel('🏗️ BUILDING', '#ffaa44', '12px');
+        constLabel.position.set(1.5, 4.0, 0);
+        constructionGroup.add(constLabel);
+
+        // ------------------------------------------------------------------
+        // 4. DAM with water particles
+        // ------------------------------------------------------------------
+        const damGroup = new THREE.Group();
+        damGroup.position.set(9, 0, -5);
+        scene.add(damGroup);
+
+        // Dam wall
+        const damMat = new THREE.MeshStandardMaterial({
+            color: 0x8899aa,
+            roughness: 0.5,
+            metalness: 0.3,
+            emissive: new THREE.Color(0x334455),
+            emissiveIntensity: 0.1,
+        });
+        const damWall = new THREE.Mesh(new THREE.BoxGeometry(3.5, 3.0, 0.8), damMat);
+        damWall.position.y = 1.5;
+        damWall.castShadow = true;
+        damWall.receiveShadow = true;
+        damGroup.add(damWall);
+
+        // Dam top
+        const damTop = new THREE.Mesh(
+            new THREE.BoxGeometry(3.7, 0.2, 1.0),
+            new THREE.MeshStandardMaterial({ color: 0x667788, roughness: 0.6 })
+        );
+        damTop.position.set(0, 3.1, 0);
+        damGroup.add(damTop);
+
+        // Water particles flowing over dam
+        const waterParticles = [];
+        const waterMat = new THREE.MeshStandardMaterial({
+            color: 0x4488ff,
+            transparent: true,
+            opacity: 0.5,
+            emissive: new THREE.Color(0x2244aa),
+            emissiveIntensity: 0.2,
+        });
+
+        for (let i = 0; i < 120; i++) {
+            const size = 0.04 + Math.random() * 0.08;
+            const particle = new THREE.Mesh(
+                new THREE.SphereGeometry(size, 4, 4),
+                waterMat.clone()
+            );
+            const x = (Math.random() - 0.5) * 3.0;
+            const z = (Math.random() - 0.5) * 0.6 + 0.6;
+            particle.position.set(x, 3.0 + Math.random() * 0.5, z);
+            particle.userData = {
+                vx: (Math.random() - 0.5) * 0.02,
+                vy: -0.02 - Math.random() * 0.03,
+                vz: -0.01 - Math.random() * 0.02,
+                life: 0.5 + Math.random() * 0.5,
+                maxLife: 0.5 + Math.random() * 0.5,
+            };
+            damGroup.add(particle);
+            waterParticles.push(particle);
+        }
+
+        // Water pool at bottom
+        const poolMat = new THREE.MeshStandardMaterial({
+            color: 0x2266cc,
+            transparent: true,
+            opacity: 0.3,
+            roughness: 0.1,
+            metalness: 0.3,
+        });
+        const pool = new THREE.Mesh(new THREE.CircleGeometry(2.5, 16), poolMat);
+        pool.rotation.x = -Math.PI / 2;
+        pool.position.set(0, -0.1, 2.2);
+        damGroup.add(pool);
+
+        // Dam label
+        const damLabel = createLabel('🌊 DAM', '#66aaff', '12px');
+        damLabel.position.set(0, 4.2, 0);
+        damGroup.add(damLabel);
+
+        // ------------------------------------------------------------------
+        // 5. PERSON at COMPUTER
+        // ------------------------------------------------------------------
+        const personGroup = new THREE.Group();
+        personGroup.position.set(-5, 0, 8);
+        scene.add(personGroup);
+
+        // Desk
+        const deskMat = new THREE.MeshStandardMaterial({ color: 0x5a3a2a, roughness: 0.7 });
+        const desk = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.08, 1.0), deskMat);
+        desk.position.set(0, 0.7, 0);
+        desk.castShadow = true;
+        desk.receiveShadow = true;
+        personGroup.add(desk);
+
+        // Desk legs
+        const legMat = new THREE.MeshStandardMaterial({ color: 0x333333, roughness: 0.8 });
+        [
+            [-0.7, 0.35, -0.35],
+            [-0.7, 0.35, 0.35],
+            [0.7, 0.35, -0.35],
+            [0.7, 0.35, 0.35]
+        ].forEach(pos => {
+            const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.7, 6), legMat);
+            leg.position.set(pos[0], pos[1], pos[2]);
+            personGroup.add(leg);
+        });
+
+        // Monitor
+        const monMat = new THREE.MeshStandardMaterial({ color: 0x111122, roughness: 0.1, metalness: 0.2 });
+        const mon = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.5, 0.04), monMat);
+        mon.position.set(0.3, 1.0, -0.3);
+        personGroup.add(mon);
+
+        // Screen glow
+        const screenMat = new THREE.MeshBasicMaterial({
+            color: 0x4488ff,
+            transparent: true,
+            opacity: 0.3,
+        });
+        const screen = new THREE.Mesh(new THREE.PlaneGeometry(0.6, 0.4), screenMat);
+        screen.position.set(0.3, 1.0, -0.28);
+        personGroup.add(screen);
+
+        // Monitor stand
+        const stand = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.06, 0.3, 6),
+            new THREE.MeshStandardMaterial({ color: 0x444444 }));
+        stand.position.set(0.3, 0.85, -0.3);
+        personGroup.add(stand);
+
+        // Keyboard
+        const kbMat = new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.5 });
+        const kb = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.03, 0.2), kbMat);
+        kb.position.set(0.0, 0.76, 0.15);
+        personGroup.add(kb);
+
+        // Person (simplified)
+        const skinMat = new THREE.MeshStandardMaterial({ color: 0xf5d0a9, roughness: 0.6 });
+        const clothMat = new THREE.MeshStandardMaterial({ color: 0x3366aa, roughness: 0.7 });
+
+        // Torso
+        const torso = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.5, 0.25), clothMat);
+        torso.position.set(-0.3, 0.7, 0.3);
+        torso.castShadow = true;
+        personGroup.add(torso);
+
+        // Head
+        const head = new THREE.Mesh(new THREE.SphereGeometry(0.15, 8, 8), skinMat);
+        head.position.set(-0.3, 1.1, 0.3);
+        head.castShadow = true;
+        personGroup.add(head);
+
+        // Arms
+        const armMat = new THREE.MeshStandardMaterial({ color: 0xf5d0a9, roughness: 0.6 });
+        const armL = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.05, 0.35, 6), armMat);
+        armL.position.set(-0.55, 0.75, 0.3);
+        armL.rotation.z = 0.3;
+        personGroup.add(armL);
+
+        const armR = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.05, 0.35, 6), armMat);
+        armR.position.set(-0.05, 0.75, 0.3);
+        armR.rotation.z = -0.3;
+        personGroup.add(armR);
+
+        // Chair
+        const chairMat = new THREE.MeshStandardMaterial({ color: 0x444466, roughness: 0.5 });
+        const chair = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.4, 0.5), chairMat);
+        chair.position.set(-0.3, 0.2, 0.7);
+        chair.castShadow = true;
+        personGroup.add(chair);
+
+        // Chair back
+        const chairBack = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.4, 0.04), chairMat);
+        chairBack.position.set(-0.3, 0.5, 0.95);
+        personGroup.add(chairBack);
+
+        // Person label
+        const personLabel = createLabel('👨‍💻 CODING', '#66ddff', '12px');
+        personLabel.position.set(-0.3, 1.7, 0.3);
+        personGroup.add(personLabel);
+
+        // Floating code symbols (CSS2D)
+        const codeSymbols = ['{ }', '</>', '()', '=>', '++', '🌟'];
+        codeSymbols.forEach((sym, idx) => {
+            const el = document.createElement('div');
+            el.textContent = sym;
+            el.style.color = '#66ddff';
+            el.style.fontSize = '14px';
+            el.style.fontWeight = '700';
+            el.style.opacity = '0.3';
+            el.style.textShadow = '0 0 20px rgba(100,200,255,0.2)';
+            const label = new CSS2DObject(el);
+            const angle = (idx / codeSymbols.length) * Math.PI * 2;
+            label.position.set(-0.3 + Math.cos(angle) * 0.8, 1.2 + Math.sin(angle * 0.5) * 0.4, 0.3 + Math.sin(angle) *
+            0.6);
+            personGroup.add(label);
+        });
+
+        // ------------------------------------------------------------------
+        // 6. ENGINE with rotating fan
+        // ------------------------------------------------------------------
+        const engineGroup = new THREE.Group();
+        engineGroup.position.set(6, 0.5, 8);
+        scene.add(engineGroup);
+
+        // Engine block
+        const engMat = new THREE.MeshStandardMaterial({
+            color: 0x666677,
+            roughness: 0.3,
+            metalness: 0.8,
+            emissive: new THREE.Color(0x222233),
+            emissiveIntensity: 0.1,
+        });
+        const block = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.6, 0.8), engMat);
+        block.position.y = 0.3;
+        block.castShadow = true;
+        engineGroup.add(block);
+
+        // Cylinder heads
+        const headMat = new THREE.MeshStandardMaterial({ color: 0x888899, roughness: 0.2, metalness: 0.9 });
+        for (let i = -1; i <= 1; i += 2) {
+            const head = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.25, 0.3, 8), headMat);
+            head.position.set(i * 0.45, 0.7, 0);
+            head.rotation.x = 0;
+            engineGroup.add(head);
+            // spark plug
+            const plug = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.02, 0.02, 0.1, 4),
+                new THREE.MeshStandardMaterial({ color: 0xccddff, emissive: 0x4488ff, emissiveIntensity: 0.2 })
+            );
+            plug.position.set(i * 0.45, 0.9, 0);
+            engineGroup.add(plug);
+        }
+
+        // Fan (rotating)
+        const fanGroup = new THREE.Group();
+        fanGroup.position.set(0.7, 0.3, 0);
+        engineGroup.add(fanGroup);
+
+        const fanMat = new THREE.MeshStandardMaterial({ color: 0xccccdd, roughness: 0.2, metalness: 0.5 });
+        const fanCenter = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.05, 8), fanMat);
+        fanCenter.position.x = 0;
+        fanGroup.add(fanCenter);
+
+        const bladeMat = new THREE.MeshStandardMaterial({ color: 0xaaaacc, roughness: 0.3, metalness: 0.6 });
+        for (let i = 0; i < 6; i++) {
+            const blade = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.02, 0.06), bladeMat);
+            const angle = (i / 6) * Math.PI * 2;
+            blade.position.set(Math.cos(angle) * 0.2, Math.sin(angle) * 0.2, 0);
+            blade.rotation.z = angle;
+            fanGroup.add(blade);
+        }
+
+        // Fan guard
+        const guardMat = new THREE.MeshBasicMaterial({
+            color: 0x888899,
+            transparent: true,
+            opacity: 0.15,
+            wireframe: true,
+        });
+        const guard = new THREE.Mesh(new THREE.CircleGeometry(0.35, 12), guardMat);
+        guard.position.set(0, 0, 0.05);
+        fanGroup.add(guard);
+
+        // Engine label
+        const engLabel = createLabel('⚙️ ENGINE', '#ff8844', '12px');
+        engLabel.position.set(0, 1.6, 0);
+        engineGroup.add(engLabel);
+
+        // Exhaust pipes
+        const exhMat = new THREE.MeshStandardMaterial({ color: 0x444455, roughness: 0.5, metalness: 0.7 });
+        for (let i = -1; i <= 1; i += 2) {
+            const exh = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.06, 0.3, 6), exhMat);
+            exh.position.set(i * 0.3, 0.1, -0.5);
+            exh.rotation.x = 0.3;
+            engineGroup.add(exh);
+        }
+
+        // ------------------------------------------------------------------
+        // 7. FLOATING 3D SHAPES
+        // ------------------------------------------------------------------
+        const shapesGroup = new THREE.Group();
+        scene.add(shapesGroup);
+
+        const shapeData = [
+            { geo: new THREE.TorusGeometry(0.4, 0.12, 12, 16), color: 0xff4488, pos: [-4, 4, -3], speed: 0.8 },
+            { geo: new THREE.OctahedronGeometry(0.4), color: 0x44ff88, pos: [5, 4.5, -4], speed: 0.6 },
+            { geo: new THREE.TorusKnotGeometry(0.35, 0.1, 32, 16), color: 0x4488ff, pos: [0, 5.5, -5], speed: 1.0 },
+            { geo: new THREE.IcosahedronGeometry(0.35), color: 0xffaa44, pos: [-6, 3.5, 4], speed: 0.7 },
+            { geo: new THREE.DodecahedronGeometry(0.35), color: 0xaa44ff, pos: [7, 4, 5], speed: 0.9 },
+            { geo: new THREE.ConeGeometry(0.3, 0.6, 8), color: 0x44ffdd, pos: [-3, 5, 6], speed: 0.5 },
+        ];
+
+        const floatingShapes = [];
+        shapeData.forEach(data => {
+            const mat = new THREE.MeshStandardMaterial({
+                color: data.color,
+                roughness: 0.2,
+                metalness: 0.7,
+                emissive: new THREE.Color(data.color),
+                emissiveIntensity: 0.05,
+                transparent: true,
+                opacity: 0.85,
+            });
+            const mesh = new THREE.Mesh(data.geo, mat);
+            mesh.position.set(data.pos[0], data.pos[1], data.pos[2]);
+            mesh.castShadow = true;
+            mesh.userData = {
+                speed: data.speed,
+                rotSpeed: 0.5 + Math.random() * 0.5,
+                floatSpeed: 0.3 + Math.random() * 0.3,
+                floatOffset: Math.random() * Math.PI * 2,
+                baseY: data.pos[1],
+            };
+            shapesGroup.add(mesh);
+            floatingShapes.push(mesh);
+
+            // Glow ring
+            const glowMat = new THREE.MeshBasicMaterial({
+                color: data.color,
+                transparent: true,
+                opacity: 0.08,
+                wireframe: true,
+            });
+            const glow = new THREE.Mesh(data.geo.clone(), glowMat);
+            glow.scale.set(1.5, 1.5, 1.5);
+            glow.position.copy(mesh.position);
+            glow.userData.parent = mesh;
+            shapesGroup.add(glow);
+            floatingShapes.push(glow);
+        });
+
+        // ------------------------------------------------------------------
+        // 8. PARTICLE SYSTEM (starfield + floating glow)
+        // ------------------------------------------------------------------
+        const particleCount = 800;
+        const particleGeo = new THREE.BufferGeometry();
+        const positions = new Float32Array(particleCount * 3);
+        const colors = new Float32Array(particleCount * 3);
+        const sizes = new Float32Array(particleCount);
+        const particleData = [];
+
+        for (let i = 0; i < particleCount; i++) {
+            const radius = 10 + Math.random() * 35;
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.random() * Math.PI * 2;
+            positions[i * 3] = Math.cos(theta) * Math.sin(phi) * radius;
+            positions[i * 3 + 1] = Math.sin(theta) * Math.sin(phi) * radius * 0.3 + 3;
+            positions[i * 3 + 2] = Math.cos(phi) * radius;
+
+            const c = new THREE.Color().setHSL(0.6 + Math.random() * 0.3, 0.5, 0.3 + Math.random() * 0.3);
+            colors[i * 3] = c.r;
+            colors[i * 3 + 1] = c.g;
+            colors[i * 3 + 2] = c.b;
+
+            sizes[i] = 0.02 + Math.random() * 0.06;
+            particleData.push({
+                speed: 0.001 + Math.random() * 0.003,
+                offset: Math.random() * Math.PI * 2,
+                radius: radius,
+                theta: theta,
+                phi: phi,
+            });
+        }
+
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        particleGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        particleGeo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+        const particleMat = new THREE.PointsMaterial({
+            size: 0.08,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.6,
+            blending: THREE.AdditiveBlending,
+            sizeAttenuation: true,
+        });
+        const particleSystem = new THREE.Points(particleGeo, particleMat);
+        scene.add(particleSystem);
+
+        // Update particle count
+        particleCountEl.textContent = particleCount;
+
+        // ------------------------------------------------------------------
+        // 9. 3D TEXT "EPICPAGES" floating in scene
+        // ------------------------------------------------------------------
+        // Using sprite with canvas text for 3D text effect
+        function createTextSprite(text, color = '#ffd700', size = 64) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 128;
+            const ctx = canvas.getContext('2d');
+
+            ctx.shadowColor = 'rgba(255,200,0,0.3)';
+            ctx.shadowBlur = 30;
+
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+            gradient.addColorStop(0, '#f7971e');
+            gradient.addColorStop(0.5, '#ffd700');
+            gradient.addColorStop(1, '#f7971e');
+            ctx.fillStyle = gradient;
+            ctx.font = `bold ${size}px 'Segoe UI', sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(text, canvas.width / 2, canvas.height / 2 + 4);
+
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = 'rgba(255,255,255,0.05)';
+            ctx.font = `bold ${size}px 'Segoe UI', sans-serif`;
+            ctx.fillText(text, canvas.width / 2 + 2, canvas.height / 2 + 6);
+
+            const texture = new THREE.CanvasTexture(canvas);
+            texture.needsUpdate = true;
+            const mat = new THREE.SpriteMaterial({
+                map: texture,
+                transparent: true,
+                blending: THREE.AdditiveBlending,
+                opacity: 0.6,
+                depthWrite: false,
+            });
+            const sprite = new THREE.Sprite(mat);
+            sprite.scale.set(6, 1.5, 1);
+            return sprite;
+        }
+
+        const epicText = createTextSprite('⚡ EPICPAGES ⚡', '#ffd700', 56);
+        epicText.position.set(0, 8, -8);
+        scene.add(epicText);
+
+        const subText = createTextSprite('✦ ANIMATION POTENTIAL ✦', '#66ddff', 32);
+        subText.position.set(0, 6.5, -8);
+        subText.scale.set(4, 1, 1);
+        scene.add(subText);
+
+        // ------------------------------------------------------------------
+        // 10. ROAD / PATH with glowing marks
+        // ------------------------------------------------------------------
+        const roadGroup = new THREE.Group();
+        scene.add(roadGroup);
+
+        for (let i = 0; i < 60; i++) {
+            const angle = (i / 60) * Math.PI * 2;
+            const r = 12;
+            const mark = new THREE.Mesh(
+                new THREE.PlaneGeometry(0.08, 0.2),
+                new THREE.MeshBasicMaterial({
+                    color: 0x4488ff,
+                    transparent: true,
+                    opacity: 0.15 + Math.sin(i * 0.5) * 0.08,
+                })
+            );
+            mark.position.set(Math.cos(angle) * r, 0.01, Math.sin(angle) * r);
+            mark.rotation.y = -angle;
+            roadGroup.add(mark);
+        }
+
+        // ------------------------------------------------------------------
+        // COUNT OBJECTS
+        // ------------------------------------------------------------------
+        let totalObjects = 0;
+        scene.traverse(child => {
+            if (child.isMesh) totalObjects++;
+        });
+        objCountEl.textContent = totalObjects;
+
+        // ------------------------------------------------------------------
+        // ANIMATION LOOP
+        // ------------------------------------------------------------------
+        let frameCount = 0;
+        let lastFpsUpdate = performance.now();
+
+        function animate(time) {
+            requestAnimationFrame(animate);
+
+            const dt = 0.016;
+
+            // ---- Auto-rotate ----
+            controls.update();
+
+            // ---- 1. Car ----
+            carAngle += 0.008;
+            const cx = Math.cos(carAngle) * carRadius;
+            const cz = Math.sin(carAngle) * carRadius;
+            carGroup.position.set(cx, 0.1, cz);
+            carGroup.rotation.y = -carAngle + Math.PI / 2;
+
+            // Spin wheels
+            wheels.forEach(w => {
+                w.rotation.x += 0.08;
+            });
+
+            // ---- 2. Construction ----
+            // Add a new floor every ~2 seconds
+            if (floorCount < maxFloors && Math.floor(time / 1800) > floorCount - 4) {
+                const w = 2.0 - floorCount * 0.06;
+                const d = 1.6 - floorCount * 0.05;
+                if (w > 0.8 && d > 0.6) {
+                    addFloor(0.2 + floorCount * 0.45, w, d);
+                }
+                // update label
+                constLabel.position.y = 0.2 + floorCount * 0.45 + 1.5;
+                objCountEl.textContent = parseInt(objCountEl.textContent) + 1;
+            }
+
+            // Crane swing
+            const craneSwing = Math.sin(time * 0.0005) * 0.15;
+            craneArm.rotation.z = craneSwing;
+            const cableX = 3.0 + Math.sin(craneSwing) * 1.5;
+            craneCable.position.x = cableX;
+            hook.position.x = cableX;
+
+            // ---- 3. Dam water ----
+            waterParticles.forEach(p => {
+                p.position.x += p.userData.vx + Math.sin(time * 0.001 + p.id) * 0.002;
+                p.position.y += p.userData.vy;
+                p.position.z += p.userData.vz;
+
+                p.userData.life -= 0.003;
+                p.material.opacity = Math.max(0, p.userData.life / p.userData.maxLife * 0.6);
+
+                if (p.userData.life <= 0 || p.position.y < -0.5) {
+                    p.position.x = (Math.random() - 0.5) * 3.0;
+                    p.position.y = 3.0 + Math.random() * 0.3;
+                    p.position.z = (Math.random() - 0.5) * 0.6 + 0.6;
+                    p.userData.life = 0.5 + Math.random() * 0.5;
+                    p.userData.maxLife = p.userData.life;
+                    p.material.opacity = 0.5;
+                    p.userData.vx = (Math.random() - 0.5) * 0.02;
+                    p.userData.vy = -0.02 - Math.random() * 0.03;
+                    p.userData.vz = -0.01 - Math.random() * 0.02;
+                }
+            });
+
+            // ---- 4. Engine fan ----
+            fanGroup.rotation.z += 0.12;
+
+            // ---- 5. Floating shapes ----
+            floatingShapes.forEach((shape, idx) => {
+                if (shape.userData.parent) {
+                    // glow follows parent
+                    const parent = shape.userData.parent;
+                    shape.position.copy(parent.position);
+                    shape.rotation.x = parent.rotation.x;
+                    shape.rotation.y = parent.rotation.y;
+                    shape.material.opacity = 0.04 + Math.sin(time * 0.001 + idx) * 0.02;
+                    return;
+                }
+                const ud = shape.userData;
+                shape.rotation.x += ud.rotSpeed * dt * 0.8;
+                shape.rotation.y += ud.rotSpeed * dt * 1.2;
+                const floatY = Math.sin(time * ud.floatSpeed * 0.001 + ud.floatOffset) * 0.3;
+                shape.position.y = ud.baseY + floatY;
+            });
+
+            // ---- 6. Particles ----
+            const posArr = particleSystem.geometry.attributes.position.array;
+            for (let i = 0; i < particleCount; i++) {
+                const data = particleData[i];
+                data.theta += data.speed * 0.5;
+                data.phi += data.speed * 0.3;
+                const r = data.radius + Math.sin(time * data.speed * 2 + data.offset) * 0.5;
+                posArr[i * 3] = Math.cos(data.theta) * Math.sin(data.phi) * r;
+                posArr[i * 3 + 1] = Math.sin(data.theta) * Math.sin(data.phi) * r * 0.3 + 3 +
+                    Math.sin(time * data.speed + data.offset) * 0.3;
+                posArr[i * 3 + 2] = Math.cos(data.phi) * r;
+            }
+            particleSystem.geometry.attributes.position.needsUpdate = true;
+
+            // ---- 7. 3D Text floating ----
+            epicText.position.y = 8 + Math.sin(time * 0.0004) * 0.3;
+            epicText.material.opacity = 0.5 + Math.sin(time * 0.0006) * 0.1;
+            subText.position.y = 6.5 + Math.sin(time * 0.0004 + 1) * 0.3;
+
+            // ---- 8. Screen glow pulse ----
+            screen.material.opacity = 0.2 + Math.sin(time * 0.002) * 0.1;
+
+            // ---- FPS ----
+            frameCount++;
+            const now = performance.now();
+            if (now - lastFpsUpdate > 500) {
+                const fps = Math.round(frameCount / ((now - lastFpsUpdate) / 1000));
+                fpsDisplayEl.textContent = fps;
+                frameCount = 0;
+                lastFpsUpdate = now;
+            }
+
+            // ---- RENDER ----
+            renderer.render(scene, camera);
+            labelRenderer.render(scene, camera);
+        }
+
+        // ------------------------------------------------------------------
+        // RESIZE
+        // ------------------------------------------------------------------
+        window.addEventListener('resize', () => {
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w, h);
+            labelRenderer.setSize(w, h);
+        });
+
+        // ------------------------------------------------------------------
+        // HIDE LOADING
+        // ------------------------------------------------------------------
+        setTimeout(() => {
+            loadingEl.classList.add('hidden');
+        }, 800);
+
+        // ---- START ----
+        animate(0);
+
+        // ------------------------------------------------------------------
+        // Toggle auto-rotate on user interaction
+        // ------------------------------------------------------------------
+        renderer.domElement.addEventListener('pointerdown', () => {
+            controls.autoRotate = false;
+        });
+        renderer.domElement.addEventListener('pointerup', () => {
+            setTimeout(() => { controls.autoRotate = true; }, 3000);
+        });
+        renderer.domElement.addEventListener('wheel', () => {
+            controls.autoRotate = false;
+            setTimeout(() => { controls.autoRotate = true; }, 3000);
+        });
+
+        console.log('🚀 EPICPAGES — Animation Potential Unleashed!');
+        console.log(`📦 ${totalObjects} 3D objects, ${particleCount} particles`);
+    </script>
+</body>
+</html>
