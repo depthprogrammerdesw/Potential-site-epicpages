@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EPICPAGES — Interactive Demo</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    overflow-x:hidden;
+    color:white;
+    background:
+        radial-gradient(circle at 20% 20%,#152d61 0%,transparent 30%),
+        radial-gradient(circle at 80% 30%,#34105e 0%,transparent 30%),
+        radial-gradient(circle at 50% 100%,#063d48 0%,transparent 35%),
+        #03040c;
+}
+
+/* BACKGROUND */
+
+.background{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:-2;
+}
+
+.grid{
+    position:absolute;
+    width:200%;
+    height:200%;
+    left:-50%;
+    top:45%;
+    background:
+        linear-gradient(rgba(0,255,255,.09) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,255,255,.09) 1px,transparent 1px);
+    background-size:55px 55px;
+    transform:perspective(500px) rotateX(62deg);
+    animation:gridMove 12s linear infinite;
+}
+
+@keyframes gridMove{
+    from{transform:perspective(500px) rotateX(62deg) translateY(0);}
+    to{transform:perspective(500px) rotateX(62deg) translateY(55px);}
+}
+
+.orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(3px);
+    opacity:.55;
+    animation:orbFloat 8s ease-in-out infinite;
+}
+
+.orb.one{
+    width:280px;
+    height:280px;
+    background:#00eaff;
+    top:10%;
+    left:10%;
+    box-shadow:0 0 100px #00eaff;
+}
+
+.orb.two{
+    width:350px;
+    height:350px;
+    background:#8a2be2;
+    right:5%;
+    top:35%;
+    box-shadow:0 0 120px #8a2be2;
+    animation-delay:2s;
+}
+
+.orb.three{
+    width:200px;
+    height:200px;
+    background:#00ff9d;
+    bottom:5%;
+    left:45%;
+    box-shadow:0 0 100px #00ff9d;
+    animation-delay:4s;
+}
+
+@keyframes orbFloat{
+    0%,100%{transform:translate(0,0) scale(1);}
+    50%{transform:translate(50px,-40px) scale(1.15);}
+}
+
+/* TOP BAR */
+
+.topbar{
+    position:fixed;
+    top:15px;
+    left:50%;
+    transform:translateX(-50%);
+    width:calc(100% - 40px);
+    max-width:1450px;
+    height:70px;
+    z-index:1000;
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    padding:10px 16px;
+
+    background:rgba(8,12,30,.72);
+    border:1px solid rgba(255,255,255,.15);
+    backdrop-filter:blur(20px);
+
+    border-radius:25px;
+    box-shadow:
+        0 15px 50px rgba(0,0,0,.4),
+        inset 0 0 20px rgba(0,255,255,.04);
+}
+
+.logo{
+    font-size:22px;
+    font-weight:900;
+    letter-spacing:2px;
+    margin-right:auto;
+
+    background:linear-gradient(90deg,#00f7ff,#fff,#a855f7);
+    -webkit-background-clip:text;
+    color:transparent;
+
+    animation:logoGlow 3s infinite alternate;
+}
+
+@keyframes logoGlow{
+    from{filter:drop-shadow(0 0 3px #00eaff);}
+    to{filter:drop-shadow(0 0 15px #a855f7);}
+}
+
+.navbtn{
+    border:1px solid rgba(255,255,255,.15);
+    background:rgba(255,255,255,.05);
+    color:white;
+    padding:11px 16px;
+    border-radius:15px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.navbtn:hover{
+    transform:translateY(-4px) scale(1.05);
+    background:linear-gradient(135deg,#00d9ff,#704cff);
+    box-shadow:0 10px 25px rgba(0,220,255,.35);
+}
+
+/* SIDEBARS */
+
+.sidebar{
+    position:fixed;
+    top:105px;
+    bottom:25px;
+    width:72px;
+    z-index:900;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+
+    padding:15px 8px;
+
+    background:rgba(8,12,30,.6);
+    border:1px solid rgba(255,255,255,.12);
+    backdrop-filter:blur(18px);
+    border-radius:25px;
+}
+
+.sidebar.left{left:18px;}
+.sidebar.right{right:18px;}
+
+.sidebtn{
+    width:52px;
+    height:52px;
+    border-radius:17px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(255,255,255,.05);
+    color:white;
+
+    font-size:20px;
+    cursor:pointer;
+
+    transition:.35s;
+}
+
+.sidebtn:hover{
+    transform:rotate(8deg) scale(1.18);
+    background:#00d9ff;
+    color:#001018;
+    box-shadow:0 0 30px #00d9ff;
+}
+
+/* MAIN */
+
+main{
+    width:min(1100px,calc(100% - 190px));
+    margin:auto;
+    padding-top:150px;
+}
+
+/* HERO */
+
+.hero{
+    min-height:680px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    text-align:center;
+    perspective:1200px;
+}
+
+.hero h1{
+    font-size:clamp(60px,11vw,145px);
+    line-height:.9;
+    font-weight:1000;
+    letter-spacing:-7px;
+
+    background:
+        linear-gradient(
+            120deg,
+            #00eaff,
+            #ffffff,
+            #a855f7,
+            #00ffb3
+        );
+
+    -webkit-background-clip:text;
+    color:transparent;
+
+    filter:drop-shadow(0 0 30px rgba(0,220,255,.3));
+
+    animation:
+        titleFloat 4s ease-in-out infinite,
+        titleGlow 3s alternate infinite;
+}
+
+@keyframes titleFloat{
+    0%,100%{transform:translateY(0) rotateX(0deg);}
+    50%{transform:translateY(-18px) rotateX(4deg);}
+}
+
+@keyframes titleGlow{
+    from{filter:drop-shadow(0 0 15px #00eaff);}
+    to{filter:drop-shadow(0 0 45px #a855f7);}
+}
+
+.subtitle{
+    margin-top:30px;
+    font-size:clamp(17px,2vw,25px);
+    color:#cbd5ff;
+    letter-spacing:4px;
+    text-transform:uppercase;
+}
+
+.description{
+    max-width:700px;
+    margin:25px auto;
+    color:#9ca9d0;
+    line-height:1.7;
+}
+
+/* 3D OBJECT */
+
+.cube{
+    width:150px;
+    height:150px;
+    margin:70px auto 30px;
+
+    position:relative;
+    transform-style:preserve-3d;
+
+    animation:cubeRotate 10s linear infinite;
+}
+
+.face{
+    position:absolute;
+    width:150px;
+    height:150px;
+
+    border:2px solid #00eaff;
+    background:rgba(0,220,255,.06);
+    box-shadow:
+        inset 0 0 30px rgba(0,220,255,.15),
+        0 0 30px rgba(0,220,255,.3);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:45px;
+}
+
+.front{transform:translateZ(75px);}
+.back{transform:rotateY(180deg) translateZ(75px);}
+.right{transform:rotateY(90deg) translateZ(75px);}
+.left{transform:rotateY(-90deg) translateZ(75px);}
+.top{transform:rotateX(90deg) translateZ(75px);}
+.bottom{transform:rotateX(-90deg) translateZ(75px);}
+
+@keyframes cubeRotate{
+    from{transform:rotateX(0) rotateY(0) rotateZ(0);}
+    to{transform:rotateX(360deg) rotateY(360deg) rotateZ(180deg);}
+}
+
+/* BUTTON AREA */
+
+.actionArea{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:15px;
+    margin:30px 0 100px;
+}
+
+.bigBtn{
+    padding:17px 28px;
+    border-radius:18px;
+
+    color:white;
+    border:1px solid rgba(255,255,255,.18);
+    background:linear-gradient(
+        135deg,
+        rgba(0,234,255,.18),
+        rgba(168,85,247,.18)
+    );
+
+    cursor:pointer;
+    font-size:15px;
+    font-weight:bold;
+
+    transition:.35s;
+    position:relative;
+    overflow:hidden;
+}
+
+.bigBtn::before{
+    content:"";
+    position:absolute;
+    width:100px;
+    height:200%;
+    background:rgba(255,255,255,.25);
+    transform:rotate(25deg);
+    left:-150px;
+    top:-50%;
+    transition:.6s;
+}
+
+.bigBtn:hover::before{
+    left:120%;
+}
+
+.bigBtn:hover{
+    transform:translateY(-7px) scale(1.05);
+    box-shadow:0 15px 40px rgba(0,220,255,.25);
+}
+
+/* SECTION */
+
+.section{
+    margin:100px 0;
+}
+
+.sectionTitle{
+    text-align:center;
+    font-size:42px;
+    margin-bottom:45px;
+    background:linear-gradient(90deg,#00eaff,#fff,#a855f7);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+/* CARDS */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+}
+
+.card{
+    min-height:230px;
+    padding:30px;
+
+    border-radius:25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.09),
+            rgba(255,255,255,.025)
+        );
+
+    border:1px solid rgba(255,255,255,.12);
+
+    backdrop-filter:blur(15px);
+
+    transition:.4s;
+
+    transform-style:preserve-3d;
+}
+
+.card:hover{
+    transform:
+        perspective(800px)
+        rotateX(8deg)
+        rotateY(-8deg)
+        translateY(-12px);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.5),
+        0 0 30px rgba(0,234,255,.12);
+}
+
+.cardIcon{
+    font-size:45px;
+    margin-bottom:20px;
+}
+
+.card h3{
+    font-size:22px;
+    margin-bottom:12px;
+}
+
+.card p{
+    color:#9da9c7;
+    line-height:1.6;
+}
+
+/* STATS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.stat{
+    padding:25px;
+    text-align:center;
+    border-radius:22px;
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.1);
+}
+
+.stat strong{
+    display:block;
+    font-size:35px;
+    color:#00eaff;
+    margin-bottom:8px;
+}
+
+/* DEMO PANEL */
+
+.demoPanel{
+    padding:40px;
+    border-radius:30px;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(0,234,255,.12),
+            transparent 55%
+        ),
+        rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.12);
+    text-align:center;
+}
+
+.progress{
+    height:12px;
+    margin:25px 0;
+    border-radius:20px;
+    background:#10182e;
+    overflow:hidden;
+}
+
+.progress span{
+    display:block;
+    width:70%;
+    height:100%;
+    background:linear-gradient(90deg,#00eaff,#a855f7,#00ffb3);
+    border-radius:20px;
+    animation:progress 4s infinite alternate;
+}
+
+@keyframes progress{
+    from{width:20%;}
+    to{width:95%;}
+}
+
+/* FOOTER */
+
+footer{
+    text-align:center;
+    padding:70px 20px 40px;
+    color:#7783a7;
+}
+
+/* NOTIFICATION */
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:30px;
+    transform:translate(-50%,120px);
+
+    padding:18px 25px;
+
+    background:rgba(8,12,30,.9);
+    border:1px solid #00eaff;
+    border-radius:18px;
+
+    box-shadow:0 0 40px rgba(0,234,255,.25);
+
+    z-index:5000;
+
+    transition:.5s;
+}
+
+.toast.show{
+    transform:translate(-50%,0);
+}
+
+/* MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.65);
+    backdrop-filter:blur(10px);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    opacity:0;
+    pointer-events:none;
+    transition:.4s;
+
+    z-index:4000;
+}
+
+.modal.active{
+    opacity:1;
+    pointer-events:auto;
+}
+
+.modalBox{
+    width:min(600px,90%);
+    padding:45px;
+    border-radius:30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(16,25,60,.96),
+            rgba(10,10,30,.96)
+        );
+
+    border:1px solid rgba(0,234,255,.4);
+
+    box-shadow:0 30px 100px rgba(0,0,0,.7);
+
+    transform:scale(.7) rotateX(20deg);
+    transition:.5s;
+}
+
+.modal.active .modalBox{
+    transform:scale(1) rotateX(0);
+}
+
+.modalBox h2{
+    margin-bottom:20px;
+}
+
+.close{
+    float:right;
+    cursor:pointer;
+    font-size:25px;
+}
+
+/* CURSOR GLOW */
+
+.cursorGlow{
+    position:fixed;
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(0,234,255,.13),transparent 70%);
+    pointer-events:none;
+    transform:translate(-50%,-50%);
+    z-index:-1;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    .topbar{
+        overflow-x:auto;
+        justify-content:flex-start;
+    }
+
+    .navbtn{
+        white-space:nowrap;
+    }
+
+    .sidebar{
+        display:none;
+    }
+
+    main{
+        width:calc(100% - 30px);
+        padding-top:130px;
+    }
+
+    .hero{
+        min-height:620px;
+    }
+
+    .hero h1{
+        letter-spacing:-4px;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .cube{
+        width:110px;
+        height:110px;
+    }
+
+    .face{
+        width:110px;
+        height:110px;
+    }
+
+    .front{transform:translateZ(55px);}
+    .back{transform:rotateY(180deg) translateZ(55px);}
+    .right{transform:rotateY(90deg) translateZ(55px);}
+    .left{transform:rotateY(-90deg) translateZ(55px);}
+    .top{transform:rotateX(90deg) translateZ(55px);}
+    .bottom{transform:rotateX(-90deg) translateZ(55px);}
+}
+
+@media(max-width:500px){
+
+    .topbar{
+        width:calc(100% - 20px);
+        top:8px;
+    }
+
+    .logo{
+        font-size:17px;
+    }
+
+    .hero h1{
+        font-size:60px;
+    }
+
+    .subtitle{
+        font-size:13px;
+        letter-spacing:2px;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .demoPanel{
+        padding:25px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background">
+    <div class="grid"></div>
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
+</div>
+
+<div class="cursorGlow" id="cursorGlow"></div>
+
+<!-- TOP BAR -->
+
+<nav class="topbar">
+
+    <div class="logo">EPICPAGES</div>
+
+    <button class="navbtn demoButton">Home</button>
+    <button class="navbtn demoButton">Explore</button>
+    <button class="navbtn demoButton">Services</button>
+    <button class="navbtn demoButton">Projects</button>
+    <button class="navbtn demoButton">Solutions</button>
+    <button class="navbtn demoButton">About</button>
+    <button class="navbtn demoButton">Contact</button>
+
+</nav>
+
+<!-- LEFT SIDEBAR -->
+
+<aside class="sidebar left">
+
+    <button class="sidebtn demoButton">⌂</button>
+    <button class="sidebtn demoButton">⚡</button>
+    <button class="sidebtn demoButton">◈</button>
+    <button class="sidebtn demoButton">◆</button>
+    <button class="sidebtn demoButton">◎</button>
+    <button class="sidebtn demoButton">☰</button>
+    <button class="sidebtn demoButton">✦</button>
+
+</aside>
+
+<!-- RIGHT SIDEBAR -->
+
+<aside class="sidebar right">
+
+    <button class="sidebtn demoButton">⚙</button>
+    <button class="sidebtn demoButton">⌕</button>
+    <button class="sidebtn demoButton">♡</button>
+    <button class="sidebtn demoButton">♢</button>
+    <button class="sidebtn demoButton">☁</button>
+    <button class="sidebtn demoButton">⚙</button>
+    <button class="sidebtn demoButton">↗</button>
+
+</aside>
+
+<main>
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="cube">
+
+        <div class="face front">E</div>
+        <div class="face back">P</div>
+        <div class="face right">I</div>
+        <div class="face left">C</div>
+        <div class="face top">✦</div>
+        <div class="face bottom">∞</div>
+
+    </div>
+
+    <h1>EPICPAGES</h1>
+
+    <div class="subtitle">
+        DEMO WEB • TEST THE INTERACTIVITY
+    </div>
+
+    <p class="description">
+        A futuristic experimental interface designed to demonstrate
+        how powerful animation, motion, glassmorphism, 3D interfaces
+        and interactive components can transform an ordinary webpage.
+    </p>
+
+    <div class="actionArea">
+
+        <button class="bigBtn demoButton">
+            🚀 Launch Experience
+        </button>
+
+        <button class="bigBtn demoButton">
+            ✦ Explore Interface
+        </button>
+
+        <button class="bigBtn demoButton">
+            ◈ View Features
+        </button>
+
+        <button class="bigBtn" id="openModal">
+            ⚡ About Demo
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- FEATURES -->
+
+<section class="section">
+
+    <h2 class="sectionTitle">INTERACTIVE SYSTEM</h2>
+
+    <div class="cards">
+
+        <div class="card demoButton">
+            <div class="cardIcon">🌐</div>
+            <h3>Immersive Web</h3>
+            <p>
+                Build websites that feel like interactive digital
+                environments rather than static pages.
+            </p>
+        </div>
+
+        <div class="card demoButton">
+            <div class="cardIcon">⚡</div>
+            <h3>Motion Interface</h3>
+            <p>
+                Smooth transitions, floating elements, glowing controls
+                and animated interactions.
+            </p>
+        </div>
+
+        <div class="card demoButton">
+            <div class="cardIcon">◇</div>
+            <h3>3D Experience</h3>
+            <p>
+                Transform ordinary interface elements into futuristic
+                three-dimensional visual experiences.
+            </p>
+        </div>
+
+        <div class="card demoButton">
+            <div class="cardIcon">🧠</div>
+            <h3>Smart UI</h3>
+            <p>
+                Design interfaces that react to users and communicate
+                information through motion.
+            </p>
+        </div>
+
+        <div class="card demoButton">
+            <div class="cardIcon">🔮</div>
+            <h3>Visual Effects</h3>
+            <p>
+                Glassmorphism, neon lighting, gradients, depth and
+                cinematic visual effects.
+            </p>
+        </div>
+
+        <div class="card demoButton">
+            <div class="cardIcon">🚀</div>
+            <h3>Future Ready</h3>
+            <p>
+                A foundation that can be customized into portfolios,
+                business sites, dashboards and landing pages.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- STATS -->
+
+<section class="section">
+
+    <h2 class="sectionTitle">INTERACTIVITY LEVEL</h2>
+
+    <div class="stats">
+
+        <div class="stat">
+            <strong>3D</strong>
+            Visual Depth
+        </div>
+
+        <div class="stat">
+            <strong>∞</strong>
+            Possibilities
+        </div>
+
+        <div class="stat">
+            <strong>60FPS</strong>
+            Smooth Motion
+        </div>
+
+        <div class="stat">
+            <strong>100%</strong>
+            Interactive
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- DEMO PANEL -->
+
+<section class="section">
+
+    <div class="demoPanel">
+
+        <h2>EPICPAGES ENGINE</h2>
+
+        <p style="margin-top:15px;color:#9da9c7;">
+            Interface animation performance simulation
+        </p>
+
+        <div class="progress">
+            <span></span>
+        </div>
+
+        <div class="actionArea">
+
+            <button class="bigBtn demoButton">
+                Test Animation
+            </button>
+
+            <button class="bigBtn demoButton">
+                Open Dashboard
+            </button>
+
+            <button class="bigBtn demoButton">
+                Start Project
+            </button>
+
+            <button class="bigBtn demoButton">
+                View Portfolio
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FINAL CTA -->
+
+<section class="section">
+
+    <div class="demoPanel">
+
+        <h2 style="font-size:42px;">
+            READY TO BUILD SOMETHING EPIC?
+        </h2>
+
+        <p style="margin:20px auto;max-width:600px;color:#9da9c7;">
+            This entire interface is a demonstration.
+            Every button can be replaced with your actual webpage,
+            section, service, application or external link.
+        </p>
+
+        <button class="bigBtn demoButton">
+            ✦ ENTER EPICPAGES
+        </button>
+
+    </div>
+
+</section>
+
+</main>
+
+<footer>
+    EPICPAGES © 2026 • Interactive Web Experience Demo
+</footer>
+
+
+<!-- TOAST -->
+
+<div class="toast" id="toast">
+    ⚡ It's a demo web — you can attach a webpage for your site here.
+</div>
+
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+    <div class="modalBox">
+
+        <span class="close" id="closeModal">×</span>
+
+        <h2>EPICPAGES DEMO</h2>
+
+        <p style="color:#aeb9d8;line-height:1.8;">
+            This interface is created to demonstrate the interaction
+            potential of a modern website.
+            <br><br>
+            Buttons, cards, navigation items and side controls can be
+            connected to your real webpages, forms, dashboards,
+            portfolios or services.
+        </p>
+
+        <br>
+
+        <button class="bigBtn demoButton">
+            🚀 Test Another Button
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* DEMO BUTTON SYSTEM */
+
+const toast = document.getElementById("toast");
+
+document.querySelectorAll(".demoButton").forEach(button => {
+
+    button.addEventListener("click", function(){
+
+        toast.classList.add("show");
+
+        clearTimeout(window.toastTimer);
+
+        window.toastTimer = setTimeout(() => {
+            toast.classList.remove("show");
+        }, 2800);
+
+    });
+
+});
+
+
+/* MODAL */
+
+const modal = document.getElementById("modal");
+const openModal = document.getElementById("openModal");
+const closeModal = document.getElementById("closeModal");
+
+openModal.addEventListener("click", () => {
+    modal.classList.add("active");
+});
+
+closeModal.addEventListener("click", () => {
+    modal.classList.remove("active");
+});
+
+modal.addEventListener("click", e => {
+
+    if(e.target === modal){
+        modal.classList.remove("active");
+    }
+
+});
+
+
+/* CURSOR GLOW */
+
+const cursorGlow = document.getElementById("cursorGlow");
+
+document.addEventListener("mousemove", e => {
+
+    cursorGlow.style.left = e.clientX + "px";
+    cursorGlow.style.top = e.clientY + "px";
+
+});
+
+
+/* CARD 3D TILT */
+
+document.querySelectorAll(".card").forEach(card => {
+
+    card.addEventListener("mousemove", e => {
+
+        const rect = card.getBoundingClientRect();
+
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const rotateY =
+            ((x / rect.width) - .5) * 14;
+
+        const rotateX =
+            ((y / rect.height) - .5) * -14;
+
+        card.style.transform =
+            `perspective(800px)
+             rotateX(${rotateX}deg)
+             rotateY(${rotateY}deg)
+             translateY(-10px)`;
+
+    });
+
+    card.addEventListener("mouseleave", () => {
+
+        card.style.transform =
+            "perspective(800px) rotateX(0) rotateY(0) translateY(0)";
+
+    });
+
+});
+
+
+/* RANDOM FLOATING PARTICLES */
+
+for(let i=0;i<45;i++){
+
+    const particle = document.createElement("div");
+
+    particle.style.position = "fixed";
+    particle.style.width = Math.random()*4+1+"px";
+    particle.style.height = particle.style.width;
+    particle.style.borderRadius = "50%";
+    particle.style.background = "white";
+    particle.style.opacity = Math.random()*.5;
+
+    particle.style.left = Math.random()*100+"vw";
+    particle.style.top = Math.random()*100+"vh";
+
+    particle.style.pointerEvents = "none";
+    particle.style.zIndex = "-1";
+
+    document.body.appendChild(particle);
+
+    const duration = 4 + Math.random()*8;
+
+    particle.animate(
+        [
+            {
+                transform:"translateY(0)",
+                opacity:0
+            },
+            {
+                transform:
+                    `translateY(-${80+Math.random()*200}px)`,
+                opacity:.6
+            },
+            {
+                transform:"translateY(0)",
+                opacity:0
+            }
+        ],
+        {
+            duration:duration*1000,
+            iterations:Infinity,
+            delay:-Math.random()*8000
+        }
+    );
+
+}
+
+</script>
+
+</body>
+</html>
