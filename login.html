@@ -1,0 +1,1185 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EPICPAGES | Customer Portal</title>
+
+<style>
+
+/* =========================
+   BASIC RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at top left,#173b5e,transparent 35%),
+        radial-gradient(circle at bottom right,#123c55,transparent 35%),
+        #06101b;
+    color:white;
+}
+
+
+/* =========================
+   MAIN HEADER
+========================= */
+
+header{
+    text-align:center;
+    padding:50px 20px 35px;
+}
+
+.logo{
+    font-size:52px;
+    font-weight:800;
+    letter-spacing:7px;
+}
+
+.tagline{
+    margin-top:10px;
+    color:#9fb2c4;
+    font-size:16px;
+}
+
+
+/* =========================
+   INTRO SECTION
+========================= */
+
+.intro{
+    max-width:1000px;
+    margin:auto;
+    padding:20px;
+    text-align:center;
+}
+
+.intro h2{
+    font-size:30px;
+    margin-bottom:12px;
+}
+
+.intro p{
+    color:#9fb2c4;
+    line-height:1.7;
+}
+
+
+/* =========================
+   LOGIN SECTION
+========================= */
+
+.login-section{
+    display:flex;
+    justify-content:center;
+    padding:45px 20px 80px;
+}
+
+.login-box{
+    width:100%;
+    max-width:430px;
+    padding:35px;
+    border-radius:22px;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.14);
+    box-shadow:0 20px 60px rgba(0,0,0,0.45);
+    backdrop-filter:blur(15px);
+}
+
+.login-box h2{
+    text-align:center;
+    margin-bottom:8px;
+}
+
+.login-description{
+    text-align:center;
+    color:#91a5b8;
+    font-size:14px;
+    margin-bottom:28px;
+}
+
+.input-group{
+    margin-bottom:18px;
+}
+
+.input-group label{
+    display:block;
+    font-size:14px;
+    margin-bottom:7px;
+}
+
+.input-group input{
+    width:100%;
+    padding:14px;
+    border-radius:10px;
+    border:1px solid #38546d;
+    background:#071522;
+    color:white;
+    outline:none;
+    font-size:15px;
+}
+
+.input-group input:focus{
+    border-color:#2196ff;
+}
+
+.login-button{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:10px;
+    background:#168cff;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.login-button:hover{
+    background:#0875dc;
+    transform:translateY(-2px);
+}
+
+.error{
+    display:none;
+    margin-top:15px;
+    text-align:center;
+    color:#ff7070;
+    font-size:13px;
+}
+
+.demo{
+    text-align:center;
+    margin-top:18px;
+    color:#718698;
+    font-size:12px;
+}
+
+
+/* =========================
+   CHAT NOTE
+========================= */
+
+.chat-note{
+    position:fixed;
+    right:24px;
+    bottom:24px;
+    z-index:1000;
+    width:280px;
+    padding:18px;
+    border-radius:16px;
+    background:#10283b;
+    border:1px solid #2d6388;
+    box-shadow:0 12px 35px rgba(0,0,0,0.45);
+    color:#dceeff;
+}
+
+.chat-note h3{
+    margin-bottom:10px;
+    color:#ffffff;
+    font-size:17px;
+}
+
+.chat-note p{
+    color:#a9c1d3;
+    font-size:13px;
+    line-height:1.6;
+}
+
+.chat-note strong{
+    color:#ffffff;
+}
+
+.chat-note button{
+    margin-top:12px;
+    padding:7px 12px;
+    border:0;
+    border-radius:7px;
+    background:#168cff;
+    color:white;
+    cursor:pointer;
+}
+
+
+/* =========================
+   CUSTOMER DASHBOARD
+========================= */
+
+.dashboard{
+    display:none;
+    max-width:1200px;
+    margin:auto;
+    padding:25px 20px 60px;
+}
+
+.dashboard-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    padding:25px;
+    margin-bottom:25px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.12);
+}
+
+.dashboard-header h2{
+    font-size:28px;
+}
+
+.dashboard-header p{
+    margin-top:7px;
+    color:#91a5b8;
+}
+
+.logout-button{
+    padding:11px 22px;
+    border:0;
+    border-radius:9px;
+    background:#dc3c3c;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.logout-button:hover{
+    background:#b92c2c;
+}
+
+
+/* =========================
+   DASHBOARD SUMMARY
+========================= */
+
+.summary-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:25px;
+}
+
+.summary-card{
+    padding:22px;
+    border-radius:17px;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.11);
+}
+
+.summary-card span{
+    color:#91a5b8;
+    font-size:13px;
+}
+
+.summary-card h3{
+    margin-top:9px;
+    font-size:25px;
+}
+
+
+/* =========================
+   MAIN DASHBOARD
+========================= */
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.card{
+    min-height:190px;
+    padding:25px;
+    border-radius:18px;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.12);
+    transition:0.25s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    background:rgba(255,255,255,0.10);
+}
+
+.card-icon{
+    font-size:32px;
+    margin-bottom:15px;
+}
+
+.card h3{
+    margin-bottom:8px;
+}
+
+.card p{
+    color:#91a5b8;
+    font-size:14px;
+    line-height:1.6;
+}
+
+.card button{
+    margin-top:16px;
+    padding:9px 15px;
+    border:0;
+    border-radius:8px;
+    background:#168cff;
+    color:white;
+    cursor:pointer;
+}
+
+
+/* =========================
+   RECENT ACTIVITY
+========================= */
+
+.activity{
+    margin-top:25px;
+    padding:25px;
+    border-radius:18px;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.12);
+}
+
+.activity h3{
+    margin-bottom:18px;
+}
+
+.activity-item{
+    display:flex;
+    justify-content:space-between;
+    padding:14px 0;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    color:#b5c3cf;
+    font-size:14px;
+}
+
+.activity-item:last-child{
+    border-bottom:0;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    text-align:center;
+    padding:35px 20px;
+    color:#64788a;
+    font-size:13px;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media(max-width:900px){
+
+    .summary-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .dashboard-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px){
+
+    .logo{
+        font-size:36px;
+        letter-spacing:4px;
+    }
+
+    .intro h2{
+        font-size:24px;
+    }
+
+    .login-box{
+        padding:25px 20px;
+    }
+
+    .dashboard{
+        padding:15px;
+    }
+
+    .dashboard-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .logout-button{
+        width:100%;
+    }
+
+    .summary-grid{
+        grid-template-columns:1fr;
+    }
+
+    .dashboard-grid{
+        grid-template-columns:1fr;
+    }
+
+    .chat-note{
+        right:15px;
+        bottom:15px;
+        left:15px;
+        width:auto;
+    }
+
+}
+
+
+/* VERY SMALL PHONES */
+
+@media(max-width:380px){
+
+    .logo{
+        font-size:30px;
+    }
+
+    .dashboard-header h2{
+        font-size:22px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     EPICPAGES HEADER
+================================================== -->
+
+<header>
+
+    <div class="logo">
+        EPICPAGES
+    </div>
+
+    <div class="tagline">
+        Demo Web — Username Login Based Customer Portal
+    </div>
+
+</header>
+
+
+<!-- ==================================================
+     INTRODUCTION
+================================================== -->
+
+<section class="intro">
+
+    <h2>
+        Welcome to EPICPAGES
+    </h2>
+
+    <p>
+        This is a demonstration of a username-based
+        customer portal. Customers can log in and access
+        their personal dashboard, account information,
+        orders, messages and support services.
+    </p>
+
+</section>
+
+
+<!-- ==================================================
+     LOGIN SECTION
+================================================== -->
+
+<section
+    class="login-section"
+    id="loginSection"
+>
+
+    <div class="login-box">
+
+        <h2>
+            Customer Login
+        </h2>
+
+        <p class="login-description">
+            Enter your account credentials to continue.
+        </p>
+
+
+        <div class="input-group">
+
+            <label>
+                Username
+            </label>
+
+            <input
+                type="text"
+                id="username"
+                placeholder="Enter username"
+            >
+
+        </div>
+
+
+        <div class="input-group">
+
+            <label>
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter password"
+            >
+
+        </div>
+
+
+        <button
+            class="login-button"
+            onclick="login()"
+        >
+            LOGIN
+        </button>
+
+
+        <div
+            class="error"
+            id="error"
+        >
+            Incorrect username or password.
+        </div>
+
+
+        <div class="demo">
+            Demo Account:
+            <b>customer</b> /
+            <b>12345</b>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     CHAT NOTE WITH DEMO CREDENTIALS
+================================================== -->
+
+<aside
+    class="chat-note"
+    id="chatNote"
+    aria-label="Demo login credentials"
+>
+
+    <h3>
+        💬 Login Note
+    </h3>
+
+    <p>
+        Use the demo credentials below:
+    </p>
+
+    <p>
+        <strong>Username:</strong> customer<br>
+        <strong>Password:</strong> 12345
+    </p>
+
+    <button
+        type="button"
+        onclick="closeChatNote()"
+    >
+        Close
+    </button>
+
+</aside>
+
+
+<!-- ==================================================
+     CUSTOMER DASHBOARD
+================================================== -->
+
+<section
+    class="dashboard"
+    id="dashboard"
+>
+
+    <div class="dashboard-header">
+
+        <div>
+
+            <h2>
+                Welcome back,
+                <span id="displayUsername">
+                    Customer
+                </span>
+                👋
+            </h2>
+
+            <p>
+                Here is your personal customer dashboard.
+            </p>
+
+        </div>
+
+
+        <button
+            class="logout-button"
+            onclick="logout()"
+        >
+            LOGOUT
+        </button>
+
+    </div>
+
+
+    <div class="summary-grid">
+
+        <div class="summary-card">
+
+            <span>
+                Account Status
+            </span>
+
+            <h3>
+                Active
+            </h3>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <span>
+                Total Orders
+            </span>
+
+            <h3>
+                12
+            </h3>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <span>
+                Messages
+            </span>
+
+            <h3>
+                04
+            </h3>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <span>
+                Reward Points
+            </span>
+
+            <h3>
+                850
+            </h3>
+
+        </div>
+
+    </div>
+
+
+    <div class="dashboard-grid">
+
+        <div class="card">
+
+            <div class="card-icon">
+                👤
+            </div>
+
+            <h3>
+                My Profile
+            </h3>
+
+            <p>
+                View and manage your personal information,
+                contact details and customer profile.
+            </p>
+
+            <button
+                onclick="demo('My Profile')"
+            >
+                Open Profile
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                📦
+            </div>
+
+            <h3>
+                My Orders
+            </h3>
+
+            <p>
+                View current orders, previous purchases
+                and transaction history.
+            </p>
+
+            <button
+                onclick="demo('My Orders')"
+            >
+                View Orders
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                💬
+            </div>
+
+            <h3>
+                Messages
+            </h3>
+
+            <p>
+                Read messages, announcements and
+                notifications from the company.
+            </p>
+
+            <button
+                onclick="demo('Messages')"
+            >
+                Open Messages
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                🎧
+            </div>
+
+            <h3>
+                Customer Support
+            </h3>
+
+            <p>
+                Get help regarding your account,
+                orders or available services.
+            </p>
+
+            <button
+                onclick="demo('Customer Support')"
+            >
+                Contact Support
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                ⚙️
+            </div>
+
+            <h3>
+                Account Settings
+            </h3>
+
+            <p>
+                Manage your account preferences,
+                password and other settings.
+            </p>
+
+            <button
+                onclick="demo('Account Settings')"
+            >
+                Open Settings
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                📄
+            </div>
+
+            <h3>
+                My Documents
+            </h3>
+
+            <p>
+                Access documents, invoices,
+                receipts and other customer records.
+            </p>
+
+            <button
+                onclick="demo('My Documents')"
+            >
+                View Documents
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                🔔
+            </div>
+
+            <h3>
+                Notifications
+            </h3>
+
+            <p>
+                Stay updated with important account
+                notifications and announcements.
+            </p>
+
+            <button
+                onclick="demo('Notifications')"
+            >
+                View Notifications
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                🔐
+            </div>
+
+            <h3>
+                Security
+            </h3>
+
+            <p>
+                Manage password, login activity
+                and account security options.
+            </p>
+
+            <button
+                onclick="demo('Security')"
+            >
+                Security Settings
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                📊
+            </div>
+
+            <h3>
+                Account Activity
+            </h3>
+
+            <p>
+                Review recent activity associated
+                with your customer account.
+            </p>
+
+            <button
+                onclick="demo('Account Activity')"
+            >
+                View Activity
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="activity">
+
+        <h3>
+            Recent Activity
+        </h3>
+
+
+        <div class="activity-item">
+
+            <span>
+                Successful login
+            </span>
+
+            <span>
+                Today
+            </span>
+
+        </div>
+
+
+        <div class="activity-item">
+
+            <span>
+                Order #EP1024 completed
+            </span>
+
+            <span>
+                Yesterday
+            </span>
+
+        </div>
+
+
+        <div class="activity-item">
+
+            <span>
+                Profile information updated
+            </span>
+
+            <span>
+                3 days ago
+            </span>
+
+        </div>
+
+
+        <div class="activity-item">
+
+            <span>
+                New company notification
+            </span>
+
+            <span>
+                5 days ago
+            </span>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+<!-- ==================================================
+     FOOTER
+================================================== -->
+
+<footer>
+
+    EPICPAGES © 2026
+    <br>
+    Demo Customer Portal
+
+</footer>
+
+
+<!-- ==================================================
+     JAVASCRIPT
+================================================== -->
+
+<script>
+
+
+/* =========================
+   LOGIN FUNCTION
+========================= */
+
+function login(){
+
+    const username =
+        document.getElementById(
+            "username"
+        ).value.trim();
+
+    const password =
+        document.getElementById(
+            "password"
+        ).value;
+
+    const error =
+        document.getElementById(
+            "error"
+        );
+
+
+    /*
+        DEMO LOGIN
+
+        USERNAME:
+        customer
+
+        PASSWORD:
+        12345
+    */
+
+
+    if(
+        username === "customer" &&
+        password === "12345"
+    ){
+
+        document.getElementById(
+            "loginSection"
+        ).style.display = "none";
+
+
+        document.getElementById(
+            "dashboard"
+        ).style.display = "block";
+
+
+        document.getElementById(
+            "displayUsername"
+        ).textContent = username;
+
+
+        error.style.display = "none";
+
+
+        window.scrollTo({
+            top:0,
+            behavior:"smooth"
+        });
+
+    }
+
+    else{
+
+        error.style.display = "block";
+
+    }
+
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+function logout(){
+
+    document.getElementById(
+        "dashboard"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "loginSection"
+    ).style.display = "flex";
+
+
+    document.getElementById(
+        "username"
+    ).value = "";
+
+
+    document.getElementById(
+        "password"
+    ).value = "";
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =========================
+   CLOSE CHAT NOTE
+========================= */
+
+function closeChatNote(){
+
+    document.getElementById(
+        "chatNote"
+    ).style.display = "none";
+
+}
+
+
+/* =========================
+   DEMO DASHBOARD BUTTONS
+========================= */
+
+function demo(section){
+
+    alert(
+        section +
+        " is currently a demonstration feature."
+    );
+
+}
+
+
+/* =========================
+   ENTER KEY LOGIN
+========================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Enter"){
+
+            const dashboard =
+                document.getElementById(
+                    "dashboard"
+                );
+
+
+            if(
+                dashboard.style.display !== "block"
+            ){
+
+                login();
+
+            }
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>
+```
