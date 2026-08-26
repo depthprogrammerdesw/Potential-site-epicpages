@@ -1,0 +1,1433 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EPICPAGES | Company Portfolio</title>
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#050b14;
+    color:white;
+    overflow-x:hidden;
+}
+
+
+/* =========================
+   ANIMATED BACKGROUND
+========================= */
+
+body::before,
+body::after{
+    content:"";
+    position:fixed;
+    width:350px;
+    height:350px;
+    border-radius:50%;
+    filter:blur(100px);
+    opacity:.25;
+    z-index:-1;
+    animation:float 8s infinite alternate ease-in-out;
+}
+
+body::before{
+    background:#087fff;
+    top:-120px;
+    left:-120px;
+}
+
+body::after{
+    background:#8b35ff;
+    bottom:-150px;
+    right:-120px;
+    animation-delay:2s;
+}
+
+@keyframes float{
+    from{
+        transform:translate(0,0);
+    }
+
+    to{
+        transform:translate(80px,50px);
+    }
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:1000;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:18px 7%;
+
+    background:rgba(5,11,20,.75);
+    backdrop-filter:blur(15px);
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.logo{
+    font-size:24px;
+    font-weight:900;
+    letter-spacing:3px;
+}
+
+.logo span{
+    color:#2998ff;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+    gap:28px;
+}
+
+nav a{
+    color:#c4d0dc;
+    text-decoration:none;
+    font-size:14px;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:white;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    min-height:100vh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    padding:120px 20px 70px;
+
+    position:relative;
+}
+
+.hero-content{
+    max-width:900px;
+
+    animation:heroIn 1.2s ease forwards;
+}
+
+@keyframes heroIn{
+
+    from{
+        opacity:0;
+        transform:translateY(50px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.badge{
+    display:inline-block;
+
+    padding:8px 16px;
+
+    border:1px solid rgba(255,255,255,.15);
+
+    border-radius:30px;
+
+    color:#8fc9ff;
+
+    background:rgba(255,255,255,.05);
+
+    margin-bottom:22px;
+}
+
+.hero h1{
+    font-size:clamp(45px,8vw,90px);
+    line-height:1.05;
+    letter-spacing:-3px;
+}
+
+.gradient-text{
+    background:linear-gradient(90deg,#2998ff,#a45cff);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.hero p{
+    max-width:700px;
+
+    margin:25px auto;
+
+    color:#91a3b5;
+
+    font-size:18px;
+
+    line-height:1.7;
+}
+
+.hero-buttons{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    padding:14px 25px;
+
+    border-radius:10px;
+
+    border:1px solid rgba(255,255,255,.15);
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+    text-decoration:none;
+
+    transition:.3s;
+}
+
+.primary{
+    background:#168cff;
+    color:white;
+}
+
+.primary:hover{
+    transform:translateY(-4px);
+    box-shadow:0 10px 30px rgba(22,140,255,.35);
+}
+
+.secondary{
+    background:rgba(255,255,255,.06);
+    color:white;
+}
+
+.secondary:hover{
+    background:rgba(255,255,255,.12);
+    transform:translateY(-4px);
+}
+
+
+/* =========================
+   GENERAL SECTIONS
+========================= */
+
+section{
+    padding:100px 7%;
+}
+
+.section-title{
+    text-align:center;
+    max-width:700px;
+    margin:0 auto 55px;
+}
+
+.section-title h2{
+    font-size:42px;
+    margin-bottom:15px;
+}
+
+.section-title p{
+    color:#91a3b5;
+    line-height:1.7;
+}
+
+
+/* =========================
+   ABOUT
+========================= */
+
+.about-grid{
+    max-width:1100px;
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:30px;
+}
+
+.about-box{
+    padding:35px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,255,255,.09);
+
+    transition:.4s;
+}
+
+.about-box:hover{
+    transform:translateY(-8px);
+
+    border-color:rgba(41,152,255,.4);
+}
+
+.about-box h3{
+    margin-bottom:15px;
+}
+
+.about-box p{
+    color:#91a3b5;
+    line-height:1.7;
+}
+
+
+/* =========================
+   SERVICES
+========================= */
+
+.services-grid{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:20px;
+}
+
+.service{
+
+    padding:30px;
+
+    min-height:220px;
+
+    border-radius:20px;
+
+    background:linear-gradient(
+        145deg,
+        rgba(255,255,255,.08),
+        rgba(255,255,255,.025)
+    );
+
+    border:1px solid rgba(255,255,255,.1);
+
+    transition:.4s;
+
+    opacity:0;
+    transform:translateY(40px);
+}
+
+.service.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.service:hover{
+
+    transform:
+        translateY(-10px)
+        scale(1.02);
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.3);
+}
+
+.service-icon{
+    font-size:38px;
+    margin-bottom:20px;
+}
+
+.service h3{
+    margin-bottom:12px;
+}
+
+.service p{
+    color:#91a3b5;
+    line-height:1.6;
+}
+
+
+/* =========================
+   PROJECTS
+========================= */
+
+.projects{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:20px;
+}
+
+.project{
+
+    position:relative;
+
+    overflow:hidden;
+
+    min-height:300px;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #15324c,
+            #211638
+        );
+
+    border:1px solid rgba(255,255,255,.1);
+
+    cursor:pointer;
+
+    transition:.4s;
+}
+
+.project:nth-child(2){
+    background:
+        linear-gradient(
+            135deg,
+            #173c36,
+            #112338
+        );
+}
+
+.project:nth-child(3){
+    background:
+        linear-gradient(
+            135deg,
+            #3c203c,
+            #16223d
+        );
+}
+
+.project:hover{
+    transform:scale(1.025);
+}
+
+.project-content{
+
+    position:absolute;
+
+    left:25px;
+    right:25px;
+    bottom:25px;
+
+    z-index:2;
+}
+
+.project-content span{
+    color:#8fc9ff;
+    font-size:13px;
+}
+
+.project-content h3{
+    margin-top:8px;
+    font-size:25px;
+}
+
+.project-content p{
+    color:#b0bfcc;
+    margin-top:8px;
+    line-height:1.5;
+}
+
+.project::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    border-radius:50%;
+
+    background:#2998ff;
+
+    filter:blur(80px);
+
+    top:-50px;
+    right:-50px;
+
+    opacity:.4;
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    max-width:1000px;
+
+    margin:auto;
+
+    text-align:center;
+
+    gap:20px;
+}
+
+.stat{
+
+    padding:30px;
+
+    background:rgba(255,255,255,.05);
+
+    border-radius:18px;
+
+    border:1px solid rgba(255,255,255,.08);
+}
+
+.stat h3{
+    font-size:38px;
+}
+
+.stat p{
+    color:#8799aa;
+    margin-top:7px;
+}
+
+
+/* =========================
+   CONTACT
+========================= */
+
+.contact-box{
+
+    max-width:850px;
+
+    margin:auto;
+
+    padding:50px;
+
+    text-align:center;
+
+    border-radius:25px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(22,140,255,.15),
+            rgba(140,75,255,.12)
+        );
+
+    border:1px solid rgba(255,255,255,.12);
+}
+
+.contact-box h2{
+    font-size:40px;
+}
+
+.contact-box p{
+    color:#9aabba;
+    margin:15px auto 25px;
+    line-height:1.7;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+
+    text-align:center;
+
+    padding:40px 20px;
+
+    color:#68798a;
+
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+
+/* =========================
+   POPUP MODAL
+========================= */
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+
+    background:rgba(0,0,0,.7);
+
+    backdrop-filter:blur(8px);
+
+    z-index:2000;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.35s;
+}
+
+.modal.active{
+
+    opacity:1;
+
+    visibility:visible;
+}
+
+.modal-box{
+
+    width:100%;
+
+    max-width:550px;
+
+    padding:35px;
+
+    border-radius:22px;
+
+    background:#0b1725;
+
+    border:1px solid rgba(255,255,255,.15);
+
+    transform:
+        translateY(50px)
+        scale(.9);
+
+    transition:.4s;
+}
+
+.modal.active .modal-box{
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+.modal-box h2{
+    margin-bottom:12px;
+}
+
+.modal-box p{
+    color:#9aabba;
+    line-height:1.7;
+}
+
+.close{
+
+    margin-top:25px;
+
+    padding:11px 20px;
+
+    border:0;
+
+    border-radius:9px;
+
+    background:#168cff;
+
+    color:white;
+
+    cursor:pointer;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:850px){
+
+    nav ul{
+        display:none;
+    }
+
+    .about-grid{
+        grid-template-columns:1fr;
+    }
+
+    .services-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .projects{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .stats{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:600px){
+
+    section{
+        padding:75px 20px;
+    }
+
+    .hero h1{
+        letter-spacing:-1px;
+    }
+
+    .section-title h2{
+        font-size:32px;
+    }
+
+    .services-grid,
+    .projects{
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .contact-box{
+        padding:35px 20px;
+    }
+
+    .contact-box h2{
+        font-size:30px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVIGATION
+========================= -->
+
+<nav>
+
+    <div class="logo">
+        EPIC<span>PAGES</span>
+    </div>
+
+    <ul>
+
+        <li>
+            <a href="#home">Home</a>
+        </li>
+
+        <li>
+            <a href="#about">About</a>
+        </li>
+
+        <li>
+            <a href="#services">Services</a>
+        </li>
+
+        <li>
+            <a href="#projects">Projects</a>
+        </li>
+
+        <li>
+            <a href="#contact">Contact</a>
+        </li>
+
+    </ul>
+
+</nav>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section
+    class="hero"
+    id="home"
+>
+
+    <div class="hero-content">
+
+        <div class="badge">
+            COMPANY PORTFOLIO • 2026
+        </div>
+
+        <h1>
+
+            We Build
+            <span class="gradient-text">
+                Digital Experiences
+            </span>
+
+        </h1>
+
+        <p>
+
+            A modern company portfolio demo designed
+            to showcase services, projects, achievements
+            and business capabilities through a dynamic
+            interactive experience.
+
+        </p>
+
+
+        <div class="hero-buttons">
+
+            <a
+                href="#projects"
+                class="btn primary"
+            >
+                Explore Projects
+            </a>
+
+            <button
+                class="btn secondary"
+                onclick="openModal(
+                    'About Our Company',
+                    'We are a technology-focused company creating modern digital solutions, professional websites and customer-focused platforms.'
+                )"
+            >
+                Learn More
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     ABOUT
+========================= -->
+
+<section id="about">
+
+    <div class="section-title">
+
+        <h2>
+            About Us
+        </h2>
+
+        <p>
+            We combine technology, creativity and
+            business strategy to create useful digital
+            solutions.
+        </p>
+
+    </div>
+
+
+    <div class="about-grid">
+
+        <div class="about-box">
+
+            <h3>
+                Our Mission
+            </h3>
+
+            <p>
+                Our mission is to help businesses establish
+                a strong digital presence through reliable,
+                modern and easy-to-use technology.
+            </p>
+
+        </div>
+
+
+        <div class="about-box">
+
+            <h3>
+                Our Vision
+            </h3>
+
+            <p>
+                We aim to create a future where technology
+                makes businesses more connected, efficient
+                and accessible to their customers.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     SERVICES
+========================= -->
+
+<section id="services">
+
+    <div class="section-title">
+
+        <h2>
+            What We Do
+        </h2>
+
+        <p>
+            A sample collection of services that a
+            modern technology company can offer.
+        </p>
+
+    </div>
+
+
+    <div class="services-grid">
+
+
+        <div class="service">
+
+            <div class="service-icon">
+                💻
+            </div>
+
+            <h3>
+                Web Development
+            </h3>
+
+            <p>
+                Modern responsive websites and web
+                applications designed for businesses.
+            </p>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-icon">
+                🎨
+            </div>
+
+            <h3>
+                UI / UX Design
+            </h3>
+
+            <p>
+                Clean interfaces and user experiences
+                designed around real customer needs.
+            </p>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-icon">
+                📱
+            </div>
+
+            <h3>
+                Digital Solutions
+            </h3>
+
+            <p>
+                Technology solutions that help companies
+                manage customers, information and services.
+            </p>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-icon">
+                🔐
+            </div>
+
+            <h3>
+                Security
+            </h3>
+
+            <p>
+                Security-focused approaches for protecting
+                business systems and customer information.
+            </p>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-icon">
+                📊
+            </div>
+
+            <h3>
+                Business Analytics
+            </h3>
+
+            <p>
+                Data-driven insights to help businesses
+                understand performance and make decisions.
+            </p>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-icon">
+                🚀
+            </div>
+
+            <h3>
+                Digital Growth
+            </h3>
+
+            <p>
+                Strategies and technology designed to help
+                businesses expand their digital presence.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     PROJECTS
+========================= -->
+
+<section id="projects">
+
+    <div class="section-title">
+
+        <h2>
+            Featured Projects
+        </h2>
+
+        <p>
+            Example projects demonstrating what the
+            company could build for its customers.
+        </p>
+
+    </div>
+
+
+    <div class="projects">
+
+
+        <div
+            class="project"
+            onclick="openModal(
+                'Customer Portal',
+                'A secure-looking customer portal concept with login, dashboard, account information, orders, messages and support features.'
+            )"
+        >
+
+            <div class="project-content">
+
+                <span>
+                    WEB PLATFORM
+                </span>
+
+                <h3>
+                    Customer Portal
+                </h3>
+
+                <p>
+                    Interactive customer management platform.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="project"
+            onclick="openModal(
+                'Business Website',
+                'A professional business website concept created to showcase company information, services, projects and contact options.'
+            )"
+        >
+
+            <div class="project-content">
+
+                <span>
+                    CORPORATE WEB
+                </span>
+
+                <h3>
+                    Business Website
+                </h3>
+
+                <p>
+                    Modern corporate digital presence.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="project"
+            onclick="openModal(
+                'Analytics Platform',
+                'A dashboard concept for displaying business statistics, customer activity and performance information.'
+            )"
+        >
+
+            <div class="project-content">
+
+                <span>
+                    DATA SYSTEM
+                </span>
+
+                <h3>
+                    Analytics Platform
+                </h3>
+
+                <p>
+                    Data-driven business dashboard.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     STATS
+========================= -->
+
+<section>
+
+    <div class="section-title">
+
+        <h2>
+            Our Numbers
+        </h2>
+
+        <p>
+            Example statistics for the company portfolio.
+        </p>
+
+    </div>
+
+
+    <div class="stats">
+
+        <div class="stat">
+
+            <h3>
+                50+
+            </h3>
+
+            <p>
+                Projects
+            </p>
+
+        </div>
+
+
+        <div class="stat">
+
+            <h3>
+                30+
+            </h3>
+
+            <p>
+                Customers
+            </p>
+
+        </div>
+
+
+        <div class="stat">
+
+            <h3>
+                12
+            </h3>
+
+            <p>
+                Services
+            </p>
+
+        </div>
+
+
+        <div class="stat">
+
+            <h3>
+                99%
+            </h3>
+
+            <p>
+                Commitment
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     CONTACT
+========================= -->
+
+<section id="contact">
+
+    <div class="contact-box">
+
+        <h2>
+            Let's Build Something Great
+        </h2>
+
+        <p>
+            Have an idea for a website, platform or
+            digital solution? Contact our team and
+            let's turn the concept into reality.
+        </p>
+
+        <button
+            class="btn primary"
+            onclick="openModal(
+                'Contact Us',
+                'This is a portfolio demo. Replace this popup with your real contact form, email address, phone number or business contact system.'
+            )"
+        >
+            Contact Company
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    EPICPAGES © 2026
+
+    <br><br>
+
+    Company Portfolio Demo
+
+</footer>
+
+
+<!-- =========================
+     POPUP MODAL
+========================= -->
+
+<div
+    class="modal"
+    id="modal"
+    onclick="closeModalOutside(event)"
+>
+
+    <div
+        class="modal-box"
+        id="modalBox"
+    >
+
+        <h2 id="modalTitle">
+            Title
+        </h2>
+
+        <p id="modalText">
+            Text
+        </p>
+
+        <button
+            class="close"
+            onclick="closeModal()"
+        >
+            Close
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+/* =========================
+   POPUP
+========================= */
+
+function openModal(title,text){
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent = title;
+
+    document.getElementById(
+        "modalText"
+    ).textContent = text;
+
+    document.getElementById(
+        "modal"
+    ).classList.add("active");
+
+}
+
+
+function closeModal(){
+
+    document.getElementById(
+        "modal"
+    ).classList.remove("active");
+
+}
+
+
+function closeModalOutside(event){
+
+    if(
+        event.target ===
+        document.getElementById("modal")
+    ){
+
+        closeModal();
+
+    }
+
+}
+
+
+/* =========================
+   ESC KEY
+========================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Escape"){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   SERVICE SCROLL ANIMATION
+========================= */
+
+const services =
+    document.querySelectorAll(
+        ".service"
+    );
+
+
+const observer =
+    new IntersectionObserver(
+
+        function(entries){
+
+            entries.forEach(
+                function(entry){
+
+                    if(entry.isIntersecting){
+
+                        entry.target.classList.add(
+                            "show"
+                        );
+
+                    }
+
+                }
+            );
+
+        },
+
+        {
+            threshold:.15
+        }
+
+    );
+
+
+services.forEach(
+    function(service){
+
+        observer.observe(service);
+
+    }
+);
+
+</script>
+
+</body>
+</html>
+```
