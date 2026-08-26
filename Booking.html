@@ -1,0 +1,2408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EPICPAGES | Booking Hub</title>
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    overflow-x:hidden;
+    color:#102033;
+    background:#f5f9ff;
+}
+
+
+/* =====================================================
+   ANIMATED BACKGROUND
+===================================================== */
+
+body::before{
+    content:"";
+
+    position:fixed;
+
+    width:500px;
+    height:500px;
+
+    border-radius:50%;
+
+    background:#72d7ff;
+
+    filter:blur(100px);
+
+    opacity:.28;
+
+    top:-200px;
+    left:-150px;
+
+    z-index:-2;
+
+    animation:
+        backgroundFloat 8s infinite alternate;
+}
+
+body::after{
+    content:"";
+
+    position:fixed;
+
+    width:500px;
+    height:500px;
+
+    border-radius:50%;
+
+    background:#c38cff;
+
+    filter:blur(110px);
+
+    opacity:.25;
+
+    right:-180px;
+    bottom:-180px;
+
+    z-index:-2;
+
+    animation:
+        backgroundFloat 10s infinite alternate-reverse;
+}
+
+@keyframes backgroundFloat{
+
+    from{
+        transform:translate(0,0) scale(1);
+    }
+
+    to{
+        transform:translate(100px,60px) scale(1.2);
+    }
+}
+
+
+/* =====================================================
+   FLOATING OBJECTS
+===================================================== */
+
+.floating-object{
+
+    position:fixed;
+
+    pointer-events:none;
+
+    z-index:-1;
+
+    opacity:.15;
+
+    font-size:55px;
+
+    animation:
+        floatingObject 8s ease-in-out infinite;
+}
+
+.plane{
+    top:18%;
+    left:-100px;
+
+    animation:
+        planeFly 12s linear infinite;
+}
+
+.bus{
+    bottom:18%;
+    right:-100px;
+
+    animation:
+        busMove 14s linear infinite;
+}
+
+.ticket{
+    top:65%;
+    left:8%;
+
+    animation-delay:2s;
+}
+
+.event{
+    top:35%;
+    right:8%;
+
+    animation-delay:4s;
+}
+
+@keyframes planeFly{
+
+    0%{
+        transform:translateX(-150px) rotate(5deg);
+    }
+
+    100%{
+        transform:translateX(120vw) rotate(5deg);
+    }
+}
+
+@keyframes busMove{
+
+    0%{
+        transform:translateX(150px);
+    }
+
+    100%{
+        transform:translateX(-120vw);
+    }
+}
+
+@keyframes floatingObject{
+
+    0%,100%{
+        transform:translateY(0) rotate(0);
+    }
+
+    50%{
+        transform:translateY(-35px) rotate(8deg);
+    }
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+nav{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+
+    z-index:1000;
+
+    display:flex;
+
+    justify-content:space-between;
+    align-items:center;
+
+    padding:18px 6%;
+
+    background:rgba(255,255,255,.78);
+
+    backdrop-filter:blur(18px);
+
+    border-bottom:1px solid rgba(0,0,0,.08);
+}
+
+.logo{
+
+    font-size:25px;
+
+    font-weight:900;
+
+    letter-spacing:3px;
+
+    color:#111d31;
+}
+
+.logo span{
+    color:#087ff5;
+}
+
+nav ul{
+
+    display:flex;
+
+    gap:25px;
+
+    list-style:none;
+}
+
+nav a{
+
+    text-decoration:none;
+
+    color:#33465a;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    transition:.3s;
+}
+
+nav a:hover{
+    color:#087ff5;
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero{
+
+    min-height:90vh;
+
+    padding:
+        150px 7%
+        80px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.hero-content{
+
+    max-width:1000px;
+
+    animation:
+        heroEntrance 1.3s ease;
+}
+
+@keyframes heroEntrance{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(70px)
+            scale(.9);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+}
+
+.hero-badge{
+
+    display:inline-block;
+
+    padding:10px 20px;
+
+    border-radius:50px;
+
+    background:white;
+
+    color:#087ff5;
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,.08);
+
+    margin-bottom:25px;
+
+    animation:
+        badgeFloat 3s infinite alternate;
+}
+
+@keyframes badgeFloat{
+
+    from{
+        transform:translateY(0);
+    }
+
+    to{
+        transform:translateY(-8px);
+    }
+}
+
+.hero h1{
+
+    font-size:
+        clamp(50px,9vw,110px);
+
+    line-height:.95;
+
+    letter-spacing:-5px;
+
+    font-weight:1000;
+}
+
+.hero h1 span{
+
+    display:block;
+
+    background:
+        linear-gradient(
+            90deg,
+            #087ff5,
+            #7b42f6,
+            #ff4fa3,
+            #087ff5
+        );
+
+    background-size:300%;
+
+    -webkit-background-clip:text;
+
+    color:transparent;
+
+    animation:
+        textGradient 5s linear infinite;
+}
+
+@keyframes textGradient{
+
+    0%{
+        background-position:0%;
+    }
+
+    100%{
+        background-position:300%;
+    }
+}
+
+.hero p{
+
+    max-width:720px;
+
+    margin:30px auto;
+
+    color:#627486;
+
+    line-height:1.7;
+
+    font-size:18px;
+}
+
+
+/* =====================================================
+   SEARCH BOX
+===================================================== */
+
+.booking-search{
+
+    max-width:1000px;
+
+    margin:-80px auto 70px;
+
+    position:relative;
+
+    z-index:10;
+
+    padding:25px;
+
+    border-radius:25px;
+
+    background:white;
+
+    box-shadow:
+        0 25px 70px rgba(30,70,110,.16);
+
+    border:1px solid #e7edf5;
+}
+
+.search-tabs{
+
+    display:flex;
+
+    gap:10px;
+
+    overflow-x:auto;
+
+    margin-bottom:20px;
+}
+
+.search-tabs button{
+
+    border:0;
+
+    background:#eef5fc;
+
+    color:#41566b;
+
+    padding:11px 18px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+    white-space:nowrap;
+
+    transition:.3s;
+}
+
+.search-tabs button:hover,
+.search-tabs button.active{
+
+    background:#087ff5;
+
+    color:white;
+
+    transform:translateY(-3px);
+}
+
+.search-fields{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr 1fr auto;
+
+    gap:12px;
+}
+
+.search-field{
+
+    padding:14px;
+
+    border:1px solid #dbe4ed;
+
+    border-radius:12px;
+
+    background:#f9fbfd;
+}
+
+.search-field small{
+
+    display:block;
+
+    color:#8091a1;
+
+    margin-bottom:5px;
+}
+
+.search-field input{
+
+    border:0;
+
+    outline:0;
+
+    background:transparent;
+
+    width:100%;
+
+    color:#24374b;
+}
+
+.search-btn{
+
+    border:0;
+
+    border-radius:12px;
+
+    padding:0 25px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #087ff5,
+            #7148ef
+        );
+
+    color:white;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.search-btn:hover{
+
+    transform:
+        translateY(-4px)
+        scale(1.03);
+
+    box-shadow:
+        0 12px 30px rgba(8,127,245,.3);
+}
+
+
+/* =====================================================
+   GENERAL SECTIONS
+===================================================== */
+
+section{
+    padding:90px 7%;
+}
+
+.section-heading{
+
+    text-align:center;
+
+    max-width:750px;
+
+    margin:
+        0 auto 50px;
+}
+
+.section-heading h2{
+
+    font-size:48px;
+
+    margin-bottom:15px;
+
+    letter-spacing:-2px;
+}
+
+.section-heading p{
+
+    color:#6e8092;
+
+    line-height:1.7;
+}
+
+
+/* =====================================================
+   BOOKING CATEGORIES
+===================================================== */
+
+.categories{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:20px;
+
+    max-width:1200px;
+
+    margin:auto;
+}
+
+.category{
+
+    position:relative;
+
+    min-height:240px;
+
+    padding:30px;
+
+    border-radius:25px;
+
+    background:white;
+
+    border:1px solid #e5edf5;
+
+    box-shadow:
+        0 15px 40px rgba(25,60,100,.07);
+
+    overflow:hidden;
+
+    cursor:pointer;
+
+    transition:.4s;
+}
+
+.category:hover{
+
+    transform:
+        translateY(-12px)
+        rotateX(3deg);
+
+    box-shadow:
+        0 25px 60px rgba(25,60,100,.15);
+}
+
+.category-icon{
+
+    width:65px;
+    height:65px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:20px;
+
+    background:#edf6ff;
+
+    font-size:35px;
+
+    margin-bottom:25px;
+
+    transition:.5s;
+}
+
+.category:hover .category-icon{
+
+    transform:
+        scale(1.15)
+        rotate(8deg);
+}
+
+.category h3{
+
+    font-size:22px;
+
+    margin-bottom:10px;
+}
+
+.category p{
+
+    color:#718294;
+
+    line-height:1.6;
+
+    font-size:14px;
+}
+
+.category::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:120px;
+    height:120px;
+
+    border-radius:50%;
+
+    background:#8cd8ff;
+
+    filter:blur(45px);
+
+    right:-40px;
+    bottom:-40px;
+
+    opacity:.35;
+}
+
+
+/* =====================================================
+   TRAVEL TICKETS
+===================================================== */
+
+.ticket-section{
+
+    background:
+        linear-gradient(
+            180deg,
+            #edf7ff,
+            #f7fbff
+        );
+}
+
+.travel-grid{
+
+    max-width:1100px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:25px;
+}
+
+.travel-ticket{
+
+    position:relative;
+
+    display:grid;
+
+    grid-template-columns:1fr 120px;
+
+    overflow:hidden;
+
+    border-radius:22px;
+
+    background:white;
+
+    box-shadow:
+        0 18px 50px rgba(30,80,120,.12);
+
+    transition:.4s;
+}
+
+.travel-ticket:hover{
+
+    transform:
+        translateY(-8px)
+        scale(1.015);
+}
+
+.ticket-main{
+
+    padding:28px;
+
+    border-right:
+        2px dashed #cbd8e4;
+}
+
+.ticket-type{
+
+    color:#087ff5;
+
+    font-size:12px;
+
+    font-weight:bold;
+
+    letter-spacing:1px;
+}
+
+.route{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin:25px 0;
+}
+
+.route-city{
+
+    font-size:25px;
+
+    font-weight:900;
+}
+
+.route-line{
+
+    flex:1;
+
+    height:2px;
+
+    margin:0 15px;
+
+    background:#dbe5ee;
+
+    position:relative;
+}
+
+.route-line::after{
+
+    content:"✈";
+
+    position:absolute;
+
+    left:50%;
+
+    top:50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    background:white;
+
+    padding:5px;
+
+    color:#087ff5;
+}
+
+.ticket-info{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    color:#7a8b9b;
+
+    font-size:13px;
+}
+
+.ticket-price{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    background:#087ff5;
+
+    color:white;
+}
+
+.ticket-price strong{
+
+    display:block;
+
+    font-size:24px;
+}
+
+.ticket-price span{
+
+    display:block;
+
+    font-size:11px;
+
+    opacity:.8;
+
+    margin-top:5px;
+}
+
+
+/* =====================================================
+   EVENTS
+===================================================== */
+
+.events-grid{
+
+    max-width:1150px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:22px;
+}
+
+.event-card{
+
+    overflow:hidden;
+
+    border-radius:22px;
+
+    background:white;
+
+    box-shadow:
+        0 15px 40px rgba(20,50,80,.08);
+
+    transition:.4s;
+
+    border:1px solid #e5edf5;
+}
+
+.event-card:hover{
+
+    transform:
+        translateY(-10px)
+        rotate(-1deg);
+
+    box-shadow:
+        0 25px 60px rgba(20,50,80,.15);
+}
+
+.event-image{
+
+    height:190px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    font-size:65px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #aee7ff,
+            #d8c7ff
+        );
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.event-image::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:100px;
+    height:100px;
+
+    border-radius:50%;
+
+    background:white;
+
+    opacity:.3;
+
+    animation:
+        eventBubble 4s infinite alternate;
+}
+
+@keyframes eventBubble{
+
+    from{
+        transform:
+            translate(-100px,50px)
+            scale(.7);
+    }
+
+    to{
+        transform:
+            translate(120px,-60px)
+            scale(1.5);
+    }
+}
+
+.event-info{
+
+    padding:25px;
+}
+
+.event-date{
+
+    color:#087ff5;
+
+    font-size:12px;
+
+    font-weight:bold;
+}
+
+.event-info h3{
+
+    margin:
+        8px 0;
+
+    font-size:21px;
+}
+
+.event-info p{
+
+    color:#718294;
+
+    line-height:1.5;
+
+    font-size:14px;
+}
+
+.event-button{
+
+    margin-top:18px;
+
+    width:100%;
+
+    padding:11px;
+
+    border:0;
+
+    border-radius:9px;
+
+    background:#eef6ff;
+
+    color:#087ff5;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.event-button:hover{
+
+    background:#087ff5;
+
+    color:white;
+}
+
+
+/* =====================================================
+   APPOINTMENTS
+===================================================== */
+
+.appointment-section{
+
+    background:#fff;
+
+}
+
+.appointment-box{
+
+    max-width:1000px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:25px;
+}
+
+.appointment-card{
+
+    padding:30px;
+
+    border-radius:24px;
+
+    background:#f7faff;
+
+    border:1px solid #e4edf5;
+
+    transition:.4s;
+}
+
+.appointment-card:hover{
+
+    transform:translateY(-7px);
+
+    background:white;
+
+    box-shadow:
+        0 20px 50px rgba(20,60,100,.1);
+}
+
+.appointment-icon{
+
+    font-size:45px;
+
+    margin-bottom:15px;
+
+    animation:
+        iconBounce 2.5s infinite;
+}
+
+@keyframes iconBounce{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-8px);
+    }
+}
+
+.appointment-card h3{
+    margin-bottom:10px;
+}
+
+.appointment-card p{
+    color:#718294;
+    line-height:1.6;
+}
+
+.appointment-button{
+
+    margin-top:18px;
+
+    padding:12px 20px;
+
+    border:0;
+
+    border-radius:10px;
+
+    background:#087ff5;
+
+    color:white;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.appointment-button:hover{
+
+    transform:
+        translateY(-3px)
+        scale(1.03);
+}
+
+
+/* =====================================================
+   POPUP
+===================================================== */
+
+.popup{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:5000;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    background:rgba(0,20,40,.65);
+
+    backdrop-filter:blur(10px);
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.35s;
+}
+
+.popup.active{
+
+    opacity:1;
+
+    visibility:visible;
+}
+
+.popup-box{
+
+    width:100%;
+
+    max-width:500px;
+
+    padding:40px;
+
+    text-align:center;
+
+    border-radius:25px;
+
+    background:white;
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.25);
+
+    transform:
+        translateY(50px)
+        scale(.85);
+
+    transition:.45s;
+}
+
+.popup.active .popup-box{
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+.popup-icon{
+
+    font-size:60px;
+
+    margin-bottom:15px;
+
+    animation:
+        popupIcon .7s;
+}
+
+@keyframes popupIcon{
+
+    0%{
+        transform:
+            scale(.3)
+            rotate(-20deg);
+    }
+
+    70%{
+        transform:
+            scale(1.2)
+            rotate(5deg);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+}
+
+.popup-box h2{
+
+    font-size:28px;
+
+    margin-bottom:10px;
+}
+
+.popup-box p{
+
+    color:#6e8092;
+
+    line-height:1.6;
+}
+
+.close-popup{
+
+    margin-top:22px;
+
+    padding:12px 25px;
+
+    border:0;
+
+    border-radius:10px;
+
+    background:#087ff5;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-weight:bold;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer{
+
+    padding:45px 20px;
+
+    text-align:center;
+
+    background:#071321;
+
+    color:#8497a9;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:950px){
+
+    .categories{
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .events-grid{
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .search-fields{
+
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .search-btn{
+
+        padding:15px;
+    }
+}
+
+@media(max-width:650px){
+
+    nav ul{
+        display:none;
+    }
+
+    .hero h1{
+
+        font-size:
+            clamp(48px,14vw,75px);
+
+        letter-spacing:-3px;
+    }
+
+    .hero p{
+        font-size:15px;
+    }
+
+    section{
+        padding:70px 20px;
+    }
+
+    .section-heading h2{
+        font-size:35px;
+    }
+
+    .booking-search{
+
+        margin:
+            -50px 15px 40px;
+
+        padding:18px;
+    }
+
+    .search-fields{
+
+        grid-template-columns:1fr;
+    }
+
+    .search-btn{
+        min-height:50px;
+    }
+
+    .categories{
+
+        grid-template-columns:1fr;
+    }
+
+    .travel-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .events-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .appointment-box{
+
+        grid-template-columns:1fr;
+    }
+
+    .travel-ticket{
+
+        grid-template-columns:1fr 90px;
+    }
+
+    .route-city{
+        font-size:20px;
+    }
+
+}
+
+
+/* =====================================================
+   SMALL PHONE
+===================================================== */
+
+@media(max-width:380px){
+
+    .logo{
+        font-size:20px;
+    }
+
+    .ticket-main{
+        padding:20px 15px;
+    }
+
+    .ticket-price strong{
+        font-size:18px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     FLOATING ANIMATIONS
+===================================================== -->
+
+<div class="floating-object plane">
+    ✈️
+</div>
+
+<div class="floating-object bus">
+    🚌
+</div>
+
+<div class="floating-object ticket">
+    🎟️
+</div>
+
+<div class="floating-object event">
+    🎉
+</div>
+
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<nav>
+
+    <div class="logo">
+        EPIC<span>BOOK</span>
+    </div>
+
+    <ul>
+
+        <li>
+            <a href="#home">
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a href="#categories">
+                Bookings
+            </a>
+        </li>
+
+        <li>
+            <a href="#travel">
+                Travel
+            </a>
+        </li>
+
+        <li>
+            <a href="#events">
+                Events
+            </a>
+        </li>
+
+        <li>
+            <a href="#appointments">
+                Appointments
+            </a>
+        </li>
+
+    </ul>
+
+</nav>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section
+    class="hero"
+    id="home"
+>
+
+    <div class="hero-content">
+
+        <div class="hero-badge">
+            ✨ YOUR WORLD. ONE BOOKING.
+        </div>
+
+        <h1>
+
+            BOOK
+
+            <span>
+                EVERYTHING.
+            </span>
+
+        </h1>
+
+        <p>
+
+            Flights, buses, trains, events,
+            appointments, hotels and more —
+            all in one beautiful booking experience.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SEARCH
+===================================================== -->
+
+<div class="booking-search">
+
+    <div class="search-tabs">
+
+        <button
+            class="active"
+            onclick="changeTab(this,'Flights')"
+        >
+            ✈ Flights
+        </button>
+
+        <button
+            onclick="changeTab(this,'Buses')"
+        >
+            🚌 Buses
+        </button>
+
+        <button
+            onclick="changeTab(this,'Trains')"
+        >
+            🚆 Trains
+        </button>
+
+        <button
+            onclick="changeTab(this,'Hotels')"
+        >
+            🏨 Hotels
+        </button>
+
+        <button
+            onclick="changeTab(this,'Events')"
+        >
+            🎟 Events
+        </button>
+
+        <button
+            onclick="changeTab(this,'Appointments')"
+        >
+            📅 Appointments
+        </button>
+
+    </div>
+
+
+    <div class="search-fields">
+
+        <div class="search-field">
+
+            <small>
+                FROM
+            </small>
+
+            <input
+                id="from"
+                placeholder="Departure"
+            >
+
+        </div>
+
+
+        <div class="search-field">
+
+            <small>
+                TO
+            </small>
+
+            <input
+                id="to"
+                placeholder="Destination"
+            >
+
+        </div>
+
+
+        <div class="search-field">
+
+            <small>
+                DATE
+            </small>
+
+            <input
+                type="date"
+            >
+
+        </div>
+
+
+        <button
+            class="search-btn"
+            onclick="searchBooking()"
+        >
+            SEARCH
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     CATEGORIES
+===================================================== -->
+
+<section
+    id="categories"
+>
+
+    <div class="section-heading">
+
+        <h2>
+            What do you want to book?
+        </h2>
+
+        <p>
+            Choose a category and start your booking.
+        </p>
+
+    </div>
+
+
+    <div class="categories">
+
+
+        <div
+            class="category"
+            onclick="openPopup(
+                'Flight Booking',
+                'Search and book flights between cities and countries.'
+            )"
+        >
+
+            <div class="category-icon">
+                ✈️
+            </div>
+
+            <h3>
+                Flights
+            </h3>
+
+            <p>
+                Domestic and international flight
+                booking experience.
+            </p>
+
+        </div>
+
+
+        <div
+            class="category"
+            onclick="openPopup(
+                'Bus Booking',
+                'Find and reserve bus seats for your journey.'
+            )"
+        >
+
+            <div class="category-icon">
+                🚌
+            </div>
+
+            <h3>
+                Buses
+            </h3>
+
+            <p>
+                Book seats for intercity and local
+                bus journeys.
+            </p>
+
+        </div>
+
+
+        <div
+            class="category"
+            onclick="openPopup(
+                'Train Booking',
+                'Explore train routes and reserve your journey.'
+            )"
+        >
+
+            <div class="category-icon">
+                🚆
+            </div>
+
+            <h3>
+                Trains
+            </h3>
+
+            <p>
+                A demo interface for train journey
+                reservations.
+            </p>
+
+        </div>
+
+
+        <div
+            class="category"
+            onclick="openPopup(
+                'Hotel Booking',
+                'Discover hotels and accommodation options.'
+            )"
+        >
+
+            <div class="category-icon">
+                🏨
+            </div>
+
+            <h3>
+                Hotels
+            </h3>
+
+            <p>
+                Find accommodation for your next trip.
+            </p>
+
+        </div>
+
+
+        <div
+            class="category"
+            onclick="openPopup(
+                'Event Tickets',
+                'Reserve tickets for concerts, shows and events.'
+            )"
+        >
+
+            <div class="category-icon">
+                🎟️
+            </div>
+
+            <h3>
+                Events
+            </h3>
+
+            <p>
+                Concerts, sports, exhibitions and
+                entertainment.
+            </p>
+
+        </div>
+
+
+        <div
+            class="category"
+            onclick="openPopup(
+                'Appointments',
+                'Book appointments with professionals and services.'
+            )"
+        >
+
+            <div class="category-icon">
+                📅
+            </div>
+
+            <h3>
+                Appointments
+            </h3>
+
+            <p>
+                Schedule appointments with different
+                service providers.
+            </p>
+
+        </div>
+
+
+        <div
+            class="category"
+            onclick="openPopup(
+                'Cinema',
+                'Book seats for movies and entertainment.'
+            )"
+        >
+
+            <div class="category-icon">
+                🎬
+            </div>
+
+            <h3>
+                Movies
+            </h3>
+
+            <p>
+                Choose your movie, theatre and seats.
+            </p>
+
+        </div>
+
+
+        <div
+            class="category"
+            onclick="openPopup(
+                'Activities',
+                'Reserve activities and experiences.'
+            )"
+        >
+
+            <div class="category-icon">
+                🎢
+            </div>
+
+            <h3>
+                Activities
+            </h3>
+
+            <p>
+                Experiences, attractions and recreational
+                activities.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     TRAVEL TICKETS
+===================================================== -->
+
+<section
+    class="ticket-section"
+    id="travel"
+>
+
+    <div class="section-heading">
+
+        <h2>
+            Popular Travel Tickets
+        </h2>
+
+        <p>
+            Sample tickets demonstrating a travel
+            booking interface.
+        </p>
+
+    </div>
+
+
+    <div class="travel-grid">
+
+
+        <!-- FLIGHT -->
+
+        <div class="travel-ticket">
+
+            <div class="ticket-main">
+
+                <div class="ticket-type">
+                    FLIGHT • EP102
+                </div>
+
+                <div class="route">
+
+                    <div class="route-city">
+                        DEL
+                    </div>
+
+                    <div class="route-line"></div>
+
+                    <div class="route-city">
+                        BOM
+                    </div>
+
+                </div>
+
+                <div class="ticket-info">
+
+                    <span>
+                        09:20 AM
+                    </span>
+
+                    <span>
+                        2h 10m
+                    </span>
+
+                    <span>
+                        11:30 AM
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="ticket-price">
+
+                <div>
+
+                    <strong>
+                        ₹4,999
+                    </strong>
+
+                    <span>
+                        BOOK
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- BUS -->
+
+        <div class="travel-ticket">
+
+            <div class="ticket-main">
+
+                <div class="ticket-type">
+                    BUS • EB452
+                </div>
+
+                <div class="route">
+
+                    <div class="route-city">
+                        RNC
+                    </div>
+
+                    <div class="route-line">
+                    </div>
+
+                    <div class="route-city">
+                        DEL
+                    </div>
+
+                </div>
+
+                <div class="ticket-info">
+
+                    <span>
+                        07:00 PM
+                    </span>
+
+                    <span>
+                        Sleeper
+                    </span>
+
+                    <span>
+                        07:30 AM
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="ticket-price">
+
+                <div>
+
+                    <strong>
+                        ₹1,499
+                    </strong>
+
+                    <span>
+                        BOOK
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     EVENTS
+===================================================== -->
+
+<section
+    id="events"
+>
+
+    <div class="section-heading">
+
+        <h2>
+            Upcoming Events
+        </h2>
+
+        <p>
+            Discover concerts, festivals and exciting
+            experiences.
+        </p>
+
+    </div>
+
+
+    <div class="events-grid">
+
+
+        <div class="event-card">
+
+            <div class="event-image">
+                🎵
+            </div>
+
+            <div class="event-info">
+
+                <div class="event-date">
+                    12 SEPTEMBER 2026
+                </div>
+
+                <h3>
+                    Music Festival
+                </h3>
+
+                <p>
+                    An energetic night of music,
+                    artists and entertainment.
+                </p>
+
+                <button
+                    class="event-button"
+                    onclick="openPopup(
+                        'Music Festival',
+                        'Ticket booking demonstration for the Music Festival.'
+                    )"
+                >
+                    VIEW TICKETS
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="event-card">
+
+            <div class="event-image">
+                🏟️
+            </div>
+
+            <div class="event-info">
+
+                <div class="event-date">
+                    20 SEPTEMBER 2026
+                </div>
+
+                <h3>
+                    Sports Championship
+                </h3>
+
+                <p>
+                    Experience the excitement of a
+                    live sporting event.
+                </p>
+
+                <button
+                    class="event-button"
+                    onclick="openPopup(
+                        'Sports Championship',
+                        'Ticket booking demonstration for the sports event.'
+                    )"
+                >
+                    VIEW TICKETS
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="event-card">
+
+            <div class="event-image">
+                🎭
+            </div>
+
+            <div class="event-info">
+
+                <div class="event-date">
+                    28 SEPTEMBER 2026
+                </div>
+
+                <h3>
+                    Theatre Night
+                </h3>
+
+                <p>
+                    Enjoy a professional stage
+                    performance.
+                </p>
+
+                <button
+                    class="event-button"
+                    onclick="openPopup(
+                        'Theatre Night',
+                        'Ticket booking demonstration for the theatre event.'
+                    )"
+                >
+                    VIEW TICKETS
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     APPOINTMENTS
+===================================================== -->
+
+<section
+    class="appointment-section"
+    id="appointments"
+>
+
+    <div class="section-heading">
+
+        <h2>
+            Book an Appointment
+        </h2>
+
+        <p>
+            Schedule services with professionals
+            through the same platform.
+        </p>
+
+    </div>
+
+
+    <div class="appointment-box">
+
+
+        <div class="appointment-card">
+
+            <div class="appointment-icon">
+                👨‍💼
+            </div>
+
+            <h3>
+                Business Consultation
+            </h3>
+
+            <p>
+                Schedule a consultation with a
+                business professional.
+            </p>
+
+            <button
+                class="appointment-button"
+                onclick="openPopup(
+                    'Business Consultation',
+                    'Appointment scheduling demonstration.'
+                )"
+            >
+                BOOK APPOINTMENT
+            </button>
+
+        </div>
+
+
+        <div class="appointment-card">
+
+            <div class="appointment-icon">
+                💻
+            </div>
+
+            <h3>
+                Technology Consultation
+            </h3>
+
+            <p>
+                Book a session with a technology
+                specialist.
+            </p>
+
+            <button
+                class="appointment-button"
+                onclick="openPopup(
+                    'Technology Consultation',
+                    'Appointment scheduling demonstration.'
+                )"
+            >
+                BOOK APPOINTMENT
+            </button>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     POPUP
+===================================================== -->
+
+<div
+    class="popup"
+    id="popup"
+    onclick="closeOutside(event)"
+>
+
+    <div class="popup-box">
+
+        <div class="popup-icon">
+            🎉
+        </div>
+
+        <h2 id="popupTitle">
+            Booking
+        </h2>
+
+        <p id="popupText">
+            Demo booking window.
+        </p>
+
+        <button
+            class="close-popup"
+            onclick="closePopup()"
+        >
+            CLOSE
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <strong>
+        EPICBOOK
+    </strong>
+
+    <br><br>
+
+    One platform for travel, events,
+    appointments and experiences.
+
+    <br><br>
+
+    © 2026 EPICPAGES • Demo Website
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+   SEARCH TAB
+===================================================== */
+
+function changeTab(button,type){
+
+    document
+        .querySelectorAll(".search-tabs button")
+        .forEach(
+            btn => btn.classList.remove("active")
+        );
+
+    button.classList.add("active");
+
+    document.getElementById("from")
+        .placeholder =
+        type + " departure";
+
+    document.getElementById("to")
+        .placeholder =
+        type + " destination";
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+function searchBooking(){
+
+    const from =
+        document.getElementById("from")
+            .value;
+
+    const to =
+        document.getElementById("to")
+            .value;
+
+    if(!from || !to){
+
+        openPopup(
+            "Almost there!",
+            "Please enter a departure and destination to search available bookings."
+        );
+
+        return;
+    }
+
+    openPopup(
+        "Searching...",
+        "This demo would now search for available bookings between " +
+        from +
+        " and " +
+        to +
+        "."
+    );
+}
+
+
+/* =====================================================
+   POPUP
+===================================================== */
+
+function openPopup(title,text){
+
+    document.getElementById(
+        "popupTitle"
+    ).textContent = title;
+
+    document.getElementById(
+        "popupText"
+    ).textContent = text;
+
+    document.getElementById(
+        "popup"
+    ).classList.add("active");
+}
+
+
+function closePopup(){
+
+    document.getElementById(
+        "popup"
+    ).classList.remove("active");
+}
+
+
+function closeOutside(event){
+
+    if(
+        event.target ===
+        document.getElementById("popup")
+    ){
+
+        closePopup();
+
+    }
+
+}
+
+
+/* =====================================================
+   ESCAPE KEY
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Escape"){
+
+            closePopup();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
