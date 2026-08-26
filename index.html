@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EPICPAGES | Potential [DEMO]</title>
+
+<style>
+/* =========================
+   BASIC SETUP
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#050816;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* =========================
+   ANIMATED BACKGROUND
+========================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    width:700px;
+    height:700px;
+    background:radial-gradient(circle, #0066ff44, transparent 65%);
+    top:-250px;
+    left:-250px;
+    animation:orb1 10s infinite alternate ease-in-out;
+    pointer-events:none;
+    z-index:-2;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:700px;
+    height:700px;
+    background:radial-gradient(circle, #a000ff44, transparent 65%);
+    bottom:-300px;
+    right:-250px;
+    animation:orb2 12s infinite alternate ease-in-out;
+    pointer-events:none;
+    z-index:-2;
+}
+
+@keyframes orb1{
+    from{transform:translate(0,0);}
+    to{transform:translate(350px,250px);}
+}
+
+@keyframes orb2{
+    from{transform:translate(0,0);}
+    to{transform:translate(-300px,-200px);}
+}
+
+/* =========================
+   PARTICLES
+========================= */
+
+.particles{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    overflow:hidden;
+    pointer-events:none;
+}
+
+.particles span{
+    position:absolute;
+    width:4px;
+    height:4px;
+    background:#ffffff;
+    border-radius:50%;
+    opacity:.5;
+    animation:float 10s infinite linear;
+}
+
+.particles span:nth-child(1){left:5%;animation-duration:12s;}
+.particles span:nth-child(2){left:15%;animation-duration:17s;}
+.particles span:nth-child(3){left:27%;animation-duration:11s;}
+.particles span:nth-child(4){left:39%;animation-duration:19s;}
+.particles span:nth-child(5){left:50%;animation-duration:14s;}
+.particles span:nth-child(6){left:62%;animation-duration:16s;}
+.particles span:nth-child(7){left:73%;animation-duration:13s;}
+.particles span:nth-child(8){left:84%;animation-duration:18s;}
+.particles span:nth-child(9){left:94%;animation-duration:15s;}
+
+@keyframes float{
+    0%{
+        transform:translateY(110vh) scale(.5);
+        opacity:0;
+    }
+    20%{opacity:.7;}
+    80%{opacity:.7;}
+    100%{
+        transform:translateY(-10vh) scale(1.4);
+        opacity:0;
+    }
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+nav{
+    position:fixed;
+    top:20px;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(92%,1100px);
+    padding:15px 25px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    background:rgba(10,15,35,.65);
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:50px;
+
+    box-shadow:0 10px 40px #0008;
+
+    z-index:1000;
+}
+
+.logo{
+    font-size:20px;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
+.logo span{
+    color:#00d9ff;
+}
+
+nav a{
+    color:#ddd;
+    text-decoration:none;
+    margin-left:20px;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:#00d9ff;
+    text-shadow:0 0 15px #00d9ff;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    min-height:100vh;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+
+    padding:100px 20px 60px;
+
+    position:relative;
+}
+
+/* Grid floor */
+
+.hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background-image:
+    linear-gradient(rgba(0,200,255,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,200,255,.05) 1px,transparent 1px);
+
+    background-size:50px 50px;
+
+    mask-image:linear-gradient(to bottom,transparent,black,transparent);
+
+    pointer-events:none;
+}
+
+.badge{
+    padding:10px 18px;
+    border:1px solid #00d9ff77;
+    border-radius:30px;
+    color:#00d9ff;
+    background:#00d9ff0d;
+    margin-bottom:25px;
+
+    animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+    50%{
+        box-shadow:0 0 30px #00d9ff33;
+    }
+}
+
+.hero h1{
+    font-size:clamp(55px,12vw,150px);
+    font-weight:1000;
+    letter-spacing:-6px;
+
+    background:linear-gradient(
+        90deg,
+        #00d9ff,
+        #ffffff,
+        #a855f7,
+        #00d9ff
+    );
+
+    background-size:300%;
+
+    -webkit-background-clip:text;
+    color:transparent;
+
+    animation:
+        gradient 5s infinite linear,
+        titleFloat 4s infinite ease-in-out;
+}
+
+@keyframes gradient{
+    0%{background-position:0%;}
+    100%{background-position:300%;}
+}
+
+@keyframes titleFloat{
+    50%{transform:translateY(-10px);}
+}
+
+.subtitle{
+    font-size:clamp(18px,3vw,28px);
+    margin-top:10px;
+    color:#d9d9e5;
+}
+
+.subtitle strong{
+    color:#00d9ff;
+}
+
+/* =========================
+   HERO DESCRIPTION
+========================= */
+
+.hero-description{
+    max-width:750px;
+    margin:25px auto;
+    color:#aeb5ca;
+    line-height:1.8;
+    font-size:17px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.button-group{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin-top:25px;
+}
+
+.btn{
+    position:relative;
+    padding:15px 25px;
+
+    border-radius:12px;
+    border:1px solid #ffffff22;
+
+    background:linear-gradient(
+        135deg,
+        #ffffff12,
+        #ffffff05
+    );
+
+    color:white;
+    text-decoration:none;
+
+    overflow:hidden;
+
+    transition:.4s;
+}
+
+.btn::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-120%;
+    width:100%;
+    height:100%;
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        #ffffff55,
+        transparent
+    );
+
+    transition:.6s;
+}
+
+.btn:hover::before{
+    left:120%;
+}
+
+.btn:hover{
+    transform:translateY(-5px) scale(1.03);
+    border-color:#00d9ff;
+    box-shadow:0 10px 35px #00d9ff22;
+}
+
+.primary{
+    background:linear-gradient(135deg,#0077ff,#8b2cff);
+    border:none;
+}
+
+/* =========================
+   SECTION
+========================= */
+
+section{
+    padding:110px 7%;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:60px;
+}
+
+.section-title h2{
+    font-size:clamp(35px,5vw,60px);
+}
+
+.section-title p{
+    color:#8992aa;
+    margin-top:12px;
+}
+
+/* =========================
+   ABOUT
+========================= */
+
+.about{
+    max-width:900px;
+    margin:auto;
+    text-align:center;
+
+    padding:40px;
+
+    border:1px solid #ffffff14;
+    border-radius:25px;
+
+    background:linear-gradient(
+        135deg,
+        rgba(255,255,255,.05),
+        rgba(255,255,255,.01)
+    );
+
+    backdrop-filter:blur(15px);
+
+    box-shadow:0 20px 70px #0006;
+}
+
+.about p{
+    color:#b9bfd0;
+    line-height:1.9;
+    font-size:17px;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.grid{
+    max-width:1250px;
+    margin:auto;
+
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(240px,1fr));
+
+    gap:25px;
+}
+
+.card{
+    position:relative;
+
+    padding:30px;
+
+    min-height:250px;
+
+    border-radius:22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.08),
+            rgba(255,255,255,.025)
+        );
+
+    border:1px solid rgba(255,255,255,.1);
+
+    overflow:hidden;
+
+    transition:
+        transform .5s,
+        box-shadow .5s,
+        border .5s;
+
+    cursor:pointer;
+}
+
+.card::before{
+    content:"";
+    position:absolute;
+
+    width:150px;
+    height:150px;
+
+    background:#00d9ff33;
+    filter:blur(60px);
+
+    top:-80px;
+    right:-80px;
+
+    transition:.5s;
+}
+
+.card:hover{
+    transform:
+        translateY(-12px)
+        rotateX(3deg)
+        rotateY(-3deg);
+
+    border-color:#00d9ff66;
+
+    box-shadow:
+        0 25px 70px #0008,
+        0 0 30px #00d9ff11;
+}
+
+.card:hover::before{
+    transform:scale(2);
+}
+
+.icon{
+    font-size:42px;
+    margin-bottom:20px;
+
+    display:inline-block;
+
+    animation:iconFloat 3s infinite ease-in-out;
+}
+
+@keyframes iconFloat{
+    50%{
+        transform:translateY(-8px) rotate(4deg);
+    }
+}
+
+.card h3{
+    font-size:22px;
+    margin-bottom:12px;
+}
+
+.card p{
+    color:#9ba4bc;
+    line-height:1.7;
+}
+
+/* =========================
+   DEMO BUTTON
+========================= */
+
+.demo{
+    display:inline-block;
+    margin-top:20px;
+
+    color:#00d9ff;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+    transition:.3s;
+}
+
+.demo:hover{
+    letter-spacing:1px;
+    text-shadow:0 0 15px #00d9ff;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+    max-width:1000px;
+    margin:auto;
+
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(180px,1fr));
+
+    gap:20px;
+
+    text-align:center;
+}
+
+.stat{
+    padding:30px;
+    border-radius:20px;
+    background:#ffffff08;
+    border:1px solid #ffffff12;
+}
+
+.stat-number{
+    font-size:45px;
+    font-weight:900;
+
+    color:#00d9ff;
+
+    text-shadow:0 0 25px #00d9ff55;
+}
+
+/* =========================
+   CALL TO ACTION
+========================= */
+
+.cta{
+    max-width:1000px;
+    margin:auto;
+
+    text-align:center;
+
+    padding:80px 30px;
+
+    border-radius:35px;
+
+    background:
+        radial-gradient(circle at center,#713cff22,transparent 60%),
+        #ffffff05;
+
+    border:1px solid #ffffff15;
+
+    overflow:hidden;
+}
+
+.cta h2{
+    font-size:clamp(35px,5vw,60px);
+    margin-bottom:20px;
+}
+
+.cta p{
+    color:#9ba4bc;
+    margin-bottom:30px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    text-align:center;
+    padding:40px 20px;
+
+    color:#667088;
+
+    border-top:1px solid #ffffff0d;
+}
+
+/* =========================
+   SCROLL REVEAL
+========================= */
+
+.reveal{
+    opacity:0;
+    transform:translateY(60px);
+    transition:1s ease;
+}
+
+.reveal.active{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px){
+
+    nav{
+        padding:13px 18px;
+    }
+
+    nav .links{
+        display:none;
+    }
+
+    .hero h1{
+        letter-spacing:-3px;
+    }
+
+    section{
+        padding:80px 5%;
+    }
+
+    .about{
+        padding:25px;
+    }
+
+    .card{
+        min-height:220px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- PARTICLES -->
+
+<div class="particles">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+
+<!-- NAVIGATION -->
+
+<nav>
+
+    <div class="logo">
+        EPIC<span>PAGES</span>
+    </div>
+
+    <div class="links">
+        <a href="#about">About</a>
+        <a href="#demos">Demos</a>
+        <a href="#features">Features</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+</nav>
+
+
+<!-- HERO -->
+
+<header class="hero">
+
+    <div class="badge">
+        ✦ NEXT-GENERATION WEB EXPERIENCES
+    </div>
+
+    <h1>EPICPAGES</h1>
+
+    <div class="subtitle">
+        Potential <strong>[DEMO]</strong> of different kinds of webpages
+    </div>
+
+    <p class="hero-description">
+
+        EPICPAGES is a web-development concept focused on creating
+        modern, interactive and highly animated digital experiences.
+        From business dashboards to personal portfolios and community
+        platforms, every page can be designed around its purpose.
+
+    </p>
+
+    <div class="button-group">
+
+        <a href="#demos" class="btn primary">
+            Explore Demos ↓
+        </a>
+
+        <a href="#about" class="btn">
+            Discover EPICPAGES
+        </a>
+
+    </div>
+
+</header>
+
+
+<!-- ABOUT -->
+
+<section id="about">
+
+    <div class="section-title reveal">
+
+        <h2>What is EPICPAGES?</h2>
+
+        <p>
+            Turning ordinary webpages into interactive experiences.
+        </p>
+
+    </div>
+
+    <div class="about reveal">
+
+        <p>
+
+            EPICPAGES represents a collection of potential website
+            experiences that can be developed for different purposes.
+            Instead of using the same layout for every project,
+            each webpage can have its own identity, animations,
+            navigation system and interactive features.
+
+            <br><br>
+
+            Whether you need a professional business website,
+            a data visualization dashboard, a customer portal,
+            a portfolio, a review community or an appointment system,
+            EPICPAGES can provide the foundation for building it.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- DEMOS -->
+
+<section id="demos">
+
+    <div class="section-title reveal">
+
+        <h2>Potential Webpage Experiences</h2>
+
+        <p>
+            Select an experience to explore its concept.
+        </p>
+
+    </div>
+
+
+    <div class="grid">
+
+
+        <!-- GRAPH -->
+
+        <div class="card reveal">
+
+            <div class="icon">📊</div>
+
+            <h3>Graphs & Data</h3>
+
+            <p>
+                Interactive dashboards, statistics,
+                charts, analytics and visual data systems.
+            </p>
+
+            <a href="#" class="demo">
+                Explore Demo →
+            </a>
+
+        </div>
+
+
+        <!-- USER -->
+
+        <div class="card reveal">
+
+            <div class="icon">👤</div>
+
+            <h3>User Based</h3>
+
+            <p>
+                Login-based platforms where users can
+                access their own profiles, records and content.
+            </p>
+
+            <a href="#" class="demo">
+                Explore Demo →
+            </a>
+
+        </div>
+
+
+        <!-- PORTFOLIO -->
+
+        <div class="card reveal">
+
+            <div class="icon">🚀</div>
+
+            <h3>Portfolio</h3>
+
+            <p>
+                Modern personal and professional portfolios
+                designed to showcase projects and achievements.
+            </p>
+
+            <a href="#" class="demo">
+                Explore Demo →
+            </a>
+
+        </div>
+
+
+        <!-- COMMUNITY -->
+
+        <div class="card reveal">
+
+            <div class="icon">💬</div>
+
+            <h3>Reviews & Community</h3>
+
+            <p>
+                Community reviews, discussions, feedback
+                systems and interactive communication spaces.
+            </p>
+
+            <a href="#" class="demo">
+                Explore Demo →
+            </a>
+
+        </div>
+
+
+        <!-- BOOKING -->
+
+        <div class="card reveal">
+
+            <div class="icon">📅</div>
+
+            <h3>Bookings & Tickets</h3>
+
+            <p>
+                Appointment scheduling, event registration,
+                ticket systems and reservation interfaces.
+            </p>
+
+            <a href="#" class="demo">
+                Explore Demo →
+            </a>
+
+        </div>
+
+
+        <!-- INTERACTIVE -->
+
+        <div class="card reveal">
+
+            <div class="icon">⚡</div>
+
+            <h3>Highly Interactive</h3>
+
+            <p>
+                Dynamic interfaces with animations,
+                transitions, interactive components and effects.
+            </p>
+
+            <a href="#" class="demo">
+                Explore Demo →
+            </a>
+
+        </div>
+
+
+        <!-- ANIMATED -->
+
+        <div class="card reveal">
+
+            <div class="icon">✨</div>
+
+            <h3>Highly Animated</h3>
+
+            <p>
+                Scroll animations, glowing elements,
+                floating objects and cinematic transitions.
+            </p>
+
+            <a href="#" class="demo">
+                Explore Demo →
+            </a>
+
+        </div>
+
+
+        <!-- CUSTOM -->
+
+        <div class="card reveal">
+
+            <div class="icon">🧩</div>
+
+            <h3>Custom Experiences</h3>
+
+            <p>
+                Unique webpage concepts designed specifically
+                around a business, organization or project.
+            </p>
+
+            <a href="#" class="demo">
+                Explore Demo →
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FEATURES -->
+
+<section id="features">
+
+    <div class="section-title reveal">
+
+        <h2>Built for Possibilities</h2>
+
+        <p>
+            A webpage doesn't have to be static.
+        </p>
+
+    </div>
+
+
+    <div class="stats">
+
+        <div class="stat reveal">
+
+            <div class="stat-number" data-target="100">0</div>
+
+            <p>
+                Creative Possibilities
+            </p>
+
+        </div>
+
+
+        <div class="stat reveal">
+
+            <div class="stat-number" data-target="24">0</div>
+
+            <p>
+                Interactive Concepts
+            </p>
+
+        </div>
+
+
+        <div class="stat reveal">
+
+            <div class="stat-number" data-target="∞">0</div>
+
+            <p>
+                Design Potential
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CTA -->
+
+<section id="contact">
+
+    <div class="cta reveal">
+
+        <h2>
+            Imagine It.
+            <br>
+            Build It.
+            <br>
+            Make It EPIC.
+        </h2>
+
+        <p>
+            EPICPAGES — exploring what webpages can become.
+        </p>
+
+        <div class="button-group">
+
+            <a href="#" class="btn primary">
+                Start Exploring
+            </a>
+
+            <a href="#" class="btn">
+                Contact EPICPAGES
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    © 2026 EPICPAGES · A Burman Ventures Concept
+
+</footer>
+
+
+<script>
+
+/* =========================
+   SCROLL REVEAL
+========================= */
+
+const reveals = document.querySelectorAll(".reveal");
+
+function revealOnScroll(){
+
+    reveals.forEach(element => {
+
+        const windowHeight =
+            window.innerHeight;
+
+        const elementTop =
+            element.getBoundingClientRect().top;
+
+        if(elementTop < windowHeight - 80){
+            element.classList.add("active");
+        }
+
+    });
+
+}
+
+window.addEventListener(
+    "scroll",
+    revealOnScroll
+);
+
+revealOnScroll();
+
+
+/* =========================
+   ANIMATED COUNTERS
+========================= */
+
+const counters =
+    document.querySelectorAll(".stat-number");
+
+let countersStarted = false;
+
+function startCounters(){
+
+    if(countersStarted) return;
+
+    const section =
+        document.querySelector(".stats");
+
+    const position =
+        section.getBoundingClientRect().top;
+
+    if(position < window.innerHeight - 100){
+
+        countersStarted = true;
+
+        counters.forEach(counter => {
+
+            const target =
+                counter.dataset.target;
+
+            if(target === "∞"){
+                counter.innerText = "∞";
+                return;
+            }
+
+            let current = 0;
+
+            const increment =
+                target / 50;
+
+            const update = () => {
+
+                current += increment;
+
+                if(current < target){
+
+                    counter.innerText =
+                        Math.ceil(current);
+
+                    requestAnimationFrame(update);
+
+                }else{
+
+                    counter.innerText =
+                        target + "+";
+
+                }
+
+            };
+
+            update();
+
+        });
+
+    }
+
+}
+
+window.addEventListener(
+    "scroll",
+    startCounters
+);
+
+
+/* =========================
+   MOUSE PARALLAX
+========================= */
+
+document.addEventListener(
+    "mousemove",
+    event => {
+
+        const x =
+            (event.clientX / window.innerWidth - .5) * 10;
+
+        const y =
+            (event.clientY / window.innerHeight - .5) * 10;
+
+        document.querySelector(".hero h1")
+            .style.transform =
+            `translate(${x}px,${y}px)`;
+
+    }
+);
+
+</script>
+
+</body>
+</html>
