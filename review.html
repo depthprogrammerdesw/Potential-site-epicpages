@@ -1,0 +1,1838 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EPICPAGES | Review & Rating</title>
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    overflow-x:hidden;
+    color:white;
+
+    background:
+        radial-gradient(circle at 15% 15%,#123b68 0,transparent 30%),
+        radial-gradient(circle at 85% 20%,#42205f 0,transparent 30%),
+        radial-gradient(circle at 50% 90%,#073d3c 0,transparent 35%),
+        #030811;
+}
+
+
+/* =====================================================
+   ANIMATED BACKGROUND
+===================================================== */
+
+.background-orb{
+    position:fixed;
+    width:280px;
+    height:280px;
+
+    border-radius:50%;
+
+    filter:blur(80px);
+
+    opacity:.35;
+
+    pointer-events:none;
+
+    z-index:-1;
+
+    animation:orbFloat 9s ease-in-out infinite alternate;
+}
+
+.orb1{
+    top:10%;
+    left:-100px;
+    background:#008cff;
+}
+
+.orb2{
+    top:45%;
+    right:-100px;
+    background:#a12cff;
+    animation-delay:2s;
+}
+
+.orb3{
+    bottom:-120px;
+    left:35%;
+    background:#00d9b5;
+    animation-delay:4s;
+}
+
+@keyframes orbFloat{
+
+    from{
+        transform:translate(0,0) scale(1);
+    }
+
+    to{
+        transform:translate(70px,-50px) scale(1.2);
+    }
+}
+
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+
+nav{
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+
+    z-index:1000;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:18px 7%;
+
+    background:rgba(3,8,17,.65);
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+}
+
+.logo{
+    font-size:24px;
+    font-weight:900;
+    letter-spacing:4px;
+}
+
+.logo span{
+    color:#31a4ff;
+}
+
+nav a{
+    color:#aebdca;
+    text-decoration:none;
+
+    margin-left:25px;
+
+    font-size:14px;
+
+    transition:.3s;
+}
+
+nav a:hover{
+    color:white;
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero{
+
+    min-height:65vh;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    padding:130px 20px 70px;
+}
+
+.hero-content{
+
+    max-width:900px;
+
+    animation:heroEnter 1.2s ease;
+}
+
+@keyframes heroEnter{
+
+    from{
+        opacity:0;
+        transform:translateY(50px) scale(.95);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+.hero-badge{
+
+    display:inline-block;
+
+    padding:9px 18px;
+
+    border-radius:30px;
+
+    background:rgba(255,255,255,.07);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    color:#70c3ff;
+
+    margin-bottom:22px;
+}
+
+.hero h1{
+
+    font-size:clamp(45px,8vw,85px);
+
+    line-height:1;
+
+    letter-spacing:-3px;
+}
+
+.gradient{
+
+    background:
+        linear-gradient(
+            90deg,
+            #28a0ff,
+            #9d52ff,
+            #00d9b5
+        );
+
+    -webkit-background-clip:text;
+
+    color:transparent;
+
+    background-size:200%;
+
+    animation:gradientMove 5s linear infinite;
+}
+
+@keyframes gradientMove{
+
+    0%{
+        background-position:0%;
+    }
+
+    100%{
+        background-position:200%;
+    }
+}
+
+.hero p{
+
+    max-width:700px;
+
+    margin:25px auto;
+
+    color:#91a4b7;
+
+    line-height:1.7;
+
+    font-size:17px;
+}
+
+
+/* =====================================================
+   MAIN REVIEW AREA
+===================================================== */
+
+.review-section{
+
+    max-width:1150px;
+
+    margin:auto;
+
+    padding:20px;
+}
+
+
+/* =====================================================
+   RATING SUMMARY
+===================================================== */
+
+.rating-summary{
+
+    display:grid;
+
+    grid-template-columns:260px 1fr;
+
+    gap:25px;
+
+    margin-bottom:30px;
+}
+
+.rating-score{
+
+    padding:30px;
+
+    text-align:center;
+
+    border-radius:24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.10),
+            rgba(255,255,255,.035)
+        );
+
+    border:1px solid rgba(255,255,255,.12);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.25);
+}
+
+.rating-number{
+
+    font-size:65px;
+
+    font-weight:900;
+}
+
+.stars{
+
+    color:#ffc83d;
+
+    font-size:25px;
+
+    letter-spacing:3px;
+
+    margin:5px 0;
+}
+
+.rating-score p{
+
+    color:#899cad;
+
+    font-size:13px;
+}
+
+
+/* =====================================================
+   RATING BARS
+===================================================== */
+
+.rating-bars{
+
+    padding:30px;
+
+    border-radius:24px;
+
+    background:rgba(255,255,255,.055);
+
+    border:1px solid rgba(255,255,255,.10);
+}
+
+.bar-row{
+
+    display:grid;
+
+    grid-template-columns:45px 1fr 45px;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:14px;
+
+    color:#9aabba;
+
+    font-size:13px;
+}
+
+.bar{
+
+    height:9px;
+
+    border-radius:20px;
+
+    background:#182635;
+
+    overflow:hidden;
+}
+
+.bar-fill{
+
+    height:100%;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #168cff,
+            #9d52ff
+        );
+
+    animation:barLoad 1.5s ease;
+}
+
+@keyframes barLoad{
+
+    from{
+        width:0;
+    }
+}
+
+
+/* =====================================================
+   CHATBOX
+===================================================== */
+
+.chat-container{
+
+    padding:30px;
+
+    border-radius:28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.09),
+            rgba(255,255,255,.025)
+        );
+
+    border:1px solid rgba(255,255,255,.13);
+
+    box-shadow:
+        0 30px 90px rgba(0,0,0,.35);
+
+    backdrop-filter:blur(20px);
+}
+
+
+/* CHAT HEADER */
+
+.chat-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding-bottom:20px;
+
+    margin-bottom:20px;
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.avatar{
+
+    width:50px;
+    height:50px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #168cff,
+            #963eff
+        );
+
+    font-size:22px;
+
+    box-shadow:
+        0 0 25px rgba(22,140,255,.35);
+}
+
+.chat-header h3{
+    font-size:17px;
+}
+
+.online{
+
+    color:#48df9c;
+
+    font-size:12px;
+
+    margin-top:4px;
+}
+
+
+/* =====================================================
+   CHAT MESSAGES
+===================================================== */
+
+.chat-messages{
+
+    height:430px;
+
+    overflow-y:auto;
+
+    padding:10px;
+
+    scroll-behavior:smooth;
+}
+
+.chat-messages::-webkit-scrollbar{
+    width:5px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb{
+    background:#31485d;
+    border-radius:20px;
+}
+
+.message{
+
+    max-width:75%;
+
+    margin-bottom:18px;
+
+    animation:
+        messageIn .45s ease;
+}
+
+@keyframes messageIn{
+
+    from{
+        opacity:0;
+        transform:translateY(15px) scale(.95);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+.message-left{
+    margin-right:auto;
+}
+
+.message-right{
+    margin-left:auto;
+}
+
+.bubble{
+
+    padding:14px 17px;
+
+    border-radius:18px;
+
+    line-height:1.5;
+
+    font-size:14px;
+}
+
+.message-left .bubble{
+
+    background:#142333;
+
+    border-bottom-left-radius:4px;
+
+    color:#d7e3ed;
+}
+
+.message-right .bubble{
+
+    background:
+        linear-gradient(
+            135deg,
+            #147edb,
+            #7139bb
+        );
+
+    border-bottom-right-radius:4px;
+}
+
+.message-time{
+
+    margin-top:5px;
+
+    color:#627487;
+
+    font-size:10px;
+}
+
+.message-right .message-time{
+    text-align:right;
+}
+
+
+/* =====================================================
+   TYPING ANIMATION
+===================================================== */
+
+.typing{
+
+    display:flex;
+
+    gap:5px;
+
+    padding:12px 15px;
+
+    width:max-content;
+
+    border-radius:15px;
+
+    background:#142333;
+}
+
+.typing span{
+
+    width:6px;
+    height:6px;
+
+    border-radius:50%;
+
+    background:#7f95a8;
+
+    animation:typing 1s infinite;
+}
+
+.typing span:nth-child(2){
+    animation-delay:.15s;
+}
+
+.typing span:nth-child(3){
+    animation-delay:.3s;
+}
+
+@keyframes typing{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-5px);
+    }
+}
+
+
+/* =====================================================
+   REVIEW INPUT
+===================================================== */
+
+.review-form{
+
+    margin-top:25px;
+
+    padding-top:25px;
+
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+.review-form h3{
+    margin-bottom:15px;
+}
+
+textarea{
+
+    width:100%;
+
+    min-height:100px;
+
+    resize:vertical;
+
+    padding:15px;
+
+    border-radius:14px;
+
+    border:1px solid #263b4e;
+
+    outline:none;
+
+    background:#091521;
+
+    color:white;
+
+    font-size:14px;
+
+    transition:.3s;
+}
+
+textarea:focus{
+
+    border-color:#258fff;
+
+    box-shadow:
+        0 0 20px rgba(37,143,255,.12);
+}
+
+
+/* =====================================================
+   STAR INPUT
+===================================================== */
+
+.star-input{
+
+    display:flex;
+
+    flex-direction:row-reverse;
+
+    justify-content:flex-end;
+
+    gap:5px;
+
+    margin:15px 0;
+}
+
+.star-input input{
+    display:none;
+}
+
+.star-input label{
+
+    font-size:30px;
+
+    color:#354452;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.star-input label:hover,
+.star-input label:hover ~ label,
+.star-input input:checked ~ label{
+
+    color:#ffc83d;
+
+    transform:scale(1.15);
+}
+
+
+/* =====================================================
+   SUBMIT BUTTON
+===================================================== */
+
+.submit{
+
+    width:100%;
+
+    padding:14px;
+
+    border:0;
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #168cff,
+            #8d42e8
+        );
+
+    color:white;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.submit:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 12px 30px rgba(72,85,255,.25);
+}
+
+
+/* =====================================================
+   REVIEW CARDS
+===================================================== */
+
+.reviews{
+
+    margin-top:30px;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:20px;
+}
+
+.review-card{
+
+    padding:25px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.055);
+
+    border:1px solid rgba(255,255,255,.10);
+
+    opacity:0;
+
+    transform:translateY(30px);
+
+    animation:cardAppear .7s forwards;
+}
+
+.review-card:nth-child(2){
+    animation-delay:.15s;
+}
+
+.review-card:nth-child(3){
+    animation-delay:.3s;
+}
+
+@keyframes cardAppear{
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.review-user{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:15px;
+}
+
+.user-avatar{
+
+    width:40px;
+    height:40px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:#20374c;
+}
+
+.review-user h4{
+    font-size:14px;
+}
+
+.review-card .stars{
+    font-size:16px;
+    margin-bottom:12px;
+}
+
+.review-card p{
+
+    color:#9babb9;
+
+    font-size:13px;
+
+    line-height:1.7;
+}
+
+
+/* =====================================================
+   POPUP
+===================================================== */
+
+.popup{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:5000;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    background:rgba(0,0,0,.72);
+
+    backdrop-filter:blur(10px);
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.35s;
+}
+
+.popup.active{
+
+    opacity:1;
+
+    visibility:visible;
+}
+
+.popup-box{
+
+    width:100%;
+
+    max-width:500px;
+
+    padding:35px;
+
+    text-align:center;
+
+    border-radius:25px;
+
+    background:#0c1927;
+
+    border:1px solid rgba(255,255,255,.15);
+
+    transform:
+        scale(.8)
+        translateY(30px);
+
+    transition:.4s;
+}
+
+.popup.active .popup-box{
+
+    transform:
+        scale(1)
+        translateY(0);
+}
+
+.popup-icon{
+
+    font-size:55px;
+
+    margin-bottom:15px;
+
+    animation:popIcon .7s ease;
+}
+
+@keyframes popIcon{
+
+    0%{
+        transform:scale(.3) rotate(-20deg);
+    }
+
+    70%{
+        transform:scale(1.15) rotate(5deg);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+}
+
+.popup-box h2{
+    margin-bottom:10px;
+}
+
+.popup-box p{
+    color:#91a4b7;
+    line-height:1.6;
+}
+
+.popup-close{
+
+    margin-top:20px;
+
+    padding:11px 25px;
+
+    border:0;
+
+    border-radius:9px;
+
+    background:#168cff;
+
+    color:white;
+
+    cursor:pointer;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer{
+
+    text-align:center;
+
+    padding:45px 20px;
+
+    color:#64788a;
+
+    font-size:13px;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:850px){
+
+    nav a{
+        display:none;
+    }
+
+    .rating-summary{
+        grid-template-columns:1fr;
+    }
+
+    .reviews{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .hero{
+        padding-top:120px;
+    }
+
+    .hero h1{
+        font-size:45px;
+    }
+
+    .chat-container{
+        padding:18px;
+        border-radius:20px;
+    }
+
+    .chat-messages{
+        height:380px;
+    }
+
+    .message{
+        max-width:88%;
+    }
+
+    .rating-score{
+        padding:25px;
+    }
+
+    .rating-number{
+        font-size:55px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- BACKGROUND -->
+
+<div class="background-orb orb1"></div>
+<div class="background-orb orb2"></div>
+<div class="background-orb orb3"></div>
+
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<nav>
+
+    <div class="logo">
+        EPIC<span>PAGES</span>
+    </div>
+
+    <div>
+
+        <a href="#home">
+            Home
+        </a>
+
+        <a href="#reviews">
+            Reviews
+        </a>
+
+        <a href="#write">
+            Write Review
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section
+    class="hero"
+    id="home"
+>
+
+    <div class="hero-content">
+
+        <div class="hero-badge">
+            CUSTOMER FEEDBACK SYSTEM
+        </div>
+
+        <h1>
+
+            Your Opinion
+            <br>
+
+            <span class="gradient">
+                Matters.
+
+            </span>
+
+        </h1>
+
+        <p>
+
+            A highly animated review and rating
+            experience designed to make customer
+            feedback interactive, modern and engaging.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     REVIEW SECTION
+===================================================== -->
+
+<main
+    class="review-section"
+    id="reviews"
+>
+
+
+    <!-- RATING SUMMARY -->
+
+    <div class="rating-summary">
+
+
+        <div class="rating-score">
+
+            <div class="rating-number">
+                4.8
+            </div>
+
+            <div class="stars">
+                ★★★★★
+            </div>
+
+            <p>
+                Based on 248 reviews
+            </p>
+
+        </div>
+
+
+        <div class="rating-bars">
+
+            <div class="bar-row">
+
+                <span>5★</span>
+
+                <div class="bar">
+                    <div
+                        class="bar-fill"
+                        style="width:88%"
+                    ></div>
+                </div>
+
+                <span>88%</span>
+
+            </div>
+
+
+            <div class="bar-row">
+
+                <span>4★</span>
+
+                <div class="bar">
+                    <div
+                        class="bar-fill"
+                        style="width:76%"
+                    ></div>
+                </div>
+
+                <span>76%</span>
+
+            </div>
+
+
+            <div class="bar-row">
+
+                <span>3★</span>
+
+                <div class="bar">
+                    <div
+                        class="bar-fill"
+                        style="width:28%"
+                    ></div>
+                </div>
+
+                <span>28%</span>
+
+            </div>
+
+
+            <div class="bar-row">
+
+                <span>2★</span>
+
+                <div class="bar">
+                    <div
+                        class="bar-fill"
+                        style="width:10%"
+                    ></div>
+                </div>
+
+                <span>10%</span>
+
+            </div>
+
+
+            <div class="bar-row">
+
+                <span>1★</span>
+
+                <div class="bar">
+                    <div
+                        class="bar-fill"
+                        style="width:5%"
+                    ></div>
+                </div>
+
+                <span>5%</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         CHATBOX
+    ================================================= -->
+
+    <div class="chat-container">
+
+        <div class="chat-header">
+
+            <div class="avatar">
+                💬
+            </div>
+
+            <div>
+
+                <h3>
+                    Customer Reviews
+                </h3>
+
+                <div class="online">
+                    ● Live feedback
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="chat-messages"
+            id="chatMessages"
+        >
+
+
+            <!-- MESSAGE 1 -->
+
+            <div class="message message-left">
+
+                <div class="bubble">
+
+                    I recently used the service and
+                    honestly loved the experience!
+
+                </div>
+
+                <div class="message-time">
+                    Alex • 2 min ago
+                </div>
+
+            </div>
+
+
+            <!-- MESSAGE 2 -->
+
+            <div class="message message-right">
+
+                <div class="bubble">
+
+                    What did you like most about it?
+
+                </div>
+
+                <div class="message-time">
+                    You • 2 min ago
+                </div>
+
+            </div>
+
+
+            <!-- MESSAGE 3 -->
+
+            <div class="message message-left">
+
+                <div class="bubble">
+
+                    The interface was really smooth,
+                    and everything was easy to understand.
+
+                </div>
+
+                <div class="message-time">
+                    Alex • 1 min ago
+                </div>
+
+            </div>
+
+
+            <!-- TYPING -->
+
+            <div
+                class="message message-left"
+                id="typingMessage"
+            >
+
+                <div class="typing">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             REVIEW FORM
+        ================================================= -->
+
+        <div
+            class="review-form"
+            id="write"
+        >
+
+            <h3>
+                Leave Your Review
+            </h3>
+
+
+            <!-- STAR RATING -->
+
+            <div class="star-input">
+
+                <input
+                    type="radio"
+                    id="star5"
+                    name="rating"
+                    value="5"
+                >
+
+                <label for="star5">
+                    ★
+                </label>
+
+
+                <input
+                    type="radio"
+                    id="star4"
+                    name="rating"
+                    value="4"
+                >
+
+                <label for="star4">
+                    ★
+                </label>
+
+
+                <input
+                    type="radio"
+                    id="star3"
+                    name="rating"
+                    value="3"
+                >
+
+                <label for="star3">
+                    ★
+                </label>
+
+
+                <input
+                    type="radio"
+                    id="star2"
+                    name="rating"
+                    value="2"
+                >
+
+                <label for="star2">
+                    ★
+                </label>
+
+
+                <input
+                    type="radio"
+                    id="star1"
+                    name="rating"
+                    value="1"
+                >
+
+                <label for="star1">
+                    ★
+                </label>
+
+            </div>
+
+
+            <textarea
+                id="reviewText"
+                placeholder="Write your experience here..."
+            ></textarea>
+
+
+            <button
+                class="submit"
+                onclick="submitReview()"
+            >
+                POST REVIEW
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         REVIEW CARDS
+    ================================================= -->
+
+    <div class="reviews">
+
+
+        <div class="review-card">
+
+            <div class="review-user">
+
+                <div class="user-avatar">
+                    A
+                </div>
+
+                <h4>
+                    Alex
+                </h4>
+
+            </div>
+
+            <div class="stars">
+                ★★★★★
+            </div>
+
+            <p>
+                Fantastic experience. The website was
+                smooth, modern and extremely easy to use.
+            </p>
+
+        </div>
+
+
+        <div class="review-card">
+
+            <div class="review-user">
+
+                <div class="user-avatar">
+                    R
+                </div>
+
+                <h4>
+                    Rahul
+                </h4>
+
+            </div>
+
+            <div class="stars">
+                ★★★★★
+            </div>
+
+            <p>
+                Very professional service. I especially
+                liked the clean interface and fast response.
+            </p>
+
+        </div>
+
+
+        <div class="review-card">
+
+            <div class="review-user">
+
+                <div class="user-avatar">
+                    S
+                </div>
+
+                <h4>
+                    Sarah
+                </h4>
+
+            </div>
+
+            <div class="stars">
+                ★★★★☆
+            </div>
+
+            <p>
+                Great overall experience. Everything was
+                organized and easy to understand.
+            </p>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- =====================================================
+     POPUP
+===================================================== -->
+
+<div
+    class="popup"
+    id="popup"
+    onclick="closeOutside(event)"
+>
+
+    <div class="popup-box">
+
+        <div class="popup-icon">
+            🎉
+        </div>
+
+        <h2>
+            Review Submitted!
+        </h2>
+
+        <p>
+            Thank you for sharing your experience.
+            Your review has been added to this demo.
+        </p>
+
+        <button
+            class="popup-close"
+            onclick="closePopup()"
+        >
+            DONE
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    EPICPAGES © 2026
+
+    <br><br>
+
+    Animated Review & Rating Demo
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+   SUBMIT REVIEW
+===================================================== */
+
+function submitReview(){
+
+    const review =
+        document.getElementById(
+            "reviewText"
+        ).value.trim();
+
+
+    const rating =
+        document.querySelector(
+            'input[name="rating"]:checked'
+        );
+
+
+    if(!rating){
+
+        alert(
+            "Please select a star rating first."
+        );
+
+        return;
+
+    }
+
+
+    if(!review){
+
+        alert(
+            "Please write a review first."
+        );
+
+        return;
+
+    }
+
+
+    /*
+       Add review to chat
+    */
+
+    const chat =
+        document.getElementById(
+            "chatMessages"
+        );
+
+
+    const message =
+        document.createElement(
+            "div"
+        );
+
+    message.className =
+        "message message-right";
+
+
+    message.innerHTML = `
+
+        <div class="bubble">
+
+            ${escapeHTML(review)}
+
+            <br>
+
+            <span
+                style="
+                    color:#ffc83d;
+                    letter-spacing:2px;
+                "
+            >
+                ${"★".repeat(
+                    Number(rating.value)
+                )}
+            </span>
+
+        </div>
+
+        <div class="message-time">
+            You • Just now
+        </div>
+
+    `;
+
+
+    chat.appendChild(message);
+
+
+    chat.scrollTop =
+        chat.scrollHeight;
+
+
+    document.getElementById(
+        "reviewText"
+    ).value = "";
+
+
+    document.querySelectorAll(
+        'input[name="rating"]'
+    ).forEach(
+        radio => radio.checked = false
+    );
+
+
+    openPopup();
+
+}
+
+
+/* =====================================================
+   BASIC HTML ESCAPE
+===================================================== */
+
+function escapeHTML(text){
+
+    const div =
+        document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   POPUP
+===================================================== */
+
+function openPopup(){
+
+    document.getElementById(
+        "popup"
+    ).classList.add("active");
+
+}
+
+
+function closePopup(){
+
+    document.getElementById(
+        "popup"
+    ).classList.remove("active");
+
+}
+
+
+function closeOutside(event){
+
+    if(
+        event.target ===
+        document.getElementById("popup")
+    ){
+
+        closePopup();
+
+    }
+
+}
+
+
+/* =====================================================
+   ESCAPE KEY
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Escape"){
+
+            closePopup();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   FAKE TYPING MESSAGE
+===================================================== */
+
+setTimeout(
+
+    function(){
+
+        const typing =
+            document.getElementById(
+                "typingMessage"
+            );
+
+        if(typing){
+
+            typing.remove();
+
+
+            const message =
+                document.createElement(
+                    "div"
+                );
+
+            message.className =
+                "message message-left";
+
+
+            message.innerHTML = `
+
+                <div class="bubble">
+
+                    Thanks for your feedback!
+                    ⭐
+
+                </div>
+
+                <div class="message-time">
+                    System • Just now
+                </div>
+
+            `;
+
+
+            document.getElementById(
+                "chatMessages"
+            ).appendChild(message);
+
+        }
+
+    },
+
+    3000
+
+);
+
+</script>
+
+</body>
+</html>
+```
