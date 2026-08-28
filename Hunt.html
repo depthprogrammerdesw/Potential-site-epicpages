@@ -1,0 +1,2314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Forest Hunt | EPICPAGES</title>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    cursor:crosshair;
+}
+
+
+/* =========================================================
+   WORLD
+========================================================= */
+
+.world{
+    position:relative;
+
+    width:100vw;
+    height:100vh;
+
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #55b7e7 0%,
+            #9dd9ef 42%,
+            #cde7b0 43%,
+            #72b94f 100%
+        );
+}
+
+
+/* =========================================================
+   SUN
+========================================================= */
+
+.sun{
+    position:absolute;
+
+    width:105px;
+    height:105px;
+
+    top:7%;
+    right:8%;
+
+    border-radius:50%;
+
+    background:#ffe082;
+
+    box-shadow:
+        0 0 35px #ffe082,
+        0 0 90px rgba(255,224,130,.5);
+}
+
+
+/* =========================================================
+   CLOUDS
+========================================================= */
+
+.cloud{
+    position:absolute;
+
+    width:160px;
+    height:42px;
+
+    border-radius:50px;
+
+    background:rgba(255,255,255,.7);
+
+    animation:
+        cloudMove linear infinite;
+
+    pointer-events:none;
+}
+
+.cloud::before,
+.cloud::after{
+    content:"";
+
+    position:absolute;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.7);
+}
+
+.cloud::before{
+    width:65px;
+    height:65px;
+
+    left:25px;
+    bottom:4px;
+}
+
+.cloud::after{
+    width:50px;
+    height:50px;
+
+    right:20px;
+    bottom:0;
+}
+
+.cloud1{
+    top:12%;
+    left:-220px;
+
+    animation-duration:45s;
+}
+
+.cloud2{
+    top:25%;
+    left:-400px;
+
+    animation-duration:60s;
+    animation-delay:10s;
+}
+
+@keyframes cloudMove{
+
+    from{
+        transform:translateX(-220px);
+    }
+
+    to{
+        transform:translateX(130vw);
+    }
+}
+
+
+/* =========================================================
+   DISTANT FOREST
+========================================================= */
+
+.distantForest{
+    position:absolute;
+
+    left:0;
+    right:0;
+    bottom:28%;
+
+    height:35%;
+
+    display:flex;
+
+    justify-content:space-around;
+
+    align-items:flex-end;
+
+    opacity:.48;
+
+    pointer-events:none;
+}
+
+.distantTree{
+    font-size:
+        clamp(45px,7vw,95px);
+
+    filter:
+        brightness(.72)
+        blur(.4px);
+}
+
+
+/* =========================================================
+   GROUND
+========================================================= */
+
+.ground{
+    position:absolute;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    height:38%;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #78b950,
+            #5b9d40 55%,
+            #3f7834
+        );
+}
+
+.ground::before{
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    opacity:.3;
+
+    background:
+        repeating-linear-gradient(
+            105deg,
+            transparent 0,
+            transparent 30px,
+            rgba(30,85,25,.25) 31px,
+            transparent 34px
+        );
+}
+
+
+/* =========================================================
+   BUSHES
+========================================================= */
+
+.bushArea{
+    position:absolute;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    height:29%;
+
+    z-index:30;
+
+    pointer-events:none;
+}
+
+.bush{
+    position:absolute;
+
+    bottom:-12px;
+
+    width:210px;
+    height:140px;
+}
+
+.bush span{
+    position:absolute;
+
+    display:block;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 25%,
+            #78b64b 0%,
+            #4b8b35 45%,
+            #285e2b 100%
+        );
+
+    box-shadow:
+        inset -12px -12px 20px rgba(0,0,0,.2),
+        inset 8px 8px 14px rgba(255,255,255,.08);
+}
+
+.bush span:nth-child(1){
+    width:105px;
+    height:92px;
+
+    left:0;
+    bottom:5px;
+}
+
+.bush span:nth-child(2){
+    width:135px;
+    height:112px;
+
+    left:42px;
+    bottom:0;
+}
+
+.bush span:nth-child(3){
+    width:105px;
+    height:92px;
+
+    right:0;
+    bottom:5px;
+}
+
+.bush span:nth-child(4){
+    width:82px;
+    height:75px;
+
+    left:67px;
+    bottom:63px;
+}
+
+.bush::after{
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    height:45px;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(25,65,28,.6),
+            transparent 70%
+        );
+
+    filter:blur(4px);
+}
+
+.bush1{
+    left:-30px;
+    transform:scale(1.15);
+}
+
+.bush2{
+    left:18%;
+    transform:scale(.82);
+}
+
+.bush3{
+    right:19%;
+    transform:scale(1.05);
+}
+
+.bush4{
+    right:-35px;
+    transform:scale(1.2);
+}
+
+
+/* =========================================================
+   CAT
+========================================================= */
+
+.cat{
+    position:absolute;
+
+    left:50%;
+    bottom:8%;
+
+    z-index:35;
+
+    font-size:65px;
+
+    opacity:0;
+
+    transform:
+        translate(-50%,120px);
+
+    transition:
+        transform .65s ease,
+        opacity .35s ease;
+
+    pointer-events:none;
+}
+
+.cat.show{
+    opacity:1;
+
+    transform:
+        translate(-50%,0);
+}
+
+.cat.hide{
+    opacity:0;
+
+    transform:
+        translate(-50%,120px);
+}
+
+
+/* =========================================================
+   TOP UI
+========================================================= */
+
+.topUI{
+    position:absolute;
+
+    top:18px;
+    left:18px;
+    right:18px;
+
+    z-index:200;
+
+    display:flex;
+
+    justify-content:space-between;
+    align-items:center;
+
+    pointer-events:none;
+}
+
+.title{
+    color:white;
+
+    font-size:
+        clamp(20px,3.5vw,36px);
+
+    font-weight:900;
+
+    text-shadow:
+        2px 3px 0 #315b29,
+        0 5px 15px rgba(0,0,0,.35);
+}
+
+.scoreBox{
+    min-width:100px;
+
+    padding:9px 18px;
+
+    text-align:center;
+
+    border-radius:18px;
+
+    color:white;
+
+    background:
+        rgba(30,55,28,.8);
+
+    border:
+        2px solid rgba(255,255,255,.35);
+
+    backdrop-filter:blur(8px);
+}
+
+.scoreLabel{
+    font-size:11px;
+    opacity:.75;
+}
+
+.score{
+    font-size:30px;
+    font-weight:900;
+}
+
+
+/* =========================================================
+   HUNTER PANEL
+========================================================= */
+
+.hunterPanel{
+    position:absolute;
+
+    left:50%;
+    bottom:17px;
+
+    transform:translateX(-50%);
+
+    z-index:150;
+
+    min-width:230px;
+
+    padding:9px 18px;
+
+    border-radius:17px;
+
+    text-align:center;
+
+    color:white;
+
+    background:
+        rgba(30,52,27,.82);
+
+    border:
+        2px solid rgba(255,255,255,.3);
+
+    backdrop-filter:blur(7px);
+
+    pointer-events:none;
+}
+
+.hunterTitle{
+    font-size:14px;
+    font-weight:bold;
+}
+
+.hunterStatus{
+    margin-top:3px;
+    font-size:11px;
+    opacity:.8;
+}
+
+
+/* =========================================================
+   BIRD
+========================================================= */
+
+.bird{
+    position:absolute;
+
+    width:65px;
+    height:45px;
+
+    z-index:20;
+
+    cursor:crosshair;
+
+    user-select:none;
+
+    /*
+       This element moves horizontally.
+       Its direction is controlled by
+       the separate .birdVisual element.
+    */
+
+    pointer-events:auto;
+}
+
+
+/* =========================================================
+   BIRD VISUAL
+========================================================= */
+
+.birdVisual{
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    width:65px;
+    height:45px;
+
+    /*
+       Smooth gliding animation.
+    */
+
+    animation:
+        birdFloat .65s ease-in-out infinite alternate;
+}
+
+
+/* =========================================================
+   BIRD BODY
+========================================================= */
+
+.birdBody{
+    position:absolute;
+
+    width:34px;
+    height:22px;
+
+    left:17px;
+    top:15px;
+
+    border-radius:
+        55% 45% 45% 55%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #454545,
+            #181818
+        );
+
+    box-shadow:
+        0 4px 5px rgba(0,0,0,.22);
+}
+
+
+/* =========================================================
+   BIRD HEAD
+========================================================= */
+
+.birdHead{
+    position:absolute;
+
+    width:19px;
+    height:19px;
+
+    top:10px;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #555,
+            #202020
+        );
+}
+
+
+/*
+   Bird faces RIGHT
+*/
+
+.bird.right .birdHead{
+    right:6px;
+}
+
+
+/*
+   Bird faces LEFT
+*/
+
+.bird.left .birdHead{
+    left:6px;
+}
+
+
+/* =========================================================
+   EYE
+========================================================= */
+
+.birdHead::before{
+    content:"";
+
+    position:absolute;
+
+    width:4px;
+    height:4px;
+
+    top:5px;
+
+    border-radius:50%;
+
+    background:white;
+
+    box-shadow:
+        0 0 2px white;
+}
+
+.bird.right .birdHead::before{
+    right:4px;
+}
+
+.bird.left .birdHead::before{
+    left:4px;
+}
+
+
+/* =========================================================
+   BEAK
+========================================================= */
+
+.birdHead::after{
+    content:"";
+
+    position:absolute;
+
+    top:9px;
+
+    width:0;
+    height:0;
+
+    border-top:4px solid transparent;
+    border-bottom:4px solid transparent;
+}
+
+.bird.right .birdHead::after{
+
+    right:-8px;
+
+    border-left:
+        9px solid #e2a62c;
+}
+
+.bird.left .birdHead::after{
+
+    left:-8px;
+
+    border-right:
+        9px solid #e2a62c;
+}
+
+
+/* =========================================================
+   WINGS
+========================================================= */
+
+.wing{
+    position:absolute;
+
+    width:30px;
+    height:20px;
+
+    top:3px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #565656,
+            #242424
+        );
+
+    border-radius:
+        80% 20% 70% 30%;
+
+    transform-origin:
+        70% 90%;
+
+    animation:
+        wingFlap .22s ease-in-out infinite alternate;
+}
+
+
+/*
+   RIGHT-FACING bird
+*/
+
+.bird.right .wing{
+    left:10px;
+
+    transform:
+        rotate(-25deg);
+}
+
+
+/*
+   LEFT-FACING bird
+*/
+
+.bird.left .wing{
+    right:10px;
+
+    transform:
+        scaleX(-1)
+        rotate(-25deg);
+}
+
+
+/* =========================================================
+   WING FLAP
+========================================================= */
+
+@keyframes wingFlap{
+
+    from{
+        transform:
+            rotate(-35deg)
+            translateY(-2px);
+    }
+
+    to{
+        transform:
+            rotate(35deg)
+            translateY(7px);
+    }
+}
+
+
+/*
+   Correct animation for left-facing wing
+*/
+
+.bird.left .wing{
+    animation-name:
+        wingFlapLeft;
+}
+
+@keyframes wingFlapLeft{
+
+    from{
+        transform:
+            scaleX(-1)
+            rotate(-35deg)
+            translateY(-2px);
+    }
+
+    to{
+        transform:
+            scaleX(-1)
+            rotate(35deg)
+            translateY(7px);
+    }
+}
+
+
+/* =========================================================
+   TAIL
+========================================================= */
+
+.tail{
+    position:absolute;
+
+    width:0;
+    height:0;
+
+    top:18px;
+
+    border-top:
+        8px solid transparent;
+
+    border-bottom:
+        8px solid transparent;
+}
+
+
+/* Right-facing */
+
+.bird.right .tail{
+    left:8px;
+
+    border-right:
+        18px solid #303030;
+}
+
+
+/* Left-facing */
+
+.bird.left .tail{
+    right:8px;
+
+    border-left:
+        18px solid #303030;
+}
+
+
+/* =========================================================
+   BIRD FLOAT
+========================================================= */
+
+@keyframes birdFloat{
+
+    from{
+        transform:
+            translateY(-3px)
+            rotate(-2deg);
+    }
+
+    to{
+        transform:
+            translateY(4px)
+            rotate(2deg);
+    }
+}
+
+
+/* =========================================================
+   EXTRA FLIGHT TRAIL
+========================================================= */
+
+.birdTrail{
+    position:absolute;
+
+    width:25px;
+    height:4px;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,255,255,.22);
+
+    filter:blur(2px);
+
+    pointer-events:none;
+}
+
+
+/* =========================================================
+   FALLING
+========================================================= */
+
+.bird.falling .birdVisual{
+
+    animation:
+        birdFall .8s ease-in forwards;
+}
+
+@keyframes birdFall{
+
+    0%{
+        transform:
+            translateY(0)
+            rotate(0deg);
+    }
+
+    45%{
+        transform:
+            translateY(80px)
+            rotate(20deg);
+    }
+
+    100%{
+        transform:
+            translateY(230px)
+            rotate(70deg);
+
+        opacity:0;
+    }
+}
+
+
+/* =========================================================
+   SHOT EFFECT
+========================================================= */
+
+.shot{
+    position:absolute;
+
+    width:60px;
+    height:60px;
+
+    border-radius:50%;
+
+    z-index:500;
+
+    pointer-events:none;
+
+    background:
+        radial-gradient(
+            circle,
+            white 0%,
+            #fff3a6 22%,
+            #ffb300 42%,
+            rgba(255,152,0,.2) 60%,
+            transparent 72%
+        );
+
+    animation:
+        shotAnimation .35s ease-out forwards;
+}
+
+@keyframes shotAnimation{
+
+    from{
+        transform:scale(.2);
+        opacity:1;
+    }
+
+    to{
+        transform:scale(2.7);
+        opacity:0;
+    }
+}
+
+
+/* =========================================================
+   CROSSHAIR
+========================================================= */
+
+.crosshair{
+    position:fixed;
+
+    width:44px;
+    height:44px;
+
+    transform:
+        translate(-50%,-50%);
+
+    z-index:600;
+
+    border:
+        2px solid rgba(255,255,255,.8);
+
+    border-radius:50%;
+
+    pointer-events:none;
+
+    opacity:.7;
+}
+
+.crosshair::before{
+    content:"";
+
+    position:absolute;
+
+    width:2px;
+    height:64px;
+
+    left:50%;
+    top:50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    background:
+        rgba(255,255,255,.7);
+}
+
+.crosshair::after{
+    content:"";
+
+    position:absolute;
+
+    width:64px;
+    height:2px;
+
+    left:50%;
+    top:50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    background:
+        rgba(255,255,255,.7);
+}
+
+
+/* =========================================================
+   SCORE MESSAGE
+========================================================= */
+
+.message{
+    position:absolute;
+
+    left:50%;
+    top:48%;
+
+    transform:
+        translate(-50%,-50%)
+        scale(.5);
+
+    z-index:700;
+
+    color:white;
+
+    font-size:
+        clamp(28px,6vw,58px);
+
+    font-weight:900;
+
+    text-align:center;
+
+    text-shadow:
+        3px 4px 0 #315d29,
+        0 7px 18px rgba(0,0,0,.4);
+
+    opacity:0;
+
+    pointer-events:none;
+}
+
+.message.show{
+    animation:
+        scoreMessage .9s ease forwards;
+}
+
+@keyframes scoreMessage{
+
+    0%{
+        opacity:0;
+
+        transform:
+            translate(-50%,-50%)
+            scale(.4);
+    }
+
+    30%{
+        opacity:1;
+
+        transform:
+            translate(-50%,-50%)
+            scale(1.15);
+    }
+
+    100%{
+        opacity:0;
+
+        transform:
+            translate(-50%,-80%)
+            scale(1);
+    }
+}
+
+
+/* =========================================================
+   WATERMARK
+========================================================= */
+
+.watermark{
+    position:absolute;
+
+    right:15px;
+    bottom:15px;
+
+    z-index:1000;
+
+    padding:
+        8px 15px;
+
+    border-radius:25px;
+
+    color:rgba(255,255,255,.92);
+
+    background:
+        rgba(0,0,0,.25);
+
+    border:
+        1px solid rgba(255,255,255,.35);
+
+    backdrop-filter:blur(8px);
+
+    font-size:12px;
+
+    font-weight:900;
+
+    letter-spacing:2px;
+
+    pointer-events:none;
+
+    user-select:none;
+
+    animation:
+        watermarkPulse 3s ease-in-out infinite;
+}
+
+@keyframes watermarkPulse{
+
+    0%,100%{
+        opacity:.65;
+    }
+
+    50%{
+        opacity:1;
+    }
+}
+
+
+/* =========================================================
+   START SCREEN
+========================================================= */
+
+.startScreen{
+    position:absolute;
+
+    inset:0;
+
+    z-index:900;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    background:
+        rgba(20,45,25,.35);
+
+    backdrop-filter:blur(4px);
+}
+
+.startCard{
+
+    width:min(460px,90%);
+
+    padding:35px;
+
+    text-align:center;
+
+    color:white;
+
+    border-radius:30px;
+
+    background:
+        rgba(34,58,30,.92);
+
+    border:
+        2px solid rgba(255,255,255,.35);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.45);
+}
+
+.startCard h1{
+
+    font-size:
+        clamp(32px,7vw,55px);
+
+    margin-bottom:12px;
+
+    text-shadow:
+        2px 3px 0 #23451e;
+}
+
+.startCard p{
+
+    line-height:1.6;
+
+    font-size:15px;
+
+    opacity:.9;
+
+    margin-bottom:25px;
+}
+
+.startButton{
+
+    border:none;
+
+    border-radius:45px;
+
+    padding:
+        15px 35px;
+
+    font-size:19px;
+
+    font-weight:bold;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8bc34a,
+            #388e3c
+        );
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.3);
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.startButton:hover{
+
+    transform:
+        translateY(-3px)
+        scale(1.04);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:600px){
+
+    .topUI{
+        top:10px;
+        left:10px;
+        right:10px;
+    }
+
+    .scoreBox{
+        min-width:80px;
+        padding:7px 12px;
+    }
+
+    .score{
+        font-size:24px;
+    }
+
+    .bird{
+        transform:scale(.8);
+    }
+
+    .crosshair{
+        display:none;
+    }
+
+    .hunterPanel{
+        bottom:10px;
+        min-width:185px;
+    }
+
+    .watermark{
+        right:8px;
+        bottom:8px;
+        font-size:10px;
+        padding:7px 11px;
+    }
+
+}
+
+
+/* =========================================================
+   END CSS
+========================================================= */
+
+</style>
+</head>
+
+
+<body>
+
+
+<div class="world">
+
+
+    <!-- SKY -->
+
+    <div class="sun"></div>
+
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+
+
+    <!-- DISTANT TREES -->
+
+    <div class="distantForest">
+
+        <div class="distantTree">🌲</div>
+        <div class="distantTree">🌳</div>
+        <div class="distantTree">🌲</div>
+        <div class="distantTree">🌳</div>
+        <div class="distantTree">🌲</div>
+        <div class="distantTree">🌳</div>
+        <div class="distantTree">🌲</div>
+
+    </div>
+
+
+    <!-- GROUND -->
+
+    <div class="ground"></div>
+
+
+    <!-- REALISTIC STYLE BUSHES -->
+
+    <div class="bushArea">
+
+        <div class="bush bush1">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="bush bush2">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="bush bush3">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="bush bush4">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+    </div>
+
+
+    <!-- CAT -->
+
+    <div
+        class="cat"
+        id="cat"
+    >
+        🐈
+    </div>
+
+
+    <!-- TOP UI -->
+
+    <div class="topUI">
+
+        <div class="title">
+            🌲 FOREST HUNT
+        </div>
+
+        <div class="scoreBox">
+
+            <div class="scoreLabel">
+                HUNTS
+            </div>
+
+            <div
+                class="score"
+                id="score"
+            >
+                0
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CROSSHAIR -->
+
+    <div
+        class="crosshair"
+        id="crosshair"
+    ></div>
+
+
+    <!-- MESSAGE -->
+
+    <div
+        class="message"
+        id="message"
+    >
+        NICE HUNT!
+    </div>
+
+
+    <!-- HUNTER PANEL -->
+
+    <div class="hunterPanel">
+
+        <div class="hunterTitle">
+            🎯 HUNTER MODE
+        </div>
+
+        <div
+            class="hunterStatus"
+            id="hunterStatus"
+        >
+            Watch the sky...
+        </div>
+
+    </div>
+
+
+    <!-- WATERMARK -->
+
+    <div class="watermark">
+        EPICPAGES
+    </div>
+
+
+    <!-- START -->
+
+    <div
+        class="startScreen"
+        id="startScreen"
+    >
+
+        <div class="startCard">
+
+            <h1>
+                🌲 FOREST HUNT
+            </h1>
+
+            <p>
+                Watch the sky and click
+                the flying birds to score.
+                Their speed increases
+                gradually as your score rises.
+            </p>
+
+            <button
+                class="startButton"
+                onclick="startGame()"
+            >
+                ▶ START GAME
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   GAME VARIABLES
+========================================================= */
+
+let score = 0;
+
+let gameRunning = false;
+
+let birds = [];
+
+let birdID = 0;
+
+let birdSpeed = 1.15;
+
+const MAX_BIRDS = 5;
+
+
+/* =========================================================
+   START GAME
+========================================================= */
+
+function startGame(){
+
+    document
+        .getElementById("startScreen")
+        .style.display = "none";
+
+
+    gameRunning = true;
+
+    score = 0;
+
+    birdSpeed = 1.15;
+
+
+    document
+        .getElementById("score")
+        .textContent = "0";
+
+
+    updateStatus();
+
+
+    /*
+       Start several birds.
+    */
+
+    createBird();
+
+    setTimeout(createBird,600);
+
+    setTimeout(createBird,1200);
+
+    setTimeout(createBird,1800);
+
+}
+
+
+/* =========================================================
+   CREATE BIRD
+========================================================= */
+
+function createBird(){
+
+    if(!gameRunning){
+        return;
+    }
+
+
+    /*
+       IMPORTANT:
+
+       This only limits birds on screen.
+       It does NOT limit hunts.
+    */
+
+    if(birds.length >= MAX_BIRDS){
+        return;
+    }
+
+
+    const bird =
+        document.createElement("div");
+
+
+    bird.className =
+        "bird";
+
+
+    bird.id =
+        "bird_" +
+        (++birdID);
+
+
+    /*
+       Random direction.
+    */
+
+    const direction =
+        Math.random() < .5
+        ? "left"
+        : "right";
+
+
+    bird.classList.add(
+        direction
+    );
+
+
+    /*
+       Random vertical position.
+    */
+
+    const top =
+        9 +
+        Math.random() * 39;
+
+
+    bird.style.top =
+        top + "vh";
+
+
+    /*
+       Starting X.
+
+       If moving RIGHT,
+       start outside left.
+
+       If moving LEFT,
+       start outside right.
+    */
+
+    let x;
+
+
+    if(direction === "right"){
+
+        x = -90;
+
+    }
+    else{
+
+        x =
+            window.innerWidth + 90;
+
+    }
+
+
+    bird.style.left =
+        x + "px";
+
+
+    /*
+       Random size.
+    */
+
+    const scale =
+        .8 +
+        Math.random() * .35;
+
+
+    bird.style.setProperty(
+        "--birdScale",
+        scale
+    );
+
+
+    /*
+       Visual bird.
+    */
+
+    bird.innerHTML = `
+
+        <div class="birdVisual">
+
+            <div class="tail"></div>
+
+            <div class="birdBody"></div>
+
+            <div class="birdHead"></div>
+
+            <div class="wing"></div>
+
+        </div>
+
+    `;
+
+
+    document
+        .querySelector(".world")
+        .appendChild(
+            bird
+        );
+
+
+    /*
+       Add to active bird list.
+    */
+
+    birds.push(
+        bird
+    );
+
+
+    /*
+       Clicking bird.
+    */
+
+    bird.addEventListener(
+        "pointerdown",
+        function(event){
+
+            event.preventDefault();
+
+            event.stopPropagation();
+
+            catchBird(
+                bird
+            );
+
+        }
+    );
+
+
+    /*
+       Begin flight.
+    */
+
+    flyBird(
+        bird,
+        x,
+        direction
+    );
+
+}
+
+
+/* =========================================================
+   FLY BIRD
+========================================================= */
+
+function flyBird(
+    bird,
+    x,
+    direction
+){
+
+    /*
+       Each bird gets a tiny variation.
+    */
+
+    const personalSpeed =
+        birdSpeed +
+        Math.random() * .30;
+
+
+    /*
+       Random flight wave.
+    */
+
+    const waveAmount =
+        0.5 +
+        Math.random() * 1.2;
+
+
+    const waveSpeed =
+        0.002 +
+        Math.random() * .001;
+
+
+    const startingTop =
+        parseFloat(
+            bird.style.top
+        );
+
+
+    const startTime =
+        performance.now();
+
+
+    function animate(time){
+
+        /*
+           Stop if game stopped.
+        */
+
+        if(!gameRunning){
+            return;
+        }
+
+
+        /*
+           Stop if bird removed.
+        */
+
+        if(
+            !document.body.contains(bird)
+        ){
+            return;
+        }
+
+
+        /*
+           Stop if bird is falling.
+        */
+
+        if(
+            bird.classList.contains(
+                "falling"
+            )
+        ){
+            return;
+        }
+
+
+        /*
+           Horizontal movement.
+
+           RIGHT = positive
+           LEFT  = negative
+        */
+
+        if(direction === "right"){
+
+            x += personalSpeed;
+
+        }
+        else{
+
+            x -= personalSpeed;
+
+        }
+
+
+        bird.style.left =
+            x + "px";
+
+
+        /*
+           Smooth natural up/down flight.
+        */
+
+        const elapsed =
+            time - startTime;
+
+
+        const wave =
+            Math.sin(
+                elapsed *
+                waveSpeed
+            ) *
+            waveAmount;
+
+
+        bird.style.top =
+            (
+                startingTop +
+                wave
+            ) + "vh";
+
+
+        /*
+           Gentle rotation.
+        */
+
+        const visual =
+            bird.querySelector(
+                ".birdVisual"
+            );
+
+
+        if(visual){
+
+            visual.style.transform =
+                `translateY(${wave * .8}px)
+                 rotate(${wave * .8}deg)`;
+
+        }
+
+
+        /*
+           Remove after leaving screen.
+        */
+
+        if(
+            direction === "right" &&
+            x > window.innerWidth + 120
+        ){
+
+            removeBird(
+                bird
+            );
+
+            return;
+
+        }
+
+
+        if(
+            direction === "left" &&
+            x < -150
+        ){
+
+            removeBird(
+                bird
+            );
+
+            return;
+
+        }
+
+
+        requestAnimationFrame(
+            animate
+        );
+
+    }
+
+
+    requestAnimationFrame(
+        animate
+    );
+
+}
+
+
+/* =========================================================
+   CATCH BIRD
+========================================================= */
+
+function catchBird(
+    bird
+){
+
+    if(!gameRunning){
+        return;
+    }
+
+
+    if(
+        bird.classList.contains(
+            "falling"
+        )
+    ){
+        return;
+    }
+
+
+    /*
+       Get current position.
+    */
+
+    const rect =
+        bird.getBoundingClientRect();
+
+
+    /*
+       Shot flash.
+    */
+
+    createShot(
+        rect.left +
+        rect.width / 2,
+
+        rect.top +
+        rect.height / 2
+    );
+
+
+    /*
+       Falling animation.
+    */
+
+    bird.classList.add(
+        "falling"
+    );
+
+
+    /*
+       Score.
+    */
+
+    score++;
+
+
+    document
+        .getElementById("score")
+        .textContent =
+        score;
+
+
+    /*
+       VERY gradual speed increase.
+
+       The increase is tiny.
+    */
+
+    birdSpeed =
+        1.15 +
+        score * 0.012;
+
+
+    updateStatus();
+
+    showMessage();
+
+
+    /*
+       Wait for fall animation.
+    */
+
+    setTimeout(
+        function(){
+
+            removeBird(
+                bird
+            );
+
+            showCat();
+
+        },
+        850
+    );
+
+}
+
+
+/* =========================================================
+   REMOVE BIRD
+========================================================= */
+
+function removeBird(
+    bird
+){
+
+    /*
+       Remove from active array.
+    */
+
+    const index =
+        birds.indexOf(
+            bird
+        );
+
+
+    if(index !== -1){
+
+        birds.splice(
+            index,
+            1
+        );
+
+    }
+
+
+    /*
+       Remove from page.
+    */
+
+    if(
+        bird &&
+        bird.parentNode
+    ){
+
+        bird.parentNode.removeChild(
+            bird
+        );
+
+    }
+
+
+    /*
+       Immediately replace it.
+
+       Therefore the game never
+       runs out of birds.
+    */
+
+    if(
+        gameRunning &&
+        birds.length < MAX_BIRDS
+    ){
+
+        setTimeout(
+            function(){
+
+                createBird();
+
+            },
+            350
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   SHOT EFFECT
+========================================================= */
+
+function createShot(
+    x,
+    y
+){
+
+    const shot =
+        document.createElement(
+            "div"
+        );
+
+
+    shot.className =
+        "shot";
+
+
+    shot.style.left =
+        (x - 30) + "px";
+
+
+    shot.style.top =
+        (y - 30) + "px";
+
+
+    document
+        .querySelector(".world")
+        .appendChild(
+            shot
+        );
+
+
+    setTimeout(
+        function(){
+
+            if(
+                shot.parentNode
+            ){
+
+                shot.parentNode
+                    .removeChild(
+                        shot
+                    );
+
+            }
+
+        },
+        400
+    );
+
+}
+
+
+/* =========================================================
+   CAT
+========================================================= */
+
+let catTimeout;
+
+
+function showCat(){
+
+    const cat =
+        document.getElementById(
+            "cat"
+        );
+
+
+    cat.classList.remove(
+        "hide"
+    );
+
+
+    void cat.offsetWidth;
+
+
+    cat.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        catTimeout
+    );
+
+
+    catTimeout =
+        setTimeout(
+            function(){
+
+                cat.classList.remove(
+                    "show"
+                );
+
+                cat.classList.add(
+                    "hide"
+                );
+
+            },
+            950
+        );
+
+}
+
+
+/* =========================================================
+   SCORE MESSAGE
+========================================================= */
+
+function showMessage(){
+
+    const message =
+        document.getElementById(
+            "message"
+        );
+
+
+    if(score % 10 === 0){
+
+        message.textContent =
+            "🔥 GREAT RUN!";
+
+    }
+    else if(score % 5 === 0){
+
+        message.textContent =
+            "⭐ AMAZING!";
+
+    }
+    else{
+
+        message.textContent =
+            "🎯 NICE HUNT!";
+
+    }
+
+
+    message.classList.remove(
+        "show"
+    );
+
+
+    void message.offsetWidth;
+
+
+    message.classList.add(
+        "show"
+    );
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function updateStatus(){
+
+    const status =
+        document.getElementById(
+            "hunterStatus"
+        );
+
+
+    if(score === 0){
+
+        status.textContent =
+            "Watch the sky...";
+
+    }
+    else if(score < 5){
+
+        status.textContent =
+            "Good start!";
+
+    }
+    else if(score < 15){
+
+        status.textContent =
+            "The birds are getting quicker...";
+
+    }
+    else if(score < 30){
+
+        status.textContent =
+            "Excellent hunter!";
+
+    }
+    else{
+
+        status.textContent =
+            "🔥 MASTER HUNTER";
+
+    }
+
+}
+
+
+/* =========================================================
+   CROSSHAIR
+========================================================= */
+
+const crosshair =
+    document.getElementById(
+        "crosshair"
+    );
+
+
+document.addEventListener(
+    "mousemove",
+    function(event){
+
+        crosshair.style.left =
+            event.clientX + "px";
+
+        crosshair.style.top =
+            event.clientY + "px";
+
+    }
+);
+
+
+/* =========================================================
+   BIRD SPAWN SAFETY
+========================================================= */
+
+setInterval(
+    function(){
+
+        if(
+            gameRunning &&
+            birds.length < MAX_BIRDS
+        ){
+
+            createBird();
+
+        }
+
+    },
+    1800
+);
+
+</script>
+
+</body>
+</html>
